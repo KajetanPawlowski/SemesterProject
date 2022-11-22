@@ -1,9 +1,6 @@
 package client.core;
 
-import client.view.applicant.ApplicantController;
-import client.view.menu.MenuController;
-import client.view.login.LoginViewController;
-import client.view.overview.OverviewController;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -76,7 +73,7 @@ public class ViewHandler {
     }
 
     public VBox getMenuBar(){
-        return(VBox)(createFromFXML(vmf.getMenuVM(), "../view/menu/Menu.fxml"));
+        return(VBox)(createFromFXML(vmf.getMenuVM(), "../view/menu/MenuCompany.fxml"));
     }
     public VBox getApplicantCV(){
         return (VBox)(createFromFXML(vmf.getApplicantVM(), "../view/applicant/Applicant.fxml"));
