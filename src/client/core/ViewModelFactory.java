@@ -14,7 +14,6 @@ public class ViewModelFactory {
     public LoginViewModel getLoginVM(){
         return new LoginViewModel(mf.getClientModel());
     }
-
     public OverviewViewModel getOverviewVM() {
         return new OverviewViewModel(mf.getClientModel());
     }
