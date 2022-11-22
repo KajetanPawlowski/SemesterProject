@@ -40,6 +40,18 @@ public class ViewHandler {
             stage.show();
 
     }
+    public void openEditApplicantProfileView(){
+        BorderPane root = (BorderPane)createFromFXML(vmf.getEditApplicantVM(),"../view/editApplicantProfile/EditApplicantProfile.fxml");
+        root.setLeft(getMenuBar());
+        BorderPane center = (BorderPane)root.getCenter();
+        center.setCenter(getApplicantCV());
+
+        mainScene = new Scene(root,800, 600);
+        stage.setScene(mainScene);
+        stage.setTitle("Edit Profile");
+        stage.show();
+
+    }
 
     public void openOverview() {
             BorderPane root = (BorderPane)createFromFXML(vmf.getOverviewVM(),"../view/overview/Overview.fxml");
@@ -86,6 +98,13 @@ public class ViewHandler {
             layout = null;
         }
         return layout;
+    }
+
+    public void setEditingProfile(boolean isEditable){
+        if(isEditable){
+
+        }
+
     }
 
 

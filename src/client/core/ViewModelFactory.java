@@ -1,6 +1,7 @@
 package client.core;
 
 import client.view.applicant.ApplicantViewModel;
+import client.view.editApplicantProfile.EditApplicantProfileViewModel;
 import client.view.jobSearch.JobSearchViewModel;
 import client.view.login.LoginViewModel;
 import client.view.menu.MenuViewModel;
@@ -27,4 +28,5 @@ public class ViewModelFactory {
     public JobSearchViewModel getJobSearchVM(){
         return new JobSearchViewModel(mf.getClientModel());
     }
+    public EditApplicantProfileViewModel getEditApplicantVM(){return new EditApplicantProfileViewModel(mf.getClientModel());}
 }
