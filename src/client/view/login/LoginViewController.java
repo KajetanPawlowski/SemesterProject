@@ -3,6 +3,7 @@ package client.view.login;
 import client.core.FXMLController;
 import client.core.ViewHandler;
 import client.core.ViewModel;
+import client.model.UserNotFoundException;
 import client.view.menu.MenuController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -32,11 +33,15 @@ public class LoginViewController implements FXMLController {
 
     @FXML
     public void onLoginBtn(){
-        if(logInVM.login()){
+        try {
+            logInVM.login();
             viewHandler.openOverview();
-        }else{
+        }catch (UserNotFoundException userNotFound){
+            System.out.println("LoginViewController::onLoginBtn::UserNotFoundException");
+            //viewHandler.openCreateProfileView();
+        }catch (InvalidLoginData invalidData){
+            System.out.println("LoginViewController::onLoginBtn::InvalidLoginDataException");
             logInVM.logInError();
         }
-
     }
 }

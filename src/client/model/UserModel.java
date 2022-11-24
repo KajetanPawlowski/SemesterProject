@@ -1,13 +1,41 @@
 package client.model;
 
+import common.Company;
+import common.JobAdd;
+
 import java.util.ArrayList;
 
-public class Model implements IClientModel {
+public class UserModel implements IUserModel {
+    private UserModelState currentUserState;
     private ArrayList<JobAdd> jobAdds;
-    public Model(){
+
+
+    private static UserModel currentInstance = null;
+    private UserModel(){
         jobAdds = new ArrayList<JobAdd>();
         setJobAdds(20);
     }
+
+    public static UserModel getInstance(){
+        if(currentInstance == null){
+            return new UserModel();
+        }
+        return currentInstance;
+    }
+
+    public void setCurrentUserState() throws UserNotFoundException{
+        char userType = 'A'; //server.getUserType(String username) // 0 for empty
+        if(userType == 0){
+            throw new UserNotFoundException();
+        }
+        if(userType =='A'){
+            currentUserState = new ApplicantState();
+        }else{
+            currentUserState = new CompanyState();
+        }
+    }
+
+
 
     public void setJobAdds(int noOfJobs){
         for (int i = 0; i<noOfJobs; i++){

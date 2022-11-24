@@ -1,9 +1,6 @@
 package client.core;
 
-import client.view.applicant.ApplicantController;
-import client.view.menu.MenuController;
-import client.view.login.LoginViewController;
-import client.view.overview.OverviewController;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -38,6 +35,18 @@ public class ViewHandler {
             stage.setScene(logInScene);
             stage.setTitle("Login");
             stage.show();
+
+    }
+    public void openEditApplicantProfileView(){
+        BorderPane root = (BorderPane)createFromFXML(vmf.getEditApplicantVM(),"../view/editApplicantProfile/EditApplicantProfile.fxml");
+        root.setLeft(getMenuBar());
+        BorderPane center = (BorderPane)root.getCenter();
+        center.setCenter(getApplicantCV());
+
+        mainScene = new Scene(root,800, 600);
+        stage.setScene(mainScene);
+        stage.setTitle("Edit Profile");
+        stage.show();
 
     }
 
@@ -86,6 +95,13 @@ public class ViewHandler {
             layout = null;
         }
         return layout;
+    }
+
+    public void setEditingProfile(boolean isEditable){
+        if(isEditable){
+
+        }
+
     }
 
 

@@ -1,4 +1,4 @@
-package client.view.menu;
+package client.view.menuCompany;
 
 import client.core.FXMLController;
 import client.core.ViewHandler;
@@ -7,7 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public class MenuController implements FXMLController {
+public class MenuCompanyController implements FXMLController {
     public ViewHandler viewHandler;
     public MenuViewModel menuVM;
 
@@ -16,7 +16,7 @@ public class MenuController implements FXMLController {
     @FXML
     Button editProfileBtn;
     @FXML
-    Button jobSearchBtn;
+    Button jobAdsBtn;
     @FXML
     Button chatBtn;
     @FXML
@@ -28,12 +28,12 @@ public class MenuController implements FXMLController {
 
     @FXML
     void onEditProfileBtn(ActionEvent event) {
-        viewHandler.openEditApplicantProfileView();
+
     }
 
     @FXML
-    void onJobSearchBtn(ActionEvent event) {
-        viewHandler.openJobSearch();
+    void onJobAdsBtn(ActionEvent event) {
+
     }
 
     @FXML
