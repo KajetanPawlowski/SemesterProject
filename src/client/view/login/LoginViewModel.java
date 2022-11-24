@@ -1,20 +1,21 @@
 package client.view.login;
 
 import client.core.ViewModel;
-import client.model.IClientModel;
-import client.model.Model;
+import client.model.IUserModel;
+import client.model.UserModel;
+import client.model.UserNotFoundException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class LoginViewModel implements ViewModel {
-    private IClientModel clientModel;
+    private IUserModel clientModel;
 
     private StringProperty userNameProperty = new SimpleStringProperty("");
     private StringProperty ipProperty = new SimpleStringProperty("");
     private StringProperty errorLabelProperty = new SimpleStringProperty("");
 
 
-    public LoginViewModel(Model model){
+    public LoginViewModel(UserModel model){
         clientModel = model;
     }
 
@@ -28,8 +29,14 @@ public class LoginViewModel implements ViewModel {
     public StringProperty getErrorLabelProperty(){
         return errorLabelProperty;
     }
-    public boolean login(){
-        return true;
+    public void login() throws UserNotFoundException, InvalidLoginData{
+        if(userNameProperty.get().equals("")){
+            throw new InvalidLoginData();
+        }
+        if(ipProperty.get().equals("")){
+            throw new InvalidLoginData();
+        }
+        clientModel.setCurrentUserState();
     }
 
     public void logInError(){

@@ -1,4 +1,4 @@
-package client.model;
+package common;
 
 public class Applicant {
     private String username;

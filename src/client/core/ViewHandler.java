@@ -73,7 +73,7 @@ public class ViewHandler {
     }
 
     public VBox getMenuBar(){
-        return(VBox)(createFromFXML(vmf.getMenuVM(), "../view/menu/MenuCompany.fxml"));
+        return(VBox)(createFromFXML(vmf.getMenuVM(), "../view/menu/Menu.fxml"));
     }
     public VBox getApplicantCV(){
         return (VBox)(createFromFXML(vmf.getApplicantVM(), "../view/applicant/Applicant.fxml"));
