@@ -9,7 +9,6 @@ public class UserModel implements IUserModel {
     private UserModelState currentUserState;
     private ArrayList<JobAdd> jobAdds;
 
-
     private static UserModel currentInstance = null;
     private UserModel(){
         jobAdds = new ArrayList<JobAdd>();
@@ -23,16 +22,23 @@ public class UserModel implements IUserModel {
         return currentInstance;
     }
 
-    public void setCurrentUserState() throws UserNotFoundException{
-        char userType = 'A'; //server.getUserType(String username) // 0 for empty
+    public void setCurrentUserState(String username) throws UserNotFoundException{
+        char userType = 'A'; //server.getUserType(username) // 0 for empty
         if(userType == 0){
             throw new UserNotFoundException();
         }
         if(userType =='A'){
-            currentUserState = new ApplicantState();
+            currentUserState = new ApplicantState(username);
+            System.out.println("UserModel::setState::Applicant::" + currentUserState.getUsername());
         }else{
-            currentUserState = new CompanyState();
+            System.out.println("UserModel::setState::Company");
+            currentUserState = new CompanyState(username);
+            System.out.println("UserModel::setState::Applicant::" + currentUserState.getUsername());
         }
+    }
+    public String getUsername(){
+        System.out.println("UserModel::getUserName");
+        return currentUserState.getUsername();
     }
 
 

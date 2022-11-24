@@ -36,7 +36,7 @@ public class LoginViewModel implements ViewModel {
         if(ipProperty.get().equals("")){
             throw new InvalidLoginData();
         }
-        clientModel.setCurrentUserState();
+        clientModel.setCurrentUserState(userNameProperty.get());
     }
 
     public void logInError(){

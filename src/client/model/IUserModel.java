@@ -1,6 +1,7 @@
 package client.model;
 
 public interface IUserModel {
-    void setCurrentUserState()
+    void setCurrentUserState(String username)
             throws UserNotFoundException;
+    String getUsername();
 }

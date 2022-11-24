@@ -2,6 +2,7 @@ package client.core;
 
 import client.model.UserModel;
 import client.view.applicant.ApplicantViewModel;
+import client.view.chat.ChatViewModel;
 import client.view.editApplicantProfile.EditApplicantProfileViewModel;
 import client.view.jobSearch.JobSearchViewModel;
 import client.view.login.LoginViewModel;
@@ -26,5 +27,6 @@ public class ViewModelFactory {
     public JobSearchViewModel getJobSearchVM(){
         return new JobSearchViewModel(UserModel.getInstance());
     }
-    public EditApplicantProfileViewModel getEditApplicantVM(){return new EditApplicantProfileViewModel(mf.getClientModel());}
+    public EditApplicantProfileViewModel getEditApplicantVM(){return new EditApplicantProfileViewModel(UserModel.getInstance());}
+    public ChatViewModel getChatVM(){ return new ChatViewModel(UserModel.getInstance());}
 }

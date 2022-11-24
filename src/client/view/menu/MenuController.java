@@ -23,7 +23,7 @@ public class MenuController implements FXMLController {
     Button logoutBtn;
     @FXML
     void onChatBtn(ActionEvent event) {
-
+        viewHandler.openChatView();
     }
 
     @FXML

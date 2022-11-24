@@ -71,6 +71,16 @@ public class ViewHandler {
         stage.setTitle("Job Search");
         stage.show();
     }
+    public void openChatView(){
+        BorderPane root = (BorderPane)createFromFXML(vmf.getChatVM(),"../view/chat/ChatView.fxml");
+
+        root.setLeft(getMenuBar());
+
+        mainScene = new Scene(root,800, 600);
+        stage.setScene(mainScene);
+        stage.setTitle("Chat");
+        stage.show();
+    }
 
     public VBox getMenuBar(){
         return(VBox)(createFromFXML(vmf.getMenuVM(), "../view/menu/Menu.fxml"));
