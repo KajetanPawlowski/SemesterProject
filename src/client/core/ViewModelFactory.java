@@ -1,5 +1,6 @@
 package client.core;
 
+import client.model.IUserModel;
 import client.model.UserModel;
 import client.view.applicant.ApplicantViewModel;
 import client.view.chat.ChatViewModel;
@@ -10,23 +11,28 @@ import client.view.menu.MenuViewModel;
 import client.view.overview.OverviewViewModel;
 
 public class ViewModelFactory {
+    private IUserModel model= UserModel.getInstance();
     public ViewModelFactory(){
     }
     public LoginViewModel getLoginVM(){
-        return new LoginViewModel(UserModel.getInstance());
+        return new LoginViewModel(model);
     }
     public OverviewViewModel getOverviewVM() {
-        return new OverviewViewModel(UserModel.getInstance());
+        return new OverviewViewModel(model);
     }
     public MenuViewModel getMenuVM(){
-        return new MenuViewModel(UserModel.getInstance());
+        return new MenuViewModel(model);
     }
     public ApplicantViewModel getApplicantVM(){
-        return new ApplicantViewModel(UserModel.getInstance());
+        return new ApplicantViewModel(model);
     }
     public JobSearchViewModel getJobSearchVM(){
-        return new JobSearchViewModel(UserModel.getInstance());
+        return new JobSearchViewModel(model);
     }
-    public EditApplicantProfileViewModel getEditApplicantVM(){return new EditApplicantProfileViewModel(UserModel.getInstance());}
-    public ChatViewModel getChatVM(){ return new ChatViewModel(UserModel.getInstance());}
+    public EditApplicantProfileViewModel getEditApplicantVM(){
+        return new EditApplicantProfileViewModel(model);
+    }
+    public ChatViewModel getChatVM(){
+        return new ChatViewModel(model);
+    }
 }

@@ -22,7 +22,7 @@ public class ChatViewModel implements ViewModel {
 
     public ChatViewModel(IUserModel model){
         clientModel = model;
-        accountNameLabelProperty.set("Hi " );
+        accountNameLabelProperty.set("Hi " + clientModel.getUsername());
         messageList = FXCollections.observableArrayList();
         accountList = FXCollections.observableArrayList();
         

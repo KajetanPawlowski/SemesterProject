@@ -1,10 +1,10 @@
 package client.view.applicant;
 
 import client.core.ViewModel;
-import client.model.UserModel;
+import client.model.IUserModel;
 
 public class ApplicantViewModel implements ViewModel {
-    public ApplicantViewModel(UserModel model){
+    public ApplicantViewModel(IUserModel model){
 
     }
 }

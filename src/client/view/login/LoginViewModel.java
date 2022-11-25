@@ -2,7 +2,6 @@ package client.view.login;
 
 import client.core.ViewModel;
 import client.model.IUserModel;
-import client.model.UserModel;
 import client.model.UserNotFoundException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -15,7 +14,7 @@ public class LoginViewModel implements ViewModel {
     private StringProperty errorLabelProperty = new SimpleStringProperty("");
 
 
-    public LoginViewModel(UserModel model){
+    public LoginViewModel(IUserModel model){
         clientModel = model;
     }
 

@@ -2,12 +2,12 @@ package client.view.jobSearch;
 
 import client.core.ViewModel;
 import common.JobAdd;
-import client.model.UserModel;
+import client.model.IUserModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class JobSearchViewModel implements ViewModel {
-    private UserModel model;
+    private IUserModel model;
     private JobAdd jobAdd;
     private int noOfAdds;
     private int currentAdd;
@@ -18,7 +18,7 @@ public class JobSearchViewModel implements ViewModel {
     private StringProperty jobDescription = new SimpleStringProperty("");
     private StringProperty requirements = new SimpleStringProperty("");
 
-    public JobSearchViewModel(UserModel model){
+    public JobSearchViewModel(IUserModel model){
         this.model = model;
         noOfAdds = model.getJobAdds().size()-1;
         if(noOfAdds>0){
@@ -59,10 +59,6 @@ public class JobSearchViewModel implements ViewModel {
         companyName.setValue(jobAdd.getCompany().getCompanyName());
         jobDescription.setValue(jobAdd.getJobDescription());
         requirements.setValue(jobAdd.getJobDescription());
-    }
-
-    public UserModel getModel() {
-        return model;
     }
 
 

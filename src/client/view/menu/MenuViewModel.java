@@ -1,10 +1,10 @@
 package client.view.menu;
 
 import client.core.ViewModel;
-import client.model.UserModel;
+import client.model.IUserModel;
 
 public class MenuViewModel implements ViewModel {
-    public MenuViewModel(UserModel model){
+    public MenuViewModel(IUserModel model){
 
     }
 }
