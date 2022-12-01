@@ -3,9 +3,12 @@ package server;
 import common.Applicant;
 import common.Company;
 import common.JobAdd;
+import common.User;
 import org.postgresql.util.PSQLException;
 
 import java.sql.*;
+
+//KAJETAN WAS HERE HHEHEHEHEHEHE
 
 public class JDBCConnector {
     private Connection connection;
@@ -29,6 +32,7 @@ public class JDBCConnector {
 //-----------------------------------------------------------------------------------------------------------Applicant OPERATIONS
     // Stores a new JobAd in the DB
     private void insertNewApplicant(Applicant applicant) {
+        insertNewUser(applicant);
         String SQL = "INSERT INTO sep5.jobad VALUES "
                 + "(DEFAULT, '" + applicant.getUsername() + "','" + applicant.getFullName() + "', '" + applicant.getPersonalInformation() +"', '"
                 + applicant.getContact()+"', '"+applicant.getEducation()+"' , '"+applicant.getLanguages()+"' , '"
@@ -58,6 +62,7 @@ public class JDBCConnector {
 //-----------------------------------------------------------------------------------------------------------Company OPERATIONS
     // Stores a new Compnay in the DB
     private void insertNewCompany(Company company) {
+        insertNewUser(company);
         String SQL = "INSERT INTO sep5.company VALUES "
                 + "(DEFAULT, '" + company.getUsername() + "', '" + company.getCompanyName() +"', '"
                 + company.getDescription()+"');";
@@ -108,5 +113,12 @@ public class JDBCConnector {
             System.out.println("Connection closing failed");
             exception.printStackTrace();
         }
+    }
+
+    private void insertNewUser(User user){
+        //write SQL here
+        user.getUsername();
+        user.getType();
+
     }
 }

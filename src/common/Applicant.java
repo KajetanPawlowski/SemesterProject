@@ -1,6 +1,7 @@
 package common;
 
 public class Applicant implements User{
+    final char TYPE = 'A';
     private String username;
     private String fullName;
     private String personalInformation;
@@ -11,9 +12,7 @@ public class Applicant implements User{
     private String skills;
 
     public String getUsername() {return username;}
-
-    public void setUsername(String username) {this.username = username;}
-
+    public char getType(){return TYPE;}
     public String getFullName() {return fullName;}
 
     public void setFullName(String fullName) {this.fullName = fullName;}

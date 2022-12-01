@@ -1,6 +1,7 @@
 package common;
 
 public class Company implements User{
+    private final char TYPE = 'C';
     private String username;
     private String companyName;
     private String description;
@@ -8,7 +9,7 @@ public class Company implements User{
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
-
+    public char getType(){return TYPE;}
     public void setDescription(String description) {
         this.description = description;
     }

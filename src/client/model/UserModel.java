@@ -25,7 +25,7 @@ public class UserModel implements IUserModel {
     }
 
     public void setCurrentUserState(String username) throws UserNotFoundException{
-        char userType = 'A'; //server.getUserType(username) // 0 for empty
+        char userType = 'A'; //server.getUsertype(username) // 0 for empty
         if(userType == 0){
             throw new UserNotFoundException();
         }
@@ -33,18 +33,11 @@ public class UserModel implements IUserModel {
             currentUserState = new ApplicantState(username);
             System.out.println("UserModel::setState::Applicant::" + currentUserState.getUsername());
         }else{
-            System.out.println("UserModel::setState::Company");
             currentUserState = new CompanyState(username);
-            System.out.println("UserModel::setState::Applicant::" + currentUserState.getUsername());
+            System.out.println("UserModel::setState::Company::" + currentUserState.getUsername());
         }
     }
     private boolean isEditing = false;
-    public boolean isEditingProfile(){
-        return isEditing;
-    }
-    public void changeEditStage(){
-        isEditing = !isEditing;
-    }
 
     public String getUsername(){
         System.out.println("UserModel::getUserName");
