@@ -1,6 +1,6 @@
 package common;
 
-public class Company {
+public class Company implements User{
     private String username;
     private String companyName;
     private String description;

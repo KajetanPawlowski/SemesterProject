@@ -1,6 +1,6 @@
 package common;
 
-public class Applicant {
+public class Applicant implements User{
     private String username;
     private String fullName;
     private String personalInformation;
