@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class ApplicantController implements FXMLController {
     private ViewHandler viewHandler;
     private ApplicantViewModel applicantVM;
+    private static ApplicantController instance = null;
 
         @FXML
         private Label ApplicantName;
@@ -47,15 +48,31 @@ public class ApplicantController implements FXMLController {
 
 
     public void init(ViewHandler viewHandler, ViewModel vm){
+        instance = this;
         this.viewHandler = viewHandler;
         this.applicantVM = (ApplicantViewModel) vm;
     }
+    public static ApplicantController getInstance(){
+        return instance;
+    }
 
     public void allowEditing(){
+        PersonalInformation.setEditable(true);
+        Education.setEditable(true);
+        Experience.setEditable(true);
+        ContactInfo.setEditable(true);
         Languages.setEditable(true);
+        Skills.setEditable(true);
     }
     public void lockEditing(){
+        PersonalInformation.setEditable(false);
+        Education.setEditable(false);
+        Experience.setEditable(false);
+        ContactInfo.setEditable(false);
         Languages.setEditable(false);
+        Skills.setEditable(false);
     }
+
+
 
 }

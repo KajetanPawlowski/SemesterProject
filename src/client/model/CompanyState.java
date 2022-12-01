@@ -2,6 +2,7 @@ package client.model;
 
 import common.Applicant;
 import common.Company;
+import common.User;
 
 public class CompanyState implements UserModelState{
     private Company company;
@@ -18,5 +19,10 @@ public class CompanyState implements UserModelState{
     @Override
     public String getUsername() {
         return company.getUsername();
+    }
+
+    @Override
+    public User getUserProfile() {
+        return company;
     }
 }

@@ -1,7 +1,9 @@
 package client.model;
 
+import common.Applicant;
 import common.Company;
 import common.JobAdd;
+import common.User;
 
 import java.util.ArrayList;
 
@@ -36,6 +38,14 @@ public class UserModel implements IUserModel {
             System.out.println("UserModel::setState::Applicant::" + currentUserState.getUsername());
         }
     }
+    private boolean isEditing = false;
+    public boolean isEditingProfile(){
+        return isEditing;
+    }
+    public void changeEditStage(){
+        isEditing = !isEditing;
+    }
+
     public String getUsername(){
         System.out.println("UserModel::getUserName");
         return currentUserState.getUsername();
@@ -53,5 +63,10 @@ public class UserModel implements IUserModel {
 
     public ArrayList<JobAdd> getJobAdds(){
         return jobAdds;
+    }
+
+    @Override
+    public User getProfile(){
+        return currentUserState.getUserProfile();
     }
 }

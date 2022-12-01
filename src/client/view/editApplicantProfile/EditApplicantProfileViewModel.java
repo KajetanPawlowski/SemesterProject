@@ -7,4 +7,5 @@ public class EditApplicantProfileViewModel implements ViewModel {
     public EditApplicantProfileViewModel(IUserModel model){
 
     }
+
 }
