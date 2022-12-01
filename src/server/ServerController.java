@@ -16,9 +16,6 @@ public class ServerController implements IServerConnector {
     private ArrayList<Applicant> applicants;
     private ArrayList<Company> companys;
 
-    public static void start(){
-
-    }
 
     @Override
     public char getUserType() {

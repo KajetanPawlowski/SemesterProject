@@ -36,7 +36,7 @@ public class UserModel implements IUserModel {
     }
     public boolean connectToServer(String ip){
         try {
-            String url = "rmi://" + ip + "/chatServer";
+            String url = "rmi://" + ip + "/server";
 
 
             server = (IServerConnector) Naming.lookup( url );
