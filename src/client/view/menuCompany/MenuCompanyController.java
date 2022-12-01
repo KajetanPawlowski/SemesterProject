@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 
 public class MenuCompanyController implements FXMLController {
     public ViewHandler viewHandler;
-    public MenuViewModel menuVM;
+    public MenuCompanyViewModel menuVM;
 
     @FXML
     Button overviewBtn;
@@ -50,6 +50,6 @@ public class MenuCompanyController implements FXMLController {
 
     public void init(ViewHandler viewHandler, ViewModel menuVM) {
         this.viewHandler = viewHandler;
-        this.menuVM = (MenuViewModel)menuVM;
+        this.menuVM = (MenuCompanyViewModel)menuVM;
     }
 }

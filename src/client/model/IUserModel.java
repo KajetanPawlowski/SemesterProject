@@ -10,7 +10,6 @@ public interface IUserModel {
     void setCurrentUserState(String username)
             throws UserNotFoundException;
     String getUsername();
-    void setJobAdds(int noOfJobs);
+    char getUsertype();
     ArrayList<JobAdd> getJobAdds();
-    User getProfile();
 }

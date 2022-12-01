@@ -8,12 +8,18 @@ import client.view.editApplicantProfile.EditApplicantProfileViewModel;
 import client.view.jobSearch.JobSearchViewModel;
 import client.view.login.LoginViewModel;
 import client.view.menu.MenuViewModel;
+import client.view.menuCompany.MenuCompanyViewModel;
 import client.view.overview.OverviewViewModel;
 
 public class ViewModelFactory {
     private IUserModel model= UserModel.getInstance();
     public ViewModelFactory(){
     }
+
+    public IUserModel getModel() {
+        return model;
+    }
+
     public LoginViewModel getLoginVM(){
         return new LoginViewModel(model);
     }
@@ -22,6 +28,9 @@ public class ViewModelFactory {
     }
     public MenuViewModel getMenuVM(){
         return new MenuViewModel(model);
+    }
+    public MenuCompanyViewModel getMenuCompanyVM(){
+        return new MenuCompanyViewModel(model);
     }
     public ApplicantViewModel getApplicantVM(){
         return new ApplicantViewModel(model);

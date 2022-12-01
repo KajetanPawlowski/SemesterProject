@@ -82,9 +82,19 @@ public class ViewHandler {
         stage.setTitle("Chat");
         stage.show();
     }
-
     public VBox getMenuBar(){
+        if(vmf.getModel().getUsertype()=='A'){
+            return getApplicantMenuBar();
+        }else{
+            return getCompanyMenuBar();
+        }
+    }
+
+    private VBox getApplicantMenuBar(){
         return(VBox)(createFromFXML(vmf.getMenuVM(), "../view/menu/Menu.fxml"));
+    }
+    private VBox getCompanyMenuBar(){
+        return(VBox)(createFromFXML(vmf.getMenuCompanyVM(), "../view/menuCompany/MenuCompany.fxml"));
     }
     public VBox getApplicantCV(){
         return (VBox)(createFromFXML(vmf.getApplicantVM(), "../view/applicant/Applicant.fxml"));
