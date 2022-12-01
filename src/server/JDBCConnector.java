@@ -1,5 +1,6 @@
 package server;
 
+import client.model.UserNotFoundException;
 import common.Applicant;
 import common.Company;
 import common.JobAdd;
@@ -28,12 +29,47 @@ public class JDBCConnector {
         }
     }
 
+//-----------------------------------------------------------------------------------------------------------User OPERATIONS
+    // Stores a new User in the DB
+    private void insertNewUser(User user){
+        String SQL = "INSERT INTO sep5.user VALUES "
+                + "(DEFAULT, '" + user.getUsername() + "', '" + user.getType() +"');";
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeQuery(SQL);
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+    }
+    // Gets the user type
+    public char getUserType(String username) throws UserNotFoundException{
+        String SQL = "SELECT type FROM sep5.user WHERE username = '"+username+"';";
+        ResultSet rs;
+        char result = 0;
+        try {
+            Statement statement = connection.createStatement();
+            rs = statement.executeQuery(SQL);
+
+            rs.next();
+            result =  rs.getString(1).charAt(0);
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        if(result == 0){
+            throw new UserNotFoundException();
+        }
+        return result;
+    }
+
 
 //-----------------------------------------------------------------------------------------------------------Applicant OPERATIONS
-    // Stores a new JobAd in the DB
+    // Stores a new Applicant in the DB
     private void insertNewApplicant(Applicant applicant) {
         insertNewUser(applicant);
-        String SQL = "INSERT INTO sep5.jobad VALUES "
+        String SQL = "INSERT INTO sep5.Applicant VALUES "
                 + "(DEFAULT, '" + applicant.getUsername() + "','" + applicant.getFullName() + "', '" + applicant.getPersonalInformation() +"', '"
                 + applicant.getContact()+"', '"+applicant.getEducation()+"' , '"+applicant.getLanguages()+"' , '"
                 +applicant.getExperience()+"' , '"+applicant.getSkills()+"');";
@@ -60,7 +96,7 @@ public class JDBCConnector {
 
 
 //-----------------------------------------------------------------------------------------------------------Company OPERATIONS
-    // Stores a new Compnay in the DB
+    // Stores a new Company in the DB
     private void insertNewCompany(Company company) {
         insertNewUser(company);
         String SQL = "INSERT INTO sep5.company VALUES "
@@ -115,10 +151,5 @@ public class JDBCConnector {
         }
     }
 
-    private void insertNewUser(User user){
-        //write SQL here
-        user.getUsername();
-        user.getType();
 
-    }
 }
