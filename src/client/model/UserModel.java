@@ -1,14 +1,13 @@
 package client.model;
 
-import common.Applicant;
-import common.Company;
-import common.JobAdd;
-import common.User;
+import common.*;
 
+import java.rmi.Naming;
 import java.util.ArrayList;
 
 public class UserModel implements IUserModel {
     private UserModelState currentUserState;
+    private IServerConnector server;
 
     private static UserModel currentInstance = null;
     private UserModel(){
@@ -33,6 +32,17 @@ public class UserModel implements IUserModel {
         }else{
             currentUserState = new CompanyState(username);
             System.out.println("UserModel::setState::Company::" + currentUserState.getUsername());
+        }
+    }
+    public boolean connectToServer(String ip){
+        try {
+            String url = "rmi://" + ip + "/chatServer";
+
+
+            server = (IServerConnector) Naming.lookup( url );
+            return true;
+        } catch( Exception ex ) {
+            return false;
         }
     }
 
