@@ -25,22 +25,23 @@ public class ServerController implements IServerConnector {
 
     @Override
     public Applicant getApplicantProfile(Applicant user) throws RemoteException {
-        Applicant applicant = serverModel.getApplicantProfile(user);
-        return null;
+        Applicant applicantProfile = serverModel.getApplicantProfile(user);
+        return applicantProfile;
     }
 
     @Override
     public Company getCompanyProfile(Company user) throws RemoteException {
-        return null;
+        Company companyProfile = serverModel.getCompanyProfile(user);
+        return companyProfile;
     }
 
     @Override
     public void createNewApplicantUser(Applicant newApplicant) throws RemoteException {
-
+        serverModel.createNewApplicantUser(newApplicant);
     }
 
     @Override
     public void createNewCompanyUser(Company newCompany) throws RemoteException {
-
+        serverModel.createNewCompanyUser(newCompany);
     }
 }
