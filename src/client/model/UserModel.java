@@ -25,22 +25,30 @@ public class UserModel implements IUserModel {
     }
 
     public void setCurrentUserState(String username) throws UserNotFoundException{
+        char userType = checkUsertype(username);
+        try{
+            if(userType =='A'){
+                currentUserState.setUserProfile(server.getApplicantProfile(username));
+                log.quickClientLog("UserModel::setState::Applicant::" + currentUserState.getUsername());
+            }else{
+                currentUserState.setUserProfile(server.getCompanyProfile(username));
+                log.quickClientLog("UserModel::setState::Company::" + currentUserState.getUsername());
+            }
+        }catch (RemoteException ex){
+            log.quickClientLog("UserModel::setCurrentUserState::RemoteException2");
+        }
+    }
+    private char checkUsertype(String username) throws UserNotFoundException{
         char userType = 0;
         try{
             userType = server.getUsertype(username);
         }catch (RemoteException ex){
-            log.quickClientLog("UserModel::setCurrentUserState::RemoteException");
+            log.quickClientLog("UserModel::setCurrentUserState::RemoteException1");
         }
         if(userType == 0){
             throw new UserNotFoundException();
         }
-        if(userType =='A'){
-            currentUserState.setUserProfile((Applicant)server.getApplicantProfile());
-            log.quickClientLog("UserModel::setState::Applicant::" + currentUserState.getUsername());
-        }else{
-            currentUserState = new CompanyState(username);
-            log.quickClientLog("UserModel::setState::Company::" + currentUserState.getUsername());
-        }
+        return userType;
     }
     public boolean connectToServer(String ip){
         try {
@@ -75,8 +83,8 @@ public class UserModel implements IUserModel {
         return currentUserState.getUsername();
     }
 
-    public char getUsertype(){
-        return currentUserState.getUserProfile().getType();
+    public UserModelState getUserState(){
+        return currentUserState;
     }
 
 

@@ -84,7 +84,7 @@ public class ViewHandler {
         stage.show();
     }
     public VBox getMenuBar(){
-        if(vmf.getModel().getUsertype()=='A'){
+        if(vmf.getModel().getUserState().getUserProfile().getType()=='A'){
             return getApplicantMenuBar();
         }else{
             return getCompanyMenuBar();

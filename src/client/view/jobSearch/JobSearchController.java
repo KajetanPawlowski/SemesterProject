@@ -3,6 +3,7 @@ package client.view.jobSearch;
 import client.core.FXMLController;
 import client.core.ViewHandler;
 import client.core.ViewModel;
+import client.view.jobAd.JobAdViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -19,36 +20,12 @@ public class JobSearchController implements FXMLController {
     public void init(ViewHandler vh, ViewModel vm) {
         viewHandler = vh;
         jobSearchVM = (JobSearchViewModel)vm;
-        positionNameLabel.textProperty().bindBidirectional(jobSearchVM.positionNameProperty());
-        subtitleLabel.textProperty().bindBidirectional(jobSearchVM.companyNameProperty());
-        jobDescriptionField.textProperty().bindBidirectional(jobSearchVM.jobDescriptionProperty());
-        requirementsField.textProperty().bindBidirectional(jobSearchVM.requirementsProperty());
 
     }
-
-    @FXML
-    private Button ApplyNowBtn;
-
-    @FXML
-    private TextArea jobDescriptionField;
-
-    @FXML
-    private Button nextAddBtn;
-
-    @FXML
-    private Circle pictureCircle;
-
-    @FXML
-    private Label positionNameLabel;
-
     @FXML
     private Button prevAddBtn;
-
     @FXML
-    private TextArea requirementsField;
-
-    @FXML
-    private Label subtitleLabel;
+    private Button nextAddBtn;
 
     @FXML
     void onApplyNowBtn(ActionEvent event) {

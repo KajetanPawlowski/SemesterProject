@@ -12,11 +12,7 @@ public class JobSearchViewModel implements ViewModel {
     private int noOfAdds;
     private int currentAdd;
 
-    private StringProperty positionName = new SimpleStringProperty("");
-    private StringProperty subtitle = new SimpleStringProperty("");
-    private StringProperty companyName = new SimpleStringProperty("");
-    private StringProperty jobDescription = new SimpleStringProperty("");
-    private StringProperty requirements = new SimpleStringProperty("");
+
 
     public JobSearchViewModel(IUserModel model){
         this.model = model;
@@ -47,43 +43,9 @@ public class JobSearchViewModel implements ViewModel {
         setJobAdd(model.getJobAdds().get(prevAdd));
         currentAdd--;
     }
-
-
     private void setJobAdd(JobAdd add){
         jobAdd = add;
-        fillJobInfo();
-    }
-
-    private void fillJobInfo(){
-        positionName.setValue(jobAdd.getJobTitle());
-        companyName.setValue(jobAdd.getCompany().getCompanyName());
-        jobDescription.setValue(jobAdd.getJobDescription());
-        requirements.setValue(jobAdd.getJobDescription());
-    }
-
-
-    public StringProperty positionNameProperty() {
-        return positionName;
-    }
-
-
-    public StringProperty subtitleProperty() {
-        return subtitle;
-    }
-
-
-    public StringProperty companyNameProperty() {
-        return companyName;
-    }
-
-
-    public StringProperty jobDescriptionProperty() {
-        return jobDescription;
-    }
-
-
-    public StringProperty requirementsProperty() {
-        return requirements;
+        //fillJobInfo();
     }
 
     public void onNextAddBtn(){

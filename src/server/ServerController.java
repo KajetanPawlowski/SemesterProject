@@ -24,14 +24,14 @@ public class ServerController implements IServerConnector {
     }
 
     @Override
-    public Applicant getApplicantProfile(Applicant user) throws RemoteException {
-        Applicant applicantProfile = serverModel.getApplicantProfile(user);
+    public Applicant getApplicantProfile(String username) throws RemoteException {
+        Applicant applicantProfile = serverModel.getApplicantProfile(username);
         return applicantProfile;
     }
 
     @Override
-    public Company getCompanyProfile(Company user) throws RemoteException {
-        Company companyProfile = serverModel.getCompanyProfile(user);
+    public Company getCompanyProfile(String username) throws RemoteException {
+        Company companyProfile = serverModel.getCompanyProfile(username);
         return companyProfile;
     }
 

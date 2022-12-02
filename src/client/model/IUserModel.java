@@ -10,7 +10,7 @@ public interface IUserModel {
     void setCurrentUserState(String username)
             throws UserNotFoundException;
     String getUsername();
-    char getUsertype();
+    UserModelState getUserState();
     ArrayList<JobAdd> getJobAdds();
     boolean connectToServer(String ip);
     void createNewUser(String username, char type);

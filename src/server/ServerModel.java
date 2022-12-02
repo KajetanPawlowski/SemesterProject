@@ -44,13 +44,13 @@ public class ServerModel  {
         return type;
     }
 
-    public Applicant getApplicantProfile(Applicant user) {
-        Applicant applicantProfile = database.getApplicantProfile(user.getUsername());
+    public Applicant getApplicantProfile(String username) {
+        Applicant applicantProfile = database.getApplicantProfile(username);
         return applicantProfile;
     }
 
-    public Company getCompanyProfile(Company user) {
-        Company companyProfile = database.getCompanyProfile(user.getUsername());
+    public Company getCompanyProfile(String username) {
+        Company companyProfile = database.getCompanyProfile(username);
         return companyProfile;
     }
 
@@ -66,13 +66,13 @@ public class ServerModel  {
         database.insertNewUser(newUser);
     }
 
-    public ArrayList<Applicant> getAllApplicants(Applicant applicant){
-        applicants.add(getApplicantProfile(applicant));
+    public ArrayList<Applicant> getAllApplicants(String username){
+        applicants.add(getApplicantProfile(username));
         return applicants;
     }
 
-    public ArrayList<Company> getAllCompanies(Company company){
-        companies.add(getCompanyProfile(company));
+    public ArrayList<Company> getAllCompanies(String username){
+        companies.add(getCompanyProfile(username));
         return companies;
     }
 
