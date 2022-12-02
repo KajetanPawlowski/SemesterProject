@@ -2,6 +2,7 @@ package client.core;
 
 
 import client.view.applicant.ApplicantController;
+import common.LogBook;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,6 +13,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class ViewHandler {
+    private LogBook log = LogBook.getInstance();
     private ViewModelFactory vmf;
     private Scene logInScene;
     private Scene chatScene;
@@ -28,6 +30,7 @@ public class ViewHandler {
     }
 
     public void openLoginView() {
+        log.printActivities();
             BorderPane root = (BorderPane)createFromFXML(vmf.getLoginVM(),"../view/login/LoginView.fxml");
 
             //No MENU BAR

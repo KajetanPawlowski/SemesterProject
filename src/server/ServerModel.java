@@ -1,10 +1,19 @@
 package server;
 
+import common.Applicant;
+import common.Company;
+import common.User;
+
 import java.net.InetAddress;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
+import java.util.ArrayList;
 
 public class ServerModel {
+    private ArrayList<User> users;
+    private ArrayList<Applicant> applicants;
+    private ArrayList<Company> companies;
+
     public static void run(){
         try {
             LocateRegistry.createRegistry( 1099 );

@@ -1,24 +1,21 @@
 package server;
 
-import common.Applicant;
-import common.Company;
-import common.IServerConnector;
-import common.User;
+import client.model.UserNotFoundException;
+import common.*;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 public class ServerController implements IServerConnector {
-
-    JDBCConnector database = new JDBCConnector();
-    //database.connect("hattie.db.elephantsql.com", 5432, "zdpvllpz", "DkaoNfKGKMNfkg8bVfKyN3pJxPM2GWmn");
-
-    private ArrayList<User> users;
-    private ArrayList<Applicant> applicants;
-    private ArrayList<Company> companys;
-
-
+    LogBook log = LogBook.getInstance();
+    public ServerController() throws RemoteException{
+        UnicastRemoteObject.exportObject(this,0);
+    }
     @Override
-    public char getUserType() {
-        return 0;
+    public char getUsertype(String username)throws RemoteException{
+        char type = 'A';
+        log.quickServerLog("ServerController::getUsertype::"+type);
+        return type;
     }
 }

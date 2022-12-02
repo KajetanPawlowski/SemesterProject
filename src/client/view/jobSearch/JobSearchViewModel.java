@@ -20,7 +20,7 @@ public class JobSearchViewModel implements ViewModel {
 
     public JobSearchViewModel(IUserModel model){
         this.model = model;
-        noOfAdds = model.getJobAdds().size()-1;
+        noOfAdds = 0;
         if(noOfAdds>0){
             setJobAdd(model.getJobAdds().get(0));
             currentAdd = 0;

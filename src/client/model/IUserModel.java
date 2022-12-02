@@ -12,4 +12,5 @@ public interface IUserModel {
     String getUsername();
     char getUsertype();
     ArrayList<JobAdd> getJobAdds();
+    boolean connectToServer(String ip);
 }
