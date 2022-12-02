@@ -31,8 +31,8 @@ public class JDBCConnector {
 
 //-----------------------------------------------------------------------------------------------------------User OPERATIONS
     // Stores a new User in the DB
-    private void insertNewUser(User user){
-        String SQL = "INSERT INTO sep5.user VALUES "
+    public void insertNewUser(User user){
+        String SQL = "INSERT INTO sep5.User VALUES "
                 + "(DEFAULT, '" + user.getUsername() + "', '" + user.getType() +"');";
         try {
             Statement statement = connection.createStatement();
@@ -45,7 +45,7 @@ public class JDBCConnector {
     }
     // Gets the user type
     public char getUserType(String username) throws UserNotFoundException{
-        String SQL = "SELECT type FROM sep5.user WHERE username = '"+username+"';";
+        String SQL = "SELECT type FROM sep5.User WHERE username = '"+username+"';";
         ResultSet rs;
         char result = 0;
         try {
@@ -67,10 +67,10 @@ public class JDBCConnector {
 
 //-----------------------------------------------------------------------------------------------------------Applicant OPERATIONS
     // Stores a new Applicant in the DB
-    private void insertNewApplicant(Applicant applicant) {
+    public void insertNewApplicant(Applicant applicant) {
         insertNewUser(applicant);
         String SQL = "INSERT INTO sep5.Applicant VALUES "
-                + "(DEFAULT, '" + applicant.getUsername() + "','" + applicant.getFullName() + "', '" + applicant.getPersonalInformation() +"', '"
+                + "( '" + applicant.getUsername() + "','" + applicant.getFullName() + "', '" + applicant.getPersonalInformation() +"', '"
                 + applicant.getContact()+"', '"+applicant.getEducation()+"' , '"+applicant.getLanguages()+"' , '"
                 +applicant.getExperience()+"' , '"+applicant.getSkills()+"');";
         try {
@@ -94,7 +94,7 @@ public class JDBCConnector {
         }
     }
 
-    // Get and Applicant from the DB
+    // Get an ApplicantProfile from the DB
     public Applicant getApplicantProfile(String username){
         String SQL = "SELECT* FROM sep5.Applicant WHERE username = ' " + username + "';";
         ResultSet rs;
@@ -105,7 +105,12 @@ public class JDBCConnector {
 
             rs.next();
             result.setFullName(rs.getString(1));
-            //to be done
+            result.setProfileInformation(rs.getString(2));
+            result.setContact(rs.getString(3));
+            result.setEducation(rs.getString(4));
+            result.setLanguages(rs.getString(5));
+            result.setExperience(rs.getString(6));
+            result.setSkills(rs.getString(7));
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -116,7 +121,7 @@ public class JDBCConnector {
 
 //-----------------------------------------------------------------------------------------------------------Company OPERATIONS
     // Stores a new Company in the DB
-    private void insertNewCompany(Company company) {
+    public void insertNewCompany(Company company) {
         insertNewUser(company);
         String SQL = "INSERT INTO sep5.company VALUES "
                 + "(DEFAULT, '" + company.getUsername() + "', '" + company.getCompanyName() +"', '"
@@ -129,7 +134,26 @@ public class JDBCConnector {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-}
+    }
+
+    //Get a CompanyProfile from the DB
+    public Company getCompanyProfile(String username){
+        String SQL = "SELECT* FROM sep5.Company WHERE username = ' " + username + "';";
+        ResultSet rs;
+        Company result = new Company(username);
+        try {
+            Statement statement = connection.createStatement();
+            rs = statement.executeQuery(SQL);
+
+            rs.next();
+            result.setCompanyName(rs.getString(1));
+            result.setDescription(rs.getString(2));
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return result;
+    }
 
 
 
