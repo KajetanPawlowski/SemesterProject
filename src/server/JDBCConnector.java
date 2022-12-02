@@ -94,6 +94,25 @@ public class JDBCConnector {
         }
     }
 
+    // Get and Applicant from the DB
+    public Applicant getApplicantProfile(String username){
+        String SQL = "SELECT* FROM sep5.Applicant WHERE username = ' " + username + "';";
+        ResultSet rs;
+        Applicant result = new Applicant(username);
+        try {
+            Statement statement = connection.createStatement();
+            rs = statement.executeQuery(SQL);
+
+            rs.next();
+            result.setFullName(rs.getString(1));
+            //to be done
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return result;
+    }
+
 
 //-----------------------------------------------------------------------------------------------------------Company OPERATIONS
     // Stores a new Company in the DB
@@ -105,6 +124,7 @@ public class JDBCConnector {
         try {
             Statement statement = connection.createStatement();
             statement.executeQuery(SQL);
+
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
