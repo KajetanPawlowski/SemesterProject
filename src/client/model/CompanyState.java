@@ -25,4 +25,9 @@ public class CompanyState implements UserModelState{
     public User getUserProfile() {
         return company;
     }
+
+    @Override
+    public void setUserProfile(User user) {
+        company = (Company) user;
+    }
 }

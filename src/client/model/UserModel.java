@@ -1,6 +1,8 @@
 package client.model;
 
 import common.*;
+import javafx.scene.Scene;
+
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -33,7 +35,7 @@ public class UserModel implements IUserModel {
             throw new UserNotFoundException();
         }
         if(userType =='A'){
-            currentUserState = new ApplicantState(username);
+            currentUserState.setUserProfile((Applicant)server.getApplicantProfile());
             log.quickClientLog("UserModel::setState::Applicant::" + currentUserState.getUsername());
         }else{
             currentUserState = new CompanyState(username);
@@ -43,14 +45,30 @@ public class UserModel implements IUserModel {
     public boolean connectToServer(String ip){
         try {
             String url = "rmi://" + ip + "/server";
-
-
             server = (IServerConnector) Naming.lookup( url );
             return true;
         } catch( Exception ex ) {
             return false;
         }
     }
+
+    @Override
+    public void createNewUser(String username,char usertype) {
+        try {
+            if (usertype == 'A') {
+                currentUserState = new ApplicantState(username);
+                server.createNewApplicantUser((Applicant) currentUserState.getUserProfile());
+                log.quickClientLog("UserModel::setState::Applicant::" + currentUserState.getUsername());
+            } else {
+                currentUserState = new CompanyState(username);
+                server.createNewCompanyUser((Company) currentUserState.getUserProfile());
+                log.quickClientLog("UserModel::setState::Company::" + currentUserState.getUsername());
+            }
+        }catch (RemoteException ex){
+            log.quickClientLog("UserModel::setState::RemoteException");
+        }
+    }
+
 
     public String getUsername(){
         System.out.println("UserModel::getUserName");

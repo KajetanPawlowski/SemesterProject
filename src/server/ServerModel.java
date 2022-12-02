@@ -31,6 +31,8 @@ public class ServerModel  {
             Naming.rebind( "server", controller );
 
             System.out.println( "Server listening on " + InetAddress.getLocalHost().getHostAddress() );
+
+            database.connect("hattie.db.elephantsql.com", 5432, "zdpvllpz", "DkaoNfKGKMNfkg8bVfKyN3pJxPM2GWmn");
         } catch( Exception ex ) {
             ex.printStackTrace();
         }

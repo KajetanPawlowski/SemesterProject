@@ -51,4 +51,8 @@ public class LoginViewModel implements ViewModel {
         errorLabelProperty.setValue(exception.getMsg());
     }
 
+    public void createNewUser(char type){
+        clientModel.createNewUser(userNameProperty.get(),type);
+    }
+
 }

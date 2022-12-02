@@ -5,11 +5,21 @@ import client.core.ViewHandler;
 import client.core.ViewModel;
 import client.model.UserNotFoundException;
 import client.view.menu.MenuController;
+import common.Applicant;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Popup;
 
 public class LoginViewController implements FXMLController {
+    private Popup popup = new Popup();
     private ViewHandler viewHandler;
     private LoginViewModel logInVM;
     private MenuController menuControl;
@@ -38,10 +48,42 @@ public class LoginViewController implements FXMLController {
             viewHandler.openOverview();
         }catch (UserNotFoundException userNotFound){
             System.out.println("LoginViewController::onLoginBtn::UserNotFoundException");
+            showPopUp();
             //viewHandler.openCreateProfileView();
         }catch (InvalidLoginData invalidData){
             System.out.println("LoginViewController::onLoginBtn::InvalidLoginDataException");
             logInVM.logInError(invalidData);
         }
     }
+    Label popupLabel = new Label("Welcome to our app. WHO ARE YOU?");
+    Button popupButtonApplicant = new Button("Applicant");
+    Button popupButtonCompany = new Button("Business User");
+
+    public void showPopUp(){
+        VBox popupVBox = new VBox();
+        HBox popupHBox = new HBox();
+        popupButtonApplicant.setOnAction(new PopupListener());
+        popupButtonCompany.setOnAction(new PopupListener());
+        popupHBox.getChildren().addAll(popupButtonApplicant,popupButtonCompany);
+        popupVBox.getChildren().addAll(popupLabel, popupHBox);
+        popupVBox.setSpacing(10);
+        popupHBox.setSpacing(5);
+        popupHBox.setAlignment(Pos.CENTER);
+        popup.getContent().addAll(popupVBox);
+        popup.show(viewHandler.getStage());
+        popupButtonApplicant.onActionProperty();
+
+    }
+    private class PopupListener implements EventHandler<ActionEvent> {
+        public void handle(ActionEvent e)
+        {
+            if(e.getSource() == popupButtonApplicant){
+                logInVM.createNewUser('A');
+            }if(e.getSource() == popupButtonCompany){
+                logInVM.createNewUser('C');
+            }
+            popup.hide();
+            viewHandler.openOverview();
+        }
+    };
 }

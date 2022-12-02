@@ -15,8 +15,6 @@ import java.io.IOException;
 public class ViewHandler {
     private LogBook log = LogBook.getInstance();
     private ViewModelFactory vmf;
-    private Scene logInScene;
-    private Scene chatScene;
     private Scene mainScene;
     private Stage stage;
 
@@ -35,8 +33,8 @@ public class ViewHandler {
 
             //No MENU BAR
 
-            logInScene = new Scene(root,800, 600);
-            stage.setScene(logInScene);
+            mainScene = new Scene(root,800, 600);
+            stage.setScene(mainScene);
             stage.setTitle("Login");
             stage.show();
 
@@ -121,11 +119,8 @@ public class ViewHandler {
         return layout;
     }
 
-    public void setEditingProfile(boolean isEditable){
-        if(isEditable){
-
-        }
-
+    public Stage getStage(){
+        return stage;
     }
 
 

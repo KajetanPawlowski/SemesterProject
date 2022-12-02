@@ -23,4 +23,9 @@ public class ApplicantState implements UserModelState{
     public User getUserProfile(){
         return applicant;
     }
+
+    @Override
+    public void setUserProfile(User user) {
+        applicant = (Applicant) user;
+    }
 }

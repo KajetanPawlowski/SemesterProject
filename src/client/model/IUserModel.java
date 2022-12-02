@@ -13,4 +13,5 @@ public interface IUserModel {
     char getUsertype();
     ArrayList<JobAdd> getJobAdds();
     boolean connectToServer(String ip);
+    void createNewUser(String username, char type);
 }
