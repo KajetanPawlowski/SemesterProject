@@ -14,7 +14,7 @@ public class ServerController implements IServerConnector {
     }
     @Override
     public char getUsertype(String username)throws RemoteException{
-        char type = 'A';
+        char type = 0;
         log.quickServerLog("ServerController::getUsertype::"+type);
         return type;
     }

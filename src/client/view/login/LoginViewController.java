@@ -41,7 +41,7 @@ public class LoginViewController implements FXMLController {
             //viewHandler.openCreateProfileView();
         }catch (InvalidLoginData invalidData){
             System.out.println("LoginViewController::onLoginBtn::InvalidLoginDataException");
-            logInVM.logInError();
+            logInVM.logInError(invalidData);
         }
     }
 }

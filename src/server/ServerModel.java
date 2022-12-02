@@ -14,6 +14,10 @@ public class ServerModel {
     private ArrayList<Applicant> applicants;
     private ArrayList<Company> companies;
 
+    public ServerModel(){
+
+    }
+
     public static void run(){
         try {
             LocateRegistry.createRegistry( 1099 );
