@@ -5,17 +5,42 @@ import common.*;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
+
 
 public class ServerController implements IServerConnector {
+    private ServerModel serverModel = new ServerModel(new JDBCConnector());
     LogBook log = LogBook.getInstance();
-    public ServerController() throws RemoteException{
+    public ServerController(ServerModel serverModel) throws RemoteException{
+        this.serverModel = serverModel;
         UnicastRemoteObject.exportObject(this,0);
     }
+
+
     @Override
     public char getUsertype(String username)throws RemoteException{
-        char type = 0;
+        char type = serverModel.getUserType(username);
         log.quickServerLog("ServerController::getUsertype::"+type);
         return type;
+    }
+
+    @Override
+    public Applicant getApplicantProfile(Applicant user) throws RemoteException {
+        Applicant applicant = serverModel.getApplicantProfile(user);
+        return null;
+    }
+
+    @Override
+    public Company getCompanyProfile(Company user) throws RemoteException {
+        return null;
+    }
+
+    @Override
+    public void createNewApplicantUser(Applicant newApplicant) throws RemoteException {
+
+    }
+
+    @Override
+    public void createNewCompanyUser(Company newCompany) throws RemoteException {
+
     }
 }

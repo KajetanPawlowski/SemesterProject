@@ -9,20 +9,24 @@ import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 import java.util.ArrayList;
 
-public class ServerModel {
+public class ServerModel  {
+    private JDBCConnector database;
+
+    public ServerModel(JDBCConnector database){
+        this.database = database;
+    }
+
+
     private ArrayList<User> users;
     private ArrayList<Applicant> applicants;
     private ArrayList<Company> companies;
 
-    public ServerModel(){
 
-    }
-
-    public static void run(){
+    public void run(){
         try {
             LocateRegistry.createRegistry( 1099 );
 
-            ServerController controller = new ServerController();
+            ServerController controller = new ServerController(this);
 
             Naming.rebind( "server", controller );
 
@@ -30,5 +34,14 @@ public class ServerModel {
         } catch( Exception ex ) {
             ex.printStackTrace();
         }
+    }
+
+    public char getUserType(String username) {
+        char type = database.getUserType(username);
+        return type;
+    }
+
+    public Applicant getApplicantProfile(Applicant user) {
+        return database.getApplicantProfile(user.getUsername());
     }
 }
