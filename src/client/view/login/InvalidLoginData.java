@@ -1,7 +1,7 @@
 package client.view.login;
 
 public class InvalidLoginData extends RuntimeException{
-    String msg = "";
+    private String msg = "";
     public InvalidLoginData(String msg){
         this.msg = msg;
     }

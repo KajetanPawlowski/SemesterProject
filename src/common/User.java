@@ -1,8 +1,15 @@
 package common;
 
+import java.util.ArrayList;
+
 public interface User {
     String getUsername();
     char getType();
-
+    ArrayList<String> getQualities();
+    void setFullName(String name);
+    void setQualities(ArrayList<String> qualities);
+    String getDetails();
+    void setDetails(String details);
+    String getFullName();
 
 }

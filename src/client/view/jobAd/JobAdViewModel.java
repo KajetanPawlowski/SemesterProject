@@ -8,24 +8,29 @@ import javafx.beans.property.StringProperty;
 
 public class JobAdViewModel implements ViewModel {
     private IUserModel model;
-    private JobAdd jobAdd;
+    private static JobAdd jobAdd;
 
-    private StringProperty positionName = new SimpleStringProperty("");
-    private StringProperty subtitle = new SimpleStringProperty("");
-    private StringProperty companyName = new SimpleStringProperty("");
-    private StringProperty jobDescription = new SimpleStringProperty("");
-    private StringProperty requirements = new SimpleStringProperty("");
+    private static StringProperty positionName = new SimpleStringProperty("");
+    private static StringProperty subtitle = new SimpleStringProperty("");
+    private static StringProperty companyName = new SimpleStringProperty("");
+    private static StringProperty jobDescription = new SimpleStringProperty("");
+    private static StringProperty requirements = new SimpleStringProperty("");
 
     public JobAdViewModel(IUserModel model) {
         this.model = model;
     }
 
 
-    private void fillJobInfo(){
+    public static void getJobAdInfo(){
         positionName.setValue(jobAdd.getJobTitle());
-        companyName.setValue(jobAdd.getCompany().getCompanyName());
-        jobDescription.setValue(jobAdd.getJobDescription());
-        requirements.setValue(jobAdd.getJobDescription());
+        companyName.setValue(jobAdd.getCompany().getFullName());
+        jobDescription.setValue(jobAdd.getJobDescription());;
+    }
+
+    public static void setJobAdInfo(){
+        jobAdd.setJobDescription(jobDescription.get());
+        jobAdd.setJobTitle(positionName.get());
+
     }
 
 

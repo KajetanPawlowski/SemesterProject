@@ -2,9 +2,10 @@ package client.core;
 
 import client.model.IUserModel;
 import client.model.UserModel;
-import client.view.applicant.ApplicantViewModel;
+import client.view.User.UserViewModel;
 import client.view.chat.ChatViewModel;
-import client.view.editApplicantProfile.EditApplicantProfileViewModel;
+import client.view.editUserProfile.EditUserProfileViewModel;
+import client.view.jobAd.JobAdViewModel;
 import client.view.jobSearch.JobSearchViewModel;
 import client.view.login.LoginViewModel;
 import client.view.menu.MenuViewModel;
@@ -32,16 +33,19 @@ public class ViewModelFactory {
     public MenuCompanyViewModel getMenuCompanyVM(){
         return new MenuCompanyViewModel(model);
     }
-    public ApplicantViewModel getApplicantVM(){
-        return new ApplicantViewModel(model);
+    public UserViewModel getUserVM(){
+        return new UserViewModel(model);
     }
     public JobSearchViewModel getJobSearchVM(){
         return new JobSearchViewModel(model);
     }
-    public EditApplicantProfileViewModel getEditApplicantVM(){
-        return new EditApplicantProfileViewModel(model);
+    public EditUserProfileViewModel getEditUserVM(){
+        return new EditUserProfileViewModel(model);
     }
     public ChatViewModel getChatVM(){
         return new ChatViewModel(model);
+    }
+    public JobAdViewModel getJobAdVM(){
+        return new JobAdViewModel(model);
     }
 }

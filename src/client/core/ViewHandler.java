@@ -1,14 +1,19 @@
 package client.core;
 
 
-import client.view.applicant.ApplicantController;
 import common.LogBook;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.*;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 
@@ -17,10 +22,13 @@ public class ViewHandler {
     private ViewModelFactory vmf;
     private Scene mainScene;
     private Stage stage;
+    private Stage popupStage;
+    private Scene popupScene;
 
     public ViewHandler(ViewModelFactory vmf) {
         this.vmf = vmf;
         stage = new Stage();
+        popupStage = new Stage();
     }
 
     public void start() {
@@ -39,11 +47,11 @@ public class ViewHandler {
             stage.show();
 
     }
-    public void openEditApplicantProfileView(){
-        BorderPane root = (BorderPane)createFromFXML(vmf.getEditApplicantVM(),"../view/editApplicantProfile/EditApplicantProfile.fxml");
+    public void openEditUserProfileView(){
+        BorderPane root = (BorderPane)createFromFXML(vmf.getEditUserVM(),"../view/editUserProfile/EditUserProfile.fxml");
         root.setLeft(getMenuBar());
         BorderPane center = (BorderPane)root.getCenter();
-        center.setCenter(getApplicantCV());
+        center.setCenter(getUserProfile());
 
         mainScene = new Scene(root,800, 600);
         stage.setScene(mainScene);
@@ -67,6 +75,8 @@ public class ViewHandler {
         BorderPane root = (BorderPane)createFromFXML(vmf.getJobSearchVM(),"../view/jobSearch/JobSearch.fxml");
 
         root.setLeft(getMenuBar());
+        BorderPane center = (BorderPane)root.getCenter();
+        center.setCenter(getJobAd());
 
         mainScene = new Scene(root,800, 600);
         stage.setScene(mainScene);
@@ -97,8 +107,11 @@ public class ViewHandler {
     private VBox getCompanyMenuBar(){
         return(VBox)(createFromFXML(vmf.getMenuCompanyVM(), "../view/menuCompany/MenuCompany.fxml"));
     }
-    public VBox getApplicantCV(){
-        return (VBox)(createFromFXML(vmf.getApplicantVM(), "../view/applicant/Applicant.fxml"));
+    public VBox getUserProfile(){
+        return (VBox)(createFromFXML(vmf.getUserVM(), "../view/user/User.fxml"));
+    }
+    public VBox getJobAd(){
+        return (VBox)(createFromFXML(vmf.getJobAdVM(), "../view/jobAd/JobAd.fxml"));
     }
 
     private Parent createFromFXML(ViewModel vm, String filePath){
@@ -119,9 +132,13 @@ public class ViewHandler {
         return layout;
     }
 
-    public Stage getStage(){
-        return stage;
+    public void showPopup(Popup nextPopup){
+
+        nextPopup.show(stage);
     }
 
-
 }
+
+
+
+

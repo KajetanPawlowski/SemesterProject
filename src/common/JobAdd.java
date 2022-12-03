@@ -6,17 +6,35 @@ import java.util.ArrayList;
 public class JobAdd {
     private String jobTitle;
     private Company company;
-    private String subtitle;
-    private ArrayList<Applicant> applicants;
     private String jobDescription;
-    private String Requirements;
+    private ArrayList<Applicant> applicants;
+    private ArrayList<String>requirements;
 
-    public JobAdd(String jobTitle, Company company, String subtitle, String jobDescription, String requirements) {
+    public JobAdd(String jobTitle, Company company, String jobDescription, ArrayList<String> requirements) {
         this.jobTitle = jobTitle;
         this.company = company;
-        this.subtitle = subtitle;
         this.jobDescription = jobDescription;
-        Requirements = requirements;
+        this.requirements = requirements;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public void setJobDescription(String jobDescription) {
+        this.jobDescription = jobDescription;
+    }
+
+    public void setApplicants(ArrayList<Applicant> applicants) {
+        this.applicants = applicants;
+    }
+
+    public void setRequirements(ArrayList<String> requirements) {
+        this.requirements = requirements;
     }
 
     public String getJobTitle() {
@@ -27,20 +45,16 @@ public class JobAdd {
         return company;
     }
 
-    public String getSubtitle() {
-        return subtitle;
+    public String getJobDescription() {
+        return jobDescription;
     }
 
     public ArrayList<Applicant> getApplicants() {
         return applicants;
     }
 
-    public String getJobDescription() {
-        return jobDescription;
-    }
-
-    public String getRequirements() {
-        return Requirements;
+    public ArrayList<String> getRequirements() {
+        return requirements;
     }
 
     public void addApplicant(Applicant newApplicant){

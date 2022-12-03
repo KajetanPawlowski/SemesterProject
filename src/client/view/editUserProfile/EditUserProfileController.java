@@ -1,25 +1,24 @@
-package client.view.editApplicantProfile;
+package client.view.editUserProfile;
 
 import client.core.FXMLController;
 import client.core.ViewHandler;
 import client.core.ViewModel;
-import client.view.applicant.ApplicantController;
+import client.view.User.QualitiesListView;
+import client.view.User.UserController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
-public class EditApplicantProfileController implements FXMLController {
+public class EditUserProfileController implements FXMLController {
     private boolean isEditing = true;
     private ViewHandler viewHandler;
-    private EditApplicantProfileViewModel editApplicantProfileVM;
+    private EditUserProfileViewModel editApplicantProfileVM;
 
     @Override
     public void init(ViewHandler vh, ViewModel vm) {
         viewHandler = vh;
-        editApplicantProfileVM = (EditApplicantProfileViewModel) vm;
+        editApplicantProfileVM = (EditUserProfileViewModel) vm;
     }
 
     @FXML
@@ -33,13 +32,15 @@ public class EditApplicantProfileController implements FXMLController {
         if(isEditing){
             EditBtn.setText("Save");
             isEditing = false;
-            ApplicantController.getInstance().allowEditing();
+            UserController.getInstance().allowEditing();
+            QualitiesListView.getInstance().setEditable(false);
 
 
         }else{
             EditBtn.setText("Edit");
             isEditing = true;
-            ApplicantController.getInstance().lockEditing();
+            UserController.getInstance().lockEditing();
+            QualitiesListView.getInstance().setEditable(true);
             //ViewModel.saveChanges();
         }
     }

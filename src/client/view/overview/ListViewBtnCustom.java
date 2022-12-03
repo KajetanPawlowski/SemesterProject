@@ -15,7 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
 
-public class ListViewCustom {
+public class ListViewBtnCustom {
 
     public static class HBoxCell extends HBox {
         Label label = new Label();

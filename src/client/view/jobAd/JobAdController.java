@@ -18,20 +18,16 @@ public class JobAdController implements FXMLController {
         viewHandler = vh;
         jobAdVM = (JobAdViewModel) vm;
         positionNameLabel.textProperty().bindBidirectional(jobAdVM.positionNameProperty());
-        subtitleLabel.textProperty().bindBidirectional(jobAdVM.companyNameProperty());
+        companyLabel.textProperty().bindBidirectional(jobAdVM.companyNameProperty());
         jobDescriptionField.textProperty().bindBidirectional(jobAdVM.jobDescriptionProperty());
-        requirementsField.textProperty().bindBidirectional(jobAdVM.requirementsProperty());
 
     }
 
-
     @FXML
-    private Button ApplyNowBtn;
+    private Label companyLabel;
 
     @FXML
     private TextArea jobDescriptionField;
-
-
 
     @FXML
     private Circle pictureCircle;
@@ -40,9 +36,4 @@ public class JobAdController implements FXMLController {
     private Label positionNameLabel;
 
 
-    @FXML
-    private TextArea requirementsField;
-
-    @FXML
-    private Label subtitleLabel;
 }

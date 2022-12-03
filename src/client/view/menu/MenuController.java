@@ -28,7 +28,7 @@ public class MenuController implements FXMLController {
 
     @FXML
     void onEditProfileBtn(ActionEvent event) {
-        viewHandler.openEditApplicantProfileView();
+        viewHandler.openEditUserProfileView();
     }
 
     @FXML

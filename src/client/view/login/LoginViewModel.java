@@ -10,7 +10,7 @@ public class LoginViewModel implements ViewModel {
     private IUserModel clientModel;
 
     private StringProperty userNameProperty = new SimpleStringProperty("");
-    private StringProperty ipProperty = new SimpleStringProperty("10.154.220.106");
+    private StringProperty ipProperty = new SimpleStringProperty("10.154.220.15");
     private StringProperty errorLabelProperty = new SimpleStringProperty("");
 
 
@@ -47,8 +47,8 @@ public class LoginViewModel implements ViewModel {
 
     }
 
-    public void logInError(InvalidLoginData exception){
-        errorLabelProperty.setValue(exception.getMsg());
+    public void logInError(String msg){
+        errorLabelProperty.setValue(msg);
     }
 
     public void createNewUser(char type){

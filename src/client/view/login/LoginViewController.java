@@ -43,23 +43,23 @@ public class LoginViewController implements FXMLController {
 
     @FXML
     public void onLoginBtn(){
-        try {
-            logInVM.login();
-            viewHandler.openOverview();
-        }catch (UserNotFoundException userNotFound){
-            System.out.println("LoginViewController::onLoginBtn::UserNotFoundException");
-            showPopUp();
-            //viewHandler.openCreateProfileView();
+        logInVM.logInError("");
+            try {
+                logInVM.login();
+                viewHandler.openOverview();
+            }catch (UserNotFoundException userNotFound){
+                System.out.println("LoginViewController::onLoginBtn::UserNotFoundException");
+                showPopUp();
         }catch (InvalidLoginData invalidData){
             System.out.println("LoginViewController::onLoginBtn::InvalidLoginDataException");
-            logInVM.logInError(invalidData);
+            logInVM.logInError(invalidData.getMsg());
         }
     }
     Label popupLabel = new Label("Welcome to our app. WHO ARE YOU?");
     Button popupButtonApplicant = new Button("Applicant");
     Button popupButtonCompany = new Button("Business User");
 
-    public void showPopUp(){
+    private void showPopUp(){
         VBox popupVBox = new VBox();
         HBox popupHBox = new HBox();
         popupButtonApplicant.setOnAction(new PopupListener());
@@ -70,20 +70,22 @@ public class LoginViewController implements FXMLController {
         popupHBox.setSpacing(5);
         popupHBox.setAlignment(Pos.CENTER);
         popup.getContent().addAll(popupVBox);
-        popup.show(viewHandler.getStage());
-        popupButtonApplicant.onActionProperty();
-
+        viewHandler.showPopup(popup);
     }
+
+
+
     private class PopupListener implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e)
         {
             if(e.getSource() == popupButtonApplicant){
                 logInVM.createNewUser('A');
             }if(e.getSource() == popupButtonCompany){
-                logInVM.createNewUser('C');
-            }
+            logInVM.createNewUser('C');
+        }
             popup.hide();
-            viewHandler.openOverview();
+            viewHandler.openEditUserProfileView();
         }
     };
+
 }

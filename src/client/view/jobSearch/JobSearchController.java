@@ -26,6 +26,8 @@ public class JobSearchController implements FXMLController {
     private Button prevAddBtn;
     @FXML
     private Button nextAddBtn;
+    @FXML
+    private Button applyNowBtn;
 
     @FXML
     void onApplyNowBtn(ActionEvent event) {

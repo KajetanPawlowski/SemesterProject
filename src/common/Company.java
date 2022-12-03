@@ -1,32 +1,56 @@
 package common;
 
+import java.util.ArrayList;
+
 public class Company implements User{
     private final char TYPE = 'C';
     private String username;
     private String companyName;
     private String description;
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-    public char getType(){return TYPE;}
-    public void setDescription(String description) {
-        this.description = description;
+
+
+    public Company(String username) {
+        this.username = username;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    @Override
+    public char getType() {
+        return TYPE;
     }
 
-    public String getDescription() {
+    @Override
+    public ArrayList<String> getQualities() {
+        return null;
+    }
+
+    @Override
+    public void setFullName(String name) {
+        companyName = name;
+    }
+
+    @Override
+    public void setQualities(ArrayList<String> qualities) {
+        //nothing
+    }
+
+    @Override
+    public String getDetails() {
         return description;
     }
 
-    public Company(String username) {
-        this.username = username;
+    @Override
+    public void setDetails(String details) {
+        description = details;
+    }
+
+    @Override
+    public String getFullName() {
+        return companyName;
     }
 }
