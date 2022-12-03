@@ -159,7 +159,7 @@ public class JDBCConnector {
 
 //-----------------------------------------------------------------------------------------------------------JobAdd OPERATIONS
     // Stores a new JobAd in the DB
-    private void insertNewJobAdd(JobAdd jobAdd) {
+    public void insertNewJobAdd(JobAdd jobAdd) {
         String SQL = "INSERT INTO sep5.jobad VALUES "
                 + "(DEFAULT, '" + jobAdd.getJobTitle() + "', '" + jobAdd.getCompany() +"', '"
                 + jobAdd.getJobDescription()+"', '"+jobAdd.getRequirements()+"');";

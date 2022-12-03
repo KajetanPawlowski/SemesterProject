@@ -5,6 +5,7 @@ import common.*;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 
 public class ServerController implements IServerConnector {
@@ -43,5 +44,16 @@ public class ServerController implements IServerConnector {
     @Override
     public void createNewCompanyUser(Company newCompany) throws RemoteException {
         serverModel.createNewCompanyUser(newCompany);
+    }
+
+    @Override
+    public void createJobAd(JobAdd nextJobAd) throws RemoteException {
+        serverModel.createJobAd(nextJobAd);
+    }
+
+    @Override
+    public ArrayList<JobAdd> getRelevantJobAds(Applicant applicant, JobAdd relevantJobAd) throws RemoteException {
+        ArrayList<JobAdd> relevantJobAds = serverModel.getRelevantJobAds(applicant, relevantJobAd);
+        return relevantJobAds;
     }
 }

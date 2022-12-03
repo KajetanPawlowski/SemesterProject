@@ -13,6 +13,6 @@ public interface IServerConnector extends Remote {
     Company getCompanyProfile(String username)throws RemoteException;
     void createNewApplicantUser(Applicant newApplicant)throws RemoteException;
     void createNewCompanyUser(Company newCompany)throws RemoteException;
-    // void createJobAd(JobAdd nextJobAd)throws RemoteException;
-    // ArrayList<JobAdd> getRelevantJobAds(Applicant applicant) throws RemoteException;
+    void createJobAd(JobAdd nextJobAd)throws RemoteException;
+    ArrayList<JobAdd> getRelevantJobAds(Applicant applicant, JobAdd relevantJobAd) throws RemoteException;
 }

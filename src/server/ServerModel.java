@@ -2,6 +2,7 @@ package server;
 
 import common.Applicant;
 import common.Company;
+import common.JobAdd;
 import common.User;
 
 import java.net.InetAddress;
@@ -20,6 +21,7 @@ public class ServerModel  {
     private ArrayList<User> users = new ArrayList<User>();
     private ArrayList<Applicant> applicants = new ArrayList<Applicant>();
     private ArrayList<Company> companies = new ArrayList<Company>();
+    private ArrayList<JobAdd> relevantJobAds = new ArrayList<JobAdd>();
 
 
     public void run(){
@@ -76,4 +78,15 @@ public class ServerModel  {
         return companies;
     }
 
+    public void createJobAd(JobAdd nextJobAd) {
+        database.insertNewJobAdd(nextJobAd);
+    }
+
+
+    public ArrayList<JobAdd> getRelevantJobAds(Applicant applicant, JobAdd relevantJobAd) {
+        if(applicant.getEducation().equals(relevantJobAd.getRequirements())) {
+            relevantJobAds.add(relevantJobAd);
+        }
+        return relevantJobAds;
+    }
 }
