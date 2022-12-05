@@ -1,11 +1,13 @@
 package common;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Applicant implements User{
+public class Applicant implements User, Serializable {
     final char TYPE = 'A';
     private String username;
     private String fullName;
+    private String subtitle;
     private String personalInformation;
     private ArrayList<String> qualities;
 
@@ -53,6 +55,16 @@ public class Applicant implements User{
     @Override
     public String getFullName() {
         return fullName;
+    }
+
+    @Override
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+    }
+
+    @Override
+    public String getSubtitle() {
+        return subtitle;
     }
 
 

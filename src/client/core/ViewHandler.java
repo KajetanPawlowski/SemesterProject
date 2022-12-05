@@ -50,8 +50,7 @@ public class ViewHandler {
     public void openEditUserProfileView(){
         BorderPane root = (BorderPane)createFromFXML(vmf.getEditUserVM(),"../view/editUserProfile/EditUserProfile.fxml");
         root.setLeft(getMenuBar());
-        BorderPane center = (BorderPane)root.getCenter();
-        center.setCenter(getUserProfile());
+
 
         mainScene = new Scene(root,800, 600);
         stage.setScene(mainScene);
@@ -108,7 +107,7 @@ public class ViewHandler {
         return(VBox)(createFromFXML(vmf.getMenuCompanyVM(), "../view/menuCompany/MenuCompany.fxml"));
     }
     public VBox getUserProfile(){
-        return (VBox)(createFromFXML(vmf.getUserVM(), "../view/user/User.fxml"));
+        return (VBox)(createFromFXML(vmf.getUserVM(), "../view/user/Profile.fxml"));
     }
     public VBox getJobAd(){
         return (VBox)(createFromFXML(vmf.getJobAdVM(), "../view/jobAd/JobAd.fxml"));

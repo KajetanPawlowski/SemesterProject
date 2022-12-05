@@ -11,5 +11,7 @@ public interface User {
     String getDetails();
     void setDetails(String details);
     String getFullName();
+    void setSubtitle(String subtitle);
+    String getSubtitle();
 
 }

@@ -6,8 +6,8 @@ import common.User;
 public class ApplicantState implements UserModelState{
     private Applicant applicant;
 
-    public ApplicantState (String username){
-        applicant = new Applicant(username);
+    public ApplicantState (Applicant applicant){
+        this.applicant = applicant;
     }
 
     @Override

@@ -7,8 +7,8 @@ import common.User;
 public class CompanyState implements UserModelState{
     private Company company;
 
-    public CompanyState (String username){
-        company = new Company(username);
+    public CompanyState (Company company){
+        this.company = company;
     }
 
     @Override

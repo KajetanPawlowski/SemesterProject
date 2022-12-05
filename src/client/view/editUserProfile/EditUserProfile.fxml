@@ -1,18 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
 <BorderPane fx:id="borderRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.editUserProfile.EditUserProfileController">
+   <bottom>
+      <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="EditBtn" mnemonicParsing="false" onAction="#onEditBtn" text="Edit" />
+         </children>
+      </HBox>
+   </bottom>
    <center>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <bottom>
-            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="EditBtn" mnemonicParsing="false" onAction="#onEditBtn" text="Edit" />
-               </children>
-            </HBox>
-         </bottom>
-      </BorderPane>
+      <VBox maxWidth="400.0" prefHeight="200.0" prefWidth="400.0" spacing="5.0" BorderPane.alignment="CENTER">
+      <children>
+            <Label text="Edit Your Profile">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         <HBox>
+            <children>
+               <VBox prefWidth="277.0" spacing="5.0" HBox.hgrow="ALWAYS">
+                  <children>
+                     <TextField fx:id="applicantName" editable="false" promptText="Full Name" />
+                     <TextField fx:id="subtitle" editable="false" layoutX="20.0" layoutY="20.0" promptText="Subtitle" />
+                  </children>
+                  <opaqueInsets>
+                     <Insets />
+                  </opaqueInsets>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+               </VBox>
+               <Circle fx:id="ProfilePicture" fill="#70a0cc" radius="34.0" stroke="BLACK" strokeType="INSIDE" />
+            </children>
+            <padding>
+               <Insets left="20.0" right="20.0" />
+            </padding>
+         </HBox>
+         <Label text="Personal Information" />
+         <TextArea fx:id="personalInformation" editable="false" maxHeight="100.0" minHeight="100.0" prefHeight="100.0" prefWidth="200.0" promptText="Write something about youself" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
    </center>
 </BorderPane>

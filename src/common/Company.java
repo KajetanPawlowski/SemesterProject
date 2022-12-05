@@ -1,8 +1,9 @@
 package common;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Company implements User{
+public class Company implements User, Serializable {
     private final char TYPE = 'C';
     private String username;
     private String companyName;
@@ -52,5 +53,15 @@ public class Company implements User{
     @Override
     public String getFullName() {
         return companyName;
+    }
+
+    @Override
+    public void setSubtitle(String subtitle) {
+
+    }
+
+    @Override
+    public String getSubtitle() {
+        return null;
     }
 }

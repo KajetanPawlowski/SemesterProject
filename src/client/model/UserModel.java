@@ -1,6 +1,7 @@
 package client.model;
 
 import common.*;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 
 import java.rmi.Naming;
@@ -28,14 +29,15 @@ public class UserModel implements IUserModel {
         char userType = checkUsertype(username);
         try{
             if(userType =='A'){
-                currentUserState.setUserProfile(server.getApplicantProfile(username));
+                currentUserState = new ApplicantState(server.getApplicantProfile(username));
                 log.quickClientLog("UserModel::setState::Applicant::" + currentUserState.getUsername());
             }else{
-                currentUserState.setUserProfile(server.getCompanyProfile(username));
+                currentUserState = new CompanyState(server.getCompanyProfile(username));
                 log.quickClientLog("UserModel::setState::Company::" + currentUserState.getUsername());
             }
         }catch (RemoteException ex){
-            log.quickClientLog("UserModel::setCurrentUserState::RemoteException2");
+            log.quickClientLog("UserModel::setCurrentUserState::RemoteException");
+            throw new UserNotFoundException();
         }
     }
     private char checkUsertype(String username) throws UserNotFoundException{
@@ -43,7 +45,7 @@ public class UserModel implements IUserModel {
         try{
             userType = server.getUsertype(username);
         }catch (RemoteException ex){
-            log.quickClientLog("UserModel::setCurrentUserState::RemoteException1");
+            log.quickClientLog("UserModel::checkUserType::RemoteException");
         }
         if(userType == 0){
             throw new UserNotFoundException();
@@ -64,16 +66,16 @@ public class UserModel implements IUserModel {
     public void createNewUser(String username,char usertype) {
         try {
             if (usertype == 'A') {
-                currentUserState = new ApplicantState(username);
+                currentUserState = new ApplicantState(new Applicant(username));
                 server.createNewApplicantUser((Applicant) currentUserState.getUserProfile());
                 log.quickClientLog("UserModel::setState::Applicant::" + currentUserState.getUsername());
             } else {
-                currentUserState = new CompanyState(username);
+                currentUserState = new CompanyState(new Company(username));
                 server.createNewCompanyUser((Company) currentUserState.getUserProfile());
                 log.quickClientLog("UserModel::setState::Company::" + currentUserState.getUsername());
             }
         }catch (RemoteException ex){
-            log.quickClientLog("UserModel::setState::RemoteException");
+            log.quickClientLog("UserModel::createNewUser::RemoteException");
         }
     }
 
@@ -91,6 +93,26 @@ public class UserModel implements IUserModel {
 
     public ArrayList<JobAdd> getJobAdds(){
         return null;
+    }
+
+    private ArrayList<Observer> observers = new ArrayList<Observer>();
+
+    @Override
+    public synchronized void attachObserver( Observer observer )
+    {
+        observers.add( observer );
+    }
+    @Override
+    public synchronized void detachObserver( Observer observer)
+    {
+        observers.remove( observer );
+    }
+    @Override
+    public void notifyObservers()
+    {
+        System.out.println("ClientModel::notifyAllObservers");
+        for( Observer o: observers )
+            o.update();
     }
 
 }

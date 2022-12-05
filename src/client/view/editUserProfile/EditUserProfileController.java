@@ -3,12 +3,14 @@ package client.view.editUserProfile;
 import client.core.FXMLController;
 import client.core.ViewHandler;
 import client.core.ViewModel;
-import client.view.User.QualitiesListView;
-import client.view.User.UserController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 
 public class EditUserProfileController implements FXMLController {
     private boolean isEditing = true;
@@ -19,30 +21,63 @@ public class EditUserProfileController implements FXMLController {
     public void init(ViewHandler vh, ViewModel vm) {
         viewHandler = vh;
         editApplicantProfileVM = (EditUserProfileViewModel) vm;
+        //rootVBox.getChildren().add(editApplicantProfileVM.getList());
+        applicantName.textProperty().bindBidirectional(editApplicantProfileVM.applicantNameProperty());
+        personalInformation.textProperty().bindBidirectional(editApplicantProfileVM.personalInformationProperty());
+        subtitle.textProperty().bindBidirectional(editApplicantProfileVM.subtitleProperty());
+        allowEditing();
     }
+    private Node list;
 
     @FXML
     private Button EditBtn;
 
     @FXML
-    private BorderPane borderRoot;
+    private VBox rootVBox;
+
+    @FXML
+    private TextField applicantName;
+
+    @FXML
+    private TextField subtitle;
+
+    @FXML
+    private Circle ProfilePicture;
+
+    @FXML
+    private TextArea personalInformation;
 
     @FXML
     void onEditBtn(ActionEvent event) {
         if(isEditing){
-            EditBtn.setText("Save");
-            isEditing = false;
-            UserController.getInstance().allowEditing();
-            QualitiesListView.getInstance().setEditable(false);
-
-
+            lockEditing();
         }else{
-            EditBtn.setText("Edit");
-            isEditing = true;
-            UserController.getInstance().lockEditing();
-            QualitiesListView.getInstance().setEditable(true);
-            //ViewModel.saveChanges();
+            allowEditing();
         }
+    }
+
+    private void allowEditing(){
+        EditBtn.setText("Save");
+        isEditing = true;
+        //rootVBox.getChildren().remove(list);
+        list = editApplicantProfileVM.getFullList();
+        //rootVBox.getChildren().add(list);
+        applicantName.setEditable(true);
+        subtitle.setEditable(true);
+        personalInformation.setEditable(true);
+
+    }
+    private void lockEditing(){
+        EditBtn.setText("Edit");
+        isEditing = false;
+        editApplicantProfileVM.safeInfoToModel();
+        //rootVBox.getChildren().remove(list);
+        //list = get applicant list
+        //rootVBox.getChildren().add(list);
+        applicantName.setEditable(false);
+        subtitle.setEditable(false);
+        personalInformation.setEditable(false);
+        viewHandler.openOverview();
     }
 
 }

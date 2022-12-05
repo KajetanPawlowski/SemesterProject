@@ -3,6 +3,7 @@ package client.view.login;
 import client.core.ViewModel;
 import client.model.IUserModel;
 import client.model.UserNotFoundException;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -10,12 +11,13 @@ public class LoginViewModel implements ViewModel {
     private IUserModel clientModel;
 
     private StringProperty userNameProperty = new SimpleStringProperty("");
-    private StringProperty ipProperty = new SimpleStringProperty("10.154.220.15");
+    private StringProperty ipProperty = new SimpleStringProperty("10.154.220.129");
     private StringProperty errorLabelProperty = new SimpleStringProperty("");
 
 
     public LoginViewModel(IUserModel model){
         clientModel = model;
+        clientModel.attachObserver(this);
     }
 
 
@@ -55,4 +57,13 @@ public class LoginViewModel implements ViewModel {
         clientModel.createNewUser(userNameProperty.get(),type);
     }
 
+    @Override
+    public void update() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                //UPDATE CODE
+            }
+        });
+    }
 }

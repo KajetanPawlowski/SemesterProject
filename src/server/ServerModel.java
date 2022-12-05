@@ -19,8 +19,9 @@ public class ServerModel  {
     }
 
     private ArrayList<User> users = new ArrayList<User>();
-    private ArrayList<Applicant> applicants = new ArrayList<Applicant>();
-    private ArrayList<Company> companies = new ArrayList<Company>();
+    private ArrayList<Applicant> applicants = new ArrayList<>();
+    private ArrayList<Company> companies = new ArrayList<>();
+
     private ArrayList<JobAdd> relevantJobAds = new ArrayList<JobAdd>();
 
 
@@ -35,6 +36,17 @@ public class ServerModel  {
             System.out.println( "Server listening on " + InetAddress.getLocalHost().getHostAddress() );
 
             database.connect("hattie.db.elephantsql.com", 5432, "zdpvllpz", "DkaoNfKGKMNfkg8bVfKyN3pJxPM2GWmn");
+//--------------------------------------------------------------SETUP----------------------------------------
+            String[] names = {"Kajetan","Maja","Maciej", "Ari","Rado"};
+            users = new ArrayList<>();
+            for(int i = 0; i <5 ;i++){
+                Applicant nextApplicant = new Applicant(names[i]);
+                nextApplicant.setFullName( names[i] + " Rasmussen");
+                nextApplicant.setSubtitle("Student");
+                nextApplicant.setDetails("Hello, \n ny name is " + names[i] + ". Nice to meet you!" );
+                users.add(nextApplicant);
+                applicants.add(nextApplicant);
+            }
 
         } catch( Exception ex ) {
             ex.printStackTrace();
@@ -42,18 +54,32 @@ public class ServerModel  {
     }
 
     public char getUserType(String username) {
-        char type = database.getUserType(username);
-        return type;
+        for(int i = 0; i < users.size(); i++){
+            if(users.get(i).getUsername().equals(username)){
+                return users.get(i).getType();
+            }
+        }
+        return 0;
+
     }
 
     public Applicant getApplicantProfile(String username) {
-        Applicant applicantProfile = database.getApplicantProfile(username);
-        return applicantProfile;
+        //Applicant applicantProfile = database.getApplicantProfile(username);
+        //return applicantProfile;
+        //write the code for DATABASE
+        for(int i = 0; i < applicants.size(); i++){
+            if(applicants.get(i).getUsername().equals(username)){
+                return applicants.get(i);
+            }
+        }
+        return null;
     }
 
     public Company getCompanyProfile(String username) {
-        Company companyProfile = database.getCompanyProfile(username);
-        return companyProfile;
+        //Company companyProfile = database.getCompanyProfile(username);
+        //return companyProfile;
+        //write the code for DATABASE
+        return new Company(username);
     }
 
     public void createNewApplicantUser(Applicant newApplicant) {
@@ -83,10 +109,5 @@ public class ServerModel  {
     }
 
 
-    public ArrayList<JobAdd> getRelevantJobAds(Applicant applicant, JobAdd relevantJobAd) {
-        if(applicant.getEducation().equals(relevantJobAd.getRequirements())) {
-            relevantJobAds.add(relevantJobAd);
-        }
-        return relevantJobAds;
-    }
+
 }

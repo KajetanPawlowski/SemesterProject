@@ -3,11 +3,12 @@ package client.view.jobAd;
 import client.core.ViewModel;
 import client.model.IUserModel;
 import common.JobAdd;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class JobAdViewModel implements ViewModel {
-    private IUserModel model;
+    private IUserModel clientModel;
     private static JobAdd jobAdd;
 
     private static StringProperty positionName = new SimpleStringProperty("");
@@ -17,7 +18,8 @@ public class JobAdViewModel implements ViewModel {
     private static StringProperty requirements = new SimpleStringProperty("");
 
     public JobAdViewModel(IUserModel model) {
-        this.model = model;
+        clientModel = model;
+        clientModel.attachObserver(this);
     }
 
 
@@ -56,5 +58,15 @@ public class JobAdViewModel implements ViewModel {
 
     public StringProperty requirementsProperty() {
         return requirements;
+    }
+
+    @Override
+    public void update() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                //UPDATE CODE
+            }
+        });
     }
 }

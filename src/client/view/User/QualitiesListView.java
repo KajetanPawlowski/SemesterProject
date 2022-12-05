@@ -17,11 +17,8 @@ import java.util.List;
 
 public  class QualitiesListView {
     private static QualitiesListView instance = null;
-    private static ArrayList<QualityCell> qualityCells = new ArrayList<>();
+    private ArrayList<QualityCell> qualityCells = new ArrayList<>();
 
-    public static ArrayList<QualityCell> getQualityCellsArrayList(){
-        return qualityCells;
-    }
     private QualitiesListView(){
         instance = this;
     }
@@ -33,7 +30,11 @@ public  class QualitiesListView {
         return instance;
     }
 
-    public static BorderPane createList(String title, ArrayList<String> qualities) {
+    public ArrayList<QualityCell> getQualityCellsArrayList(){
+        return qualityCells;
+    }
+
+    public BorderPane createCheckedList(String title, ArrayList<String> qualities) {
         BorderPane layout = new BorderPane();
 
         List<QualityCell> list = new ArrayList<>();
@@ -52,24 +53,23 @@ public  class QualitiesListView {
 
        return layout;
     }
-    public ArrayList<QualityCell> getPickedQualities(){
-        ArrayList<QualityCell> result = new ArrayList<>();
+    public ArrayList<String> getPickedQualities(){
+        ArrayList<String> result = new ArrayList<>();
         for(int i = 0; i < qualityCells.size(); i++){
             if(qualityCells.get(i).isChecked()){
-                result.add(qualityCells.get(i));
+                result.add(qualityCells.get(i).getLabel());
             }
         }
         return result;
     }
     public void setEditable(boolean isEditable){
-        ArrayList<QualityCell> result = new ArrayList<>();
         for(int i = 0; i < qualityCells.size(); i++){
             qualityCells.get(i).setEditable(isEditable);
         }
 
     }
 
-    public static class QualityCell extends HBox {
+    public class QualityCell extends HBox {
 
         Label label = new Label();
         CheckBox checkBox = new CheckBox();
@@ -91,6 +91,9 @@ public  class QualitiesListView {
         }
         public void setEditable(boolean isEditable){
             checkBox.setDisable(isEditable);
+        }
+        public String getLabel(){
+            return label.getText();
         }
     }
 

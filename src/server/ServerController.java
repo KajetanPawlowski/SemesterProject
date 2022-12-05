@@ -51,9 +51,5 @@ public class ServerController implements IServerConnector {
         serverModel.createJobAd(nextJobAd);
     }
 
-    @Override
-    public ArrayList<JobAdd> getRelevantJobAds(Applicant applicant, JobAdd relevantJobAd) throws RemoteException {
-        ArrayList<JobAdd> relevantJobAds = serverModel.getRelevantJobAds(applicant, relevantJobAd);
-        return relevantJobAds;
-    }
+
 }

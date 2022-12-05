@@ -22,6 +22,7 @@ public class ChatViewModel implements ViewModel {
 
     public ChatViewModel(IUserModel model){
         clientModel = model;
+        clientModel.attachObserver(this);
         accountNameLabelProperty.set("Hi " + clientModel.getUsername());
         messageList = FXCollections.observableArrayList();
         accountList = FXCollections.observableArrayList();
@@ -63,6 +64,15 @@ public class ChatViewModel implements ViewModel {
 //        for(int i = 0; i < clientModel.getAccountArrayList().size();i++){
 //            accountList.add(clientModel.getAccountArrayList().get(i));
 //        }
+    }
+    @Override
+    public void update() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                //UPDATE CODE
+            }
+        });
     }
 
 

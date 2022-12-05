@@ -3,11 +3,12 @@ package client.view.jobSearch;
 import client.core.ViewModel;
 import common.JobAdd;
 import client.model.IUserModel;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class JobSearchViewModel implements ViewModel {
-    private IUserModel model;
+    private IUserModel clientModel;
     private JobAdd jobAdd;
     private int noOfAdds;
     private int currentAdd;
@@ -15,7 +16,8 @@ public class JobSearchViewModel implements ViewModel {
 
 
     public JobSearchViewModel(IUserModel model){
-        this.model = model;
+        clientModel = model;
+        clientModel.attachObserver(this);
         noOfAdds = 0;
         if(noOfAdds>0){
             setJobAdd(model.getJobAdds().get(0));
@@ -30,7 +32,7 @@ public class JobSearchViewModel implements ViewModel {
             nextAdd = 0;
             currentAdd = 0;
         }
-        setJobAdd(model.getJobAdds().get(nextAdd));
+        setJobAdd(clientModel.getJobAdds().get(nextAdd));
         currentAdd++;
     }
     private void showPrevAdd(){
@@ -40,7 +42,7 @@ public class JobSearchViewModel implements ViewModel {
             prevAdd = noOfAdds;
             currentAdd = noOfAdds;
         }
-        setJobAdd(model.getJobAdds().get(prevAdd));
+        setJobAdd(clientModel.getJobAdds().get(prevAdd));
         currentAdd--;
     }
     private void setJobAdd(JobAdd add){
@@ -57,5 +59,13 @@ public class JobSearchViewModel implements ViewModel {
     }
 
 
-
+    @Override
+    public void update() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                //UPDATE CODE
+            }
+        });
+    }
 }
