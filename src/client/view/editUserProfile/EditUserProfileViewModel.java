@@ -45,14 +45,17 @@ public class EditUserProfileViewModel implements ViewModel {
         clientModel.getUserState().getUserProfile().setFullName(applicantName.get());
         clientModel.getUserState().getUserProfile().setSubtitle(subtitle.get());
         clientModel.getUserState().getUserProfile().setDetails(personalInformation.get());
-        //clientModel.getUserState().getUserProfile().setQualities(qualityList.getPickedQualities());
+        clientModel.getUserState().getUserProfile().setQualities(qualityList.getPickedQualities());
     }
     public Node getFullList(){
         ArrayList<String> temp = new ArrayList<>();
         for(int i = 0; i < 10; i++){
             temp.add("Skill " + i);
         }
-        return qualityList.createCheckedList("Skills", temp);
+        return qualityList.createCheckedList("Skills", temp, qualityList.getPickedQualities());
+    }
+    public void setQualityListEditable(boolean isEditable){
+        qualityList.setEditable(isEditable);
     }
 
     @Override

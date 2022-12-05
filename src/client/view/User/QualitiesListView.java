@@ -17,7 +17,7 @@ import java.util.List;
 
 public  class QualitiesListView {
     private static QualitiesListView instance = null;
-    private ArrayList<QualityCell> qualityCells = new ArrayList<>();
+    private ArrayList<QualityCell> qualityCells;
 
     private QualitiesListView(){
         instance = this;
@@ -34,14 +34,36 @@ public  class QualitiesListView {
         return qualityCells;
     }
 
-    public BorderPane createCheckedList(String title, ArrayList<String> qualities) {
+    public BorderPane createCheckedList(String title, ArrayList<String> allQualities, ArrayList<String> applicantQualities) {
         BorderPane layout = new BorderPane();
-
         List<QualityCell> list = new ArrayList<>();
-        for (int i = 0; i < qualities.size(); i++) {
-            QualityCell nextCell = new QualityCell(qualities.get(i));
-            getQualityCellsArrayList().add(nextCell);
-            list.add(nextCell);
+        qualityCells = new ArrayList<>();
+        if(allQualities !=null){//
+            for (int i = 0; i < allQualities.size(); i++) {
+                QualityCell nextCell = new QualityCell(allQualities.get(i));
+                list.add(nextCell);
+            }
+        }else{
+            for (int i = 0; i < applicantQualities.size(); i++) {
+                QualityCell nextCell = new QualityCell(applicantQualities.get(i));
+                list.add(nextCell);
+            }
+        }
+
+        if(applicantQualities != null) {
+            for (int i = 0; i < list.size(); i++) {
+                for (int j = 0; j < applicantQualities.size(); j++) {
+                    if (list.get(i).getLabel().equals(applicantQualities.get(j))) {
+                        list.get(i).setCheckBox(true);
+                        break;
+                    }
+                }
+
+            }
+        }else{
+            for(int i = 0; i < applicantQualities.size(); i++){
+                list.get(i).setCheckBox(true);
+            }
         }
 
         ListView<QualityCell> listView = new ListView<QualityCell>();
@@ -50,11 +72,13 @@ public  class QualitiesListView {
 
        layout.setTop(new Label(title));
        layout.setCenter(listView);
-
        return layout;
     }
     public ArrayList<String> getPickedQualities(){
         ArrayList<String> result = new ArrayList<>();
+        if(qualityCells ==null){
+         return result;
+        }
         for(int i = 0; i < qualityCells.size(); i++){
             if(qualityCells.get(i).isChecked()){
                 result.add(qualityCells.get(i).getLabel());
@@ -90,10 +114,13 @@ public  class QualitiesListView {
             return checkBox.isSelected();
         }
         public void setEditable(boolean isEditable){
-            checkBox.setDisable(isEditable);
+            checkBox.setDisable(!isEditable);
         }
         public String getLabel(){
             return label.getText();
+        }
+        public void setCheckBox(boolean isSelected){
+            checkBox.setSelected(isSelected);
         }
     }
 

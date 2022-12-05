@@ -39,13 +39,21 @@ public class ServerModel  {
 //--------------------------------------------------------------SETUP----------------------------------------
             String[] names = {"Kajetan","Maja","Maciej", "Ari","Rado"};
             users = new ArrayList<>();
-            for(int i = 0; i <5 ;i++){
+            for(int i = 0; i <2 ;i++){
                 Applicant nextApplicant = new Applicant(names[i]);
                 nextApplicant.setFullName( names[i] + " Rasmussen");
                 nextApplicant.setSubtitle("Student");
                 nextApplicant.setDetails("Hello, \n ny name is " + names[i] + ". Nice to meet you!" );
                 users.add(nextApplicant);
                 applicants.add(nextApplicant);
+            }
+            for(int i = 2; i <5 ;i++){
+                Company nextCompany = new Company(names[i]);
+                nextCompany.setFullName( names[i] + " Company");
+                nextCompany.setSubtitle("Company");
+                nextCompany.setDetails("Nice to meet you!" );
+                users.add(nextCompany);
+                companies.add(nextCompany);
             }
 
         } catch( Exception ex ) {
@@ -79,7 +87,12 @@ public class ServerModel  {
         //Company companyProfile = database.getCompanyProfile(username);
         //return companyProfile;
         //write the code for DATABASE
-        return new Company(username);
+        for(int i = 0; i < companies.size(); i++){
+            if(companies.get(i).getUsername().equals(username)){
+                return companies.get(i);
+            }
+        }
+        return null;
     }
 
     public void createNewApplicantUser(Applicant newApplicant) {

@@ -27,7 +27,7 @@ public class EditUserProfileController implements FXMLController {
         subtitle.textProperty().bindBidirectional(editApplicantProfileVM.subtitleProperty());
         allowEditing();
     }
-    private Node list;
+    private Node list = null;
 
     @FXML
     private Button EditBtn;
@@ -59,9 +59,13 @@ public class EditUserProfileController implements FXMLController {
     private void allowEditing(){
         EditBtn.setText("Save");
         isEditing = true;
-        //rootVBox.getChildren().remove(list);
+        if (list != null) {
+            rootVBox.getChildren().remove(list);
+        }
         list = editApplicantProfileVM.getFullList();
-        //rootVBox.getChildren().add(list);
+
+        editApplicantProfileVM.setQualityListEditable(true);
+        rootVBox.getChildren().add(list);
         applicantName.setEditable(true);
         subtitle.setEditable(true);
         personalInformation.setEditable(true);
@@ -71,7 +75,7 @@ public class EditUserProfileController implements FXMLController {
         EditBtn.setText("Edit");
         isEditing = false;
         editApplicantProfileVM.safeInfoToModel();
-        //rootVBox.getChildren().remove(list);
+        rootVBox.getChildren().remove(list);
         //list = get applicant list
         //rootVBox.getChildren().add(list);
         applicantName.setEditable(false);

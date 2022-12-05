@@ -14,7 +14,7 @@ public class ProfileController implements FXMLController {
     private ViewHandler viewHandler;
     private ProfileViewModel profileVM;
     private static ProfileController instance = null;
-        private Node list;
+        private Node list = null;
         @FXML
         private VBox rootVBox;
 
@@ -35,14 +35,28 @@ public class ProfileController implements FXMLController {
         instance = this;
         this.viewHandler = viewHandler;
         this.profileVM = (ProfileViewModel) vm;
-        //rootVBox.getChildren().add(QualitiesListView.createList("Qualities", userVM.getAllQualities()));
+        if(list !=null){
+            rootVBox.getChildren().remove(list);
+        }
+        list = profileVM.getApplicantList();
+        rootVBox.getChildren().add(list);
         applicantName.textProperty().bindBidirectional(profileVM.applicantNameProperty());
         personalInformation.textProperty().bindBidirectional(profileVM.personalInformationProperty());
         subtitle.textProperty().bindBidirectional(profileVM.subtitleProperty());
+        getProfileColour(profileVM.getUserType());
+
     }
     public static ProfileController getInstance(){
         return instance;
     }
 
+    private void getProfileColour(char profileType){
+        System.out.println("ProfileController::getProfileColour::" + profileType);
+        if(profileType == 'A'){
+            profilePicture.setFill(javafx.scene.paint.Color.rgb(112,160,204));
+        }else{
+            profilePicture.setFill(javafx.scene.paint.Color.rgb(204,112,156));
+        }
+    }
 
 }

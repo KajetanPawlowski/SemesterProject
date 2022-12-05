@@ -5,6 +5,7 @@ import client.model.IUserModel;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.Node;
 
 import java.util.ArrayList;
 
@@ -33,13 +34,16 @@ public class ProfileViewModel implements ViewModel {
         subtitle = new SimpleStringProperty(clientModel.getUserState().getUserProfile().getSubtitle());
         personalInformation = new SimpleStringProperty(clientModel.getUserState().getUserProfile().getDetails());
     }
+     public char getUserType(){
+        return clientModel.getUserState().getUserProfile().getType();
+     }
 
-    public void safeInfoToModel(){
-        clientModel.getUserState().getUserProfile().setFullName(applicantName.get());
-        clientModel.getUserState().getUserProfile().setSubtitle(subtitle.get());
-        clientModel.getUserState().getUserProfile().setDetails(personalInformation.get());
-        clientModel.getUserState().getUserProfile().setQualities(QualitiesListView.getInstance().getPickedQualities());
-    }
+     public Node getApplicantList(){
+        if(clientModel.getUserState().getUserProfile().getQualities().size() == 0){
+            return null;
+        }
+         return QualitiesListView.getInstance().createCheckedList("Skills", null, clientModel.getUserState().getUserProfile().getQualities());
+     }
 
     public StringProperty applicantNameProperty() {
         return applicantName;
