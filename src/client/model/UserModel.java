@@ -12,10 +12,14 @@ public class UserModel implements IUserModel {
     private LogBook log = LogBook.getInstance();
     private UserModelState currentUserState;
     private IServerConnector server;
+    ArrayList<String> allQualities = new ArrayList<>();
 
     private static UserModel currentInstance = null;
     private UserModel(){
-
+        currentInstance = this;
+        for(int i = 0; i <10 ; i++){
+            allQualities.add("Quality " + i);
+        }
     }
 
     public static UserModel getInstance(){
@@ -77,6 +81,11 @@ public class UserModel implements IUserModel {
         }catch (RemoteException ex){
             log.quickClientLog("UserModel::createNewUser::RemoteException");
         }
+    }
+
+    @Override
+    public ArrayList<String> getAllQualities() {
+        return allQualities;
     }
 
 

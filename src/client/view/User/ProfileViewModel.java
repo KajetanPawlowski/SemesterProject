@@ -10,7 +10,6 @@ import javafx.scene.Node;
 import java.util.ArrayList;
 
 public class ProfileViewModel implements ViewModel {
-    ArrayList<String> allQualities = new ArrayList<>();
     ArrayList<String> userQualities = new ArrayList<>();
     private IUserModel clientModel;
     private StringProperty applicantName = new SimpleStringProperty("Full Name");
@@ -20,9 +19,6 @@ public class ProfileViewModel implements ViewModel {
     public ProfileViewModel(IUserModel model){
         clientModel = model;
         clientModel.attachObserver(this);
-        for(int i = 0; i <10 ; i++){
-            allQualities.add("Quality " + i);
-        }
         if(clientModel.getUserState() != null){
             loadInfoFromModel();
         }
@@ -39,9 +35,6 @@ public class ProfileViewModel implements ViewModel {
      }
 
      public Node getApplicantList(){
-        if(clientModel.getUserState().getUserProfile().getQualities().size() == 0){
-            return null;
-        }
          return QualitiesListView.getInstance().createCheckedList("Skills", null, clientModel.getUserState().getUserProfile().getQualities());
      }
 
@@ -63,7 +56,7 @@ public class ProfileViewModel implements ViewModel {
     }
 
     public  ArrayList<String> getAllQualities(){
-        return allQualities;
+        return clientModel.getAllQualities();
     }
 
 

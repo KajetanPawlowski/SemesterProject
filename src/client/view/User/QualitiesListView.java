@@ -38,14 +38,20 @@ public  class QualitiesListView {
         BorderPane layout = new BorderPane();
         List<QualityCell> list = new ArrayList<>();
         qualityCells = new ArrayList<>();
-        if(allQualities !=null){//
+        if(allQualities !=null){
+            System.out.println("All Qualities NOT NULL");
             for (int i = 0; i < allQualities.size(); i++) {
                 QualityCell nextCell = new QualityCell(allQualities.get(i));
                 list.add(nextCell);
             }
+        }else if(applicantQualities == null){
+            System.out.println("Applicant Qualities NULL");
+            //do nothing (empty list)
         }else{
+            System.out.println("All Qualities NULL");
             for (int i = 0; i < applicantQualities.size(); i++) {
                 QualityCell nextCell = new QualityCell(applicantQualities.get(i));
+                nextCell.setCheckBox(true);
                 list.add(nextCell);
             }
         }
@@ -59,10 +65,6 @@ public  class QualitiesListView {
                     }
                 }
 
-            }
-        }else{
-            for(int i = 0; i < applicantQualities.size(); i++){
-                list.get(i).setCheckBox(true);
             }
         }
 

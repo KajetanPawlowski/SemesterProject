@@ -15,4 +15,5 @@ public interface IUserModel extends Subject {
     ArrayList<JobAdd> getJobAdds();
     boolean connectToServer(String ip);
     void createNewUser(String username, char type);
+    ArrayList<String> getAllQualities();
 }
