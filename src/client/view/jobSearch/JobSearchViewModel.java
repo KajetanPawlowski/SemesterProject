@@ -18,7 +18,7 @@ public class JobSearchViewModel implements ViewModel {
         clientModel.attachObserver(this);
         noOfAdds = 0;
         if(noOfAdds>0){
-            setJobAdd(model.getJobAdds().get(0));
+           // setJobAdd(model.getJobAdds().get(0));
             currentAdd = 0;
         }
     }
@@ -30,7 +30,7 @@ public class JobSearchViewModel implements ViewModel {
             nextAdd = 0;
             currentAdd = 0;
         }
-        setJobAdd(clientModel.getJobAdds().get(nextAdd));
+        //setJobAdd(clientModel.getJobAdds().get(nextAdd));
         currentAdd++;
     }
     private void showPrevAdd(){
@@ -40,7 +40,7 @@ public class JobSearchViewModel implements ViewModel {
             prevAdd = noOfAdds;
             currentAdd = noOfAdds;
         }
-        setJobAdd(clientModel.getJobAdds().get(prevAdd));
+        ///setJobAdd(clientModel.getJobAdds().get(prevAdd));
         currentAdd--;
     }
     private void setJobAdd(JobAdd add){

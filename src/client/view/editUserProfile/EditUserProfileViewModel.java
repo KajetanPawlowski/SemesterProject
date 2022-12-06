@@ -14,6 +14,7 @@ public class EditUserProfileViewModel implements ViewModel {
     private StringProperty applicantName = new SimpleStringProperty("");
     private StringProperty subtitle = new SimpleStringProperty("");
     private StringProperty personalInformation = new SimpleStringProperty("");
+    private StringProperty nextQuality = new SimpleStringProperty("");
     private QualitiesListView qualityList = new QualitiesListView();
     public EditUserProfileViewModel(IUserModel model){
         clientModel = model;
@@ -32,30 +33,38 @@ public class EditUserProfileViewModel implements ViewModel {
     public StringProperty personalInformationProperty() {
         return personalInformation;
     }
+    public StringProperty getNextQuality(){
+        return  nextQuality;
+    }
 
 
     private void loadInfoFromModel(){
-        applicantName = new SimpleStringProperty(clientModel.getUserState().getUserProfile().getFullName());
-        subtitle = new SimpleStringProperty(clientModel.getUserState().getUserProfile().getSubtitle());
-        personalInformation = new SimpleStringProperty(clientModel.getUserState().getUserProfile().getDetails());
+        applicantName = new SimpleStringProperty(clientModel.getUser().getFullName());
+        subtitle = new SimpleStringProperty(clientModel.getUser().getSubtitle());
+        personalInformation = new SimpleStringProperty(clientModel.getUser().getDetails());
     }
 
     public void safeInfo(){
-        clientModel.getUserState().getUserProfile().setFullName(applicantName.get());
-        clientModel.getUserState().getUserProfile().setSubtitle(subtitle.get());
-        clientModel.getUserState().getUserProfile().setDetails(personalInformation.get());
-        clientModel.getUserState().getUserProfile().setQualities(qualityList.getPickedQualities());
-        clientModel.updateUserToServer();
+        clientModel.getUser().setFullName(applicantName.get());
+        clientModel.getUser().setSubtitle(subtitle.get());
+        clientModel.getUser().setDetails(personalInformation.get());
+        clientModel.getUser().setQualities(qualityList.getPickedQualities());
+        clientModel.updateUser();
     }
     public Node getFullList(){
-        ArrayList<String> temp = new ArrayList<>();
-        for(int i = 0; i < 10; i++){
-            temp.add("Skill " + i);
-        }
-        return qualityList.createCheckedList("Skills", temp, qualityList.getPickedQualities());
+        return qualityList.createCheckedList("Skills", clientModel.getAllQualities(), clientModel.getUser().getQualities());
     }
     public void setQualityListEditable(boolean isEditable){
         qualityList.setEditable(isEditable);
+    }
+
+    public void addQuality(){
+
+            clientModel.getAllQualities().add(nextQuality.get());
+            clientModel.getUser().getQualities().add(nextQuality.get());
+            nextQuality.setValue("");
+
+
     }
 
     @Override

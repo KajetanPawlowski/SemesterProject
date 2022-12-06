@@ -24,6 +24,7 @@ public class EditUserProfileController implements FXMLController {
         //rootVBox.getChildren().add(editApplicantProfileVM.getList());
         applicantName.textProperty().bindBidirectional(editApplicantProfileVM.applicantNameProperty());
         personalInformation.textProperty().bindBidirectional(editApplicantProfileVM.personalInformationProperty());
+        addYourQualityTextField.textProperty().bindBidirectional(editApplicantProfileVM.getNextQuality());
         subtitle.textProperty().bindBidirectional(editApplicantProfileVM.subtitleProperty());
         allowEditing();
     }
@@ -48,12 +49,29 @@ public class EditUserProfileController implements FXMLController {
     private TextArea personalInformation;
 
     @FXML
+    TextField addYourQualityTextField;
+
+    @FXML
+    Button addNextQualityBtn;
+
+    @FXML
     void onEditBtn(ActionEvent event) {
         if(isEditing){
             lockEditing();
         }else{
             allowEditing();
         }
+    }
+
+    @FXML
+    void onAddNextQualityBtn(ActionEvent event){
+        editApplicantProfileVM.addQuality();
+        if (list != null) {
+            rootVBox.getChildren().remove(list);
+        }
+        list = editApplicantProfileVM.getFullList();
+        rootVBox.getChildren().add(list);
+        editApplicantProfileVM.setQualityListEditable(true);
     }
 
     private void allowEditing(){
@@ -63,24 +81,23 @@ public class EditUserProfileController implements FXMLController {
             rootVBox.getChildren().remove(list);
         }
         list = editApplicantProfileVM.getFullList();
-
         editApplicantProfileVM.setQualityListEditable(true);
         rootVBox.getChildren().add(list);
         applicantName.setEditable(true);
         subtitle.setEditable(true);
         personalInformation.setEditable(true);
+        addYourQualityTextField.setEditable(true);
 
     }
     private void lockEditing(){
         EditBtn.setText("Edit");
         isEditing = false;
-        editApplicantProfileVM.safeInfo();
         rootVBox.getChildren().remove(list);
-        //list = get applicant list
-        //rootVBox.getChildren().add(list);
         applicantName.setEditable(false);
         subtitle.setEditable(false);
         personalInformation.setEditable(false);
+        addYourQualityTextField.setEditable(false);
+        editApplicantProfileVM.safeInfo();
         viewHandler.openOverview();
     }
 

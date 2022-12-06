@@ -31,6 +31,7 @@ public class LoginViewModel implements ViewModel {
     public StringProperty getErrorLabelProperty(){
         return errorLabelProperty;
     }
+
     public void login() throws UserNotFoundException, InvalidLoginData, UserAlreadyConnectedException {
         if(userNameProperty.get().equals("")){
             throw new InvalidLoginData("Invalid Username");
@@ -41,7 +42,6 @@ public class LoginViewModel implements ViewModel {
         //IMPORTANT ORDER
         if(clientModel.connectToServer(userNameProperty.get(), ipProperty.get())){
             System.out.println("LoginView::login::success");
-            clientModel.setCurrentUserState(userNameProperty.get());
         }else{
             System.out.println("LoginView::login::fail");
             throw new InvalidLoginData("Server not found");

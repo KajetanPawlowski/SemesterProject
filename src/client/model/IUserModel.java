@@ -1,20 +1,21 @@
 package client.model;
 
 import common.transferObjects.JobAdd;
+import common.transferObjects.User;
 import common.util.Subject;
+import common.util.UserAlreadyConnectedException;
 
 import java.util.ArrayList;
 
 public interface IUserModel extends Subject {
-    void setCurrentUserState(String username)
-            throws UserNotFoundException;
-    String getUsername();
-    UserModelState getUserState();
-    ArrayList<JobAdd> getJobAdds();
-    boolean connectToServer(String username, String ip);
+    boolean connectToServer(String username, String ip) throws UserNotFoundException, UserAlreadyConnectedException;
     void disconnectFromServer(String username);
+    void updateUser();
     void createNewUser(String username, char type);
-    ArrayList<String> getAllQualities();
+    User getUser();
     void resetModel();
-    void updateUserToServer();
+    ArrayList<String> getAllQualities();
+
+
+
 }

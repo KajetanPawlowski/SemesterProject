@@ -20,23 +20,31 @@ public class ProfileViewModel implements ViewModel {
     public ProfileViewModel(IUserModel model){
         clientModel = model;
         clientModel.attachObserver(this);
-        if(clientModel.getUserState() != null){
+        if(clientModel.getUser() != null){
             loadInfoFromModel();
         }
 
 
     }
     private void loadInfoFromModel(){
-        applicantName = new SimpleStringProperty(clientModel.getUserState().getUserProfile().getFullName());
-        subtitle = new SimpleStringProperty(clientModel.getUserState().getUserProfile().getSubtitle());
-        personalInformation = new SimpleStringProperty(clientModel.getUserState().getUserProfile().getDetails());
+        applicantName = new SimpleStringProperty(clientModel.getUser().getFullName());
+        subtitle = new SimpleStringProperty(clientModel.getUser().getSubtitle());
+        personalInformation = new SimpleStringProperty(clientModel.getUser().getDetails());
     }
      public char getUserType(){
-        return clientModel.getUserState().getUserProfile().getType();
+        try{
+            return clientModel.getUser().getType();
+        }catch (NullPointerException ex){
+            return 0;
+        }
+
      }
 
      public ArrayList<String> getApplicantList(){
-         return clientModel.getUserState().getUserProfile().getQualities();
+        if(clientModel.getUser() == null){
+            return null;
+        }
+        return clientModel.getUser().getQualities();
      }
 
     public StringProperty applicantNameProperty() {

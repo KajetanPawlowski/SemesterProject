@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
@@ -44,6 +45,21 @@
          </HBox>
          <Label text="Personal Information" />
          <TextArea fx:id="personalInformation" editable="false" maxHeight="100.0" minHeight="100.0" prefHeight="100.0" prefWidth="200.0" promptText="Write something about youself" />
+            <Label text="Add other skill" />
+            <FlowPane hgap="10.0">
+               <children>
+                  <TextField fx:id="addYourQualityTextField" prefWidth="330.0" promptText="Aa">
+                     <FlowPane.margin>
+                        <Insets bottom="10.0" />
+                     </FlowPane.margin>
+                  </TextField>
+                  <Button fx:id="addNextQualityBtn" mnemonicParsing="false" onAction="#onAddNextQualityBtn" text="Add">
+                     <FlowPane.margin>
+                        <Insets bottom="10.0" />
+                     </FlowPane.margin>
+                  </Button>
+               </children>
+            </FlowPane>
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

@@ -1,6 +1,7 @@
 package client.core;
 
 
+import client.model.UserModel;
 import common.util.LogBook;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,6 +24,9 @@ public class ViewHandler {
         this.vmf = vmf;
         stage = new Stage();
         popupStage = new Stage();
+        stage.setOnCloseRequest(ev -> {
+            UserModel.getInstance().resetModel();
+        });
     }
 
     public void start() {
@@ -87,7 +91,7 @@ public class ViewHandler {
         stage.show();
     }
     public VBox getMenuBar(){
-        if(vmf.getModel().getUserState().getUserProfile().getType()=='A'){
+        if(vmf.getModel().getUser().getType()=='A'){
             return getApplicantMenuBar();
         }else{
             return getCompanyMenuBar();

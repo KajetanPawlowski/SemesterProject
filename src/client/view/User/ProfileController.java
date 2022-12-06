@@ -49,9 +49,7 @@ public class ProfileController implements FXMLController {
         instance = this;
         this.viewHandler = viewHandler;
         this.profileVM = (ProfileViewModel) vm;
-        if(profileVM.getApplicantList()!=null){
-            qualitiesListView.setItems(getObservableList(profileVM.getApplicantList()));
-        }
+        qualitiesListView.setItems(getObservableList(profileVM.getApplicantList()));
         applicantName.textProperty().bindBidirectional(profileVM.applicantNameProperty());
         personalInformation.textProperty().bindBidirectional(profileVM.personalInformationProperty());
         subtitle.textProperty().bindBidirectional(profileVM.subtitleProperty());
@@ -59,6 +57,9 @@ public class ProfileController implements FXMLController {
 
     }
     private ObservableList<String> getObservableList(ArrayList<String> arrayList){
+        if(arrayList == null){
+            return null;
+        }
         List<String> list = arrayList;
         return FXCollections.observableList(list);
     }
@@ -67,6 +68,9 @@ public class ProfileController implements FXMLController {
     }
 
     private void getProfileColour(char profileType){
+        if(profileType ==0){
+            return;
+        }
         System.out.println("ProfileController::getProfileColour::" + profileType);
         if(profileType == 'A'){
             profilePicture.setFill(javafx.scene.paint.Color.rgb(112,160,204));

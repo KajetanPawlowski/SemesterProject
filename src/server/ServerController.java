@@ -1,7 +1,5 @@
 package server;
 
-import common.networking.IServerApplicantConnector;
-import common.networking.IServerCompanyConnector;
 import common.networking.IServerConnector;
 import common.transferObjects.Applicant;
 import common.transferObjects.Company;
@@ -12,9 +10,10 @@ import common.util.UserAlreadyConnectedException;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 
-public class ServerController implements IServerApplicantConnector, IServerCompanyConnector {
+public class ServerController implements IServerConnector {
     private ServerModel serverModel = new ServerModel(new JDBCConnector());
     LogBook log = LogBook.getInstance();
     public ServerController(ServerModel serverModel) throws RemoteException{
@@ -36,37 +35,23 @@ public class ServerController implements IServerApplicantConnector, IServerCompa
     }
 
     @Override
-    public char getUsertype(String username)throws RemoteException{
-        char type = serverModel.getUserType(username);
-        log.quickServerLog("ServerController::getUsertype::"+type);
-        return type;
-    }
+    public void createNewUser(String username, char type) throws RemoteException {
 
-    @Override
-    public Applicant getApplicantProfile(String username) throws RemoteException {
-        Applicant applicantProfile = serverModel.getApplicantProfile(username);
-        return applicantProfile;
-    }
-
-    @Override
-    public Company getCompanyProfile(String username) throws RemoteException {
-        Company companyProfile = serverModel.getCompanyProfile(username);
-        return companyProfile;
-    }
-
-    @Override
-    public void createNewApplicantUser(Applicant newApplicant) throws RemoteException {
-        serverModel.createNewApplicantUser(newApplicant);
-    }
-
-    @Override
-    public void createNewCompanyUser(Company newCompany) throws RemoteException {
-        serverModel.createNewCompanyUser(newCompany);
     }
 
     @Override
     public void updateUser(User newUser) throws RemoteException {
         serverModel.updateUser(newUser);
+    }
+
+    @Override
+    public User getUser(String username) {
+        return serverModel.getUser(username);
+    }
+
+    @Override
+    public ArrayList<String> getAllQualities() throws RemoteException {
+        return serverModel.getQualities();
     }
 
     @Override

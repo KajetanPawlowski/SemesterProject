@@ -6,10 +6,10 @@ import java.util.ArrayList;
 public class Applicant implements User, Serializable {
     final char TYPE = 'A';
     private String username;
-    private String fullName;
-    private String subtitle;
-    private String personalInformation;
-    private ArrayList<String> qualities;
+    private String fullName = "";
+    private String subtitle = "";
+    private String personalInformation = "";
+    private ArrayList<String> qualities = new ArrayList<>();
 
 
 

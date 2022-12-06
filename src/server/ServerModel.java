@@ -22,6 +22,7 @@ public class ServerModel  {
     private ArrayList<User> users = new ArrayList<User>();
     private ArrayList<Applicant> applicants = new ArrayList<>();
     private ArrayList<Company> companies = new ArrayList<>();
+    private ArrayList<String> qualities = new ArrayList<>();
 
     private ArrayList<JobAdd> relevantJobAds = new ArrayList<JobAdd>();
 
@@ -56,6 +57,10 @@ public class ServerModel  {
                 nextCompany.setDetails("Nice to meet you!" );
                 users.add(nextCompany);
                 companies.add(nextCompany);
+            }
+
+            for(int j = 0; j < 10; j++){
+                qualities.add("Skill " + j);
             }
 
         } catch( Exception ex ) {
@@ -121,13 +126,16 @@ public class ServerModel  {
         getUser(newUser.getUsername()).updateUser(newUser);
 
     }
-    private User getUser(String username){
+    public User getUser(String username){
         for(int i = 0; i < users.size(); i ++){
             if(users.get(i).getUsername().equals(username)){
                 return users.get(i);
             }
         }
         return null;
+    }
+    public ArrayList<String> getQualities(){
+        return qualities;
     }
 
     public ArrayList<Applicant> getAllApplicants(String username){

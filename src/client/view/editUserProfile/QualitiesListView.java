@@ -15,36 +15,39 @@ import java.util.List;
 
 public  class QualitiesListView {
     private ArrayList<QualityCell> qualityCells;
+    private List<QualityCell> list = new ArrayList<>();
 
     public QualitiesListView(){
     }
 
-    public ArrayList<QualityCell> getQualityCellsArrayList(){
-        return qualityCells;
-    }
 
     public BorderPane createCheckedList(String title, ArrayList<String> allQualities, ArrayList<String> applicantQualities) {
         BorderPane layout = new BorderPane();
-        List<QualityCell> list = new ArrayList<>();
+        list = new ArrayList<>();
         qualityCells = new ArrayList<>();
+        createList(allQualities);
+        selectApplicantChoice(applicantQualities);
+
+        ListView<QualityCell> listView = new ListView<QualityCell>();
+        ObservableList<QualityCell> myObservableList = FXCollections.observableList(list);
+        listView.setItems(myObservableList);
+
+       layout.setTop(new Label(title));
+       layout.setCenter(listView);
+       return layout;
+    }
+    private void createList(ArrayList<String> allQualities){
         if(allQualities !=null){
             System.out.println("All Qualities NOT NULL");
             for (int i = 0; i < allQualities.size(); i++) {
                 QualityCell nextCell = new QualityCell(allQualities.get(i));
                 list.add(nextCell);
             }
-        }else if(applicantQualities == null){
-            System.out.println("Applicant Qualities NULL");
-            //do nothing (empty list)
         }else{
             System.out.println("All Qualities NULL");
-            for (int i = 0; i < applicantQualities.size(); i++) {
-                QualityCell nextCell = new QualityCell(applicantQualities.get(i));
-                nextCell.setCheckBox(true);
-                list.add(nextCell);
-            }
         }
-
+    }
+    private void selectApplicantChoice(ArrayList<String> applicantQualities){
         if(applicantQualities != null) {
             for (int i = 0; i < list.size(); i++) {
                 for (int j = 0; j < applicantQualities.size(); j++) {
@@ -56,32 +59,22 @@ public  class QualitiesListView {
 
             }
         }
-
-        ListView<QualityCell> listView = new ListView<QualityCell>();
-        ObservableList<QualityCell> myObservableList = FXCollections.observableList(list);
-        listView.setItems(myObservableList);
-
-       layout.setTop(new Label(title));
-       layout.setCenter(listView);
-       return layout;
     }
-    public ArrayList<String> getPickedQualities(){
-        ArrayList<String> result = new ArrayList<>();
-        if(qualityCells ==null){
-         return result;
-        }
-        for(int i = 0; i < qualityCells.size(); i++){
-            if(qualityCells.get(i).isChecked()){
-                result.add(qualityCells.get(i).getLabel());
-            }
-        }
-        return result;
-    }
+
     public void setEditable(boolean isEditable){
         for(int i = 0; i < qualityCells.size(); i++){
             qualityCells.get(i).setEditable(isEditable);
         }
 
+    }
+    public ArrayList<String> getPickedQualities(){
+        ArrayList<String> temp = new ArrayList<>();
+        for(int i = 0; i < qualityCells.size(); i++){
+            if(qualityCells.get(i).isChecked()){
+                temp.add(qualityCells.get(i).getLabel());
+            }
+        }
+        return temp;
     }
 
     public class QualityCell extends HBox {
@@ -97,8 +90,7 @@ public  class QualitiesListView {
             label.setMaxWidth(Double.MAX_VALUE);
             HBox.setHgrow(label, Priority.ALWAYS);
             checkBox.setDisable(true);
-
-            getQualityCellsArrayList().add(this);
+            qualityCells.add(this);
             this.getChildren().addAll(label, checkBox);
         }
         public boolean isChecked(){
