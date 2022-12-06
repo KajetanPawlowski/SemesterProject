@@ -4,11 +4,19 @@ import client.core.FXMLController;
 import client.core.ViewHandler;
 
 import client.core.ViewModel;
+import client.view.editUserProfile.QualitiesListView;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileController implements FXMLController {
     private ViewHandler viewHandler;
@@ -30,21 +38,29 @@ public class ProfileController implements FXMLController {
         @FXML
         private Label personalInformation;
 
+        @FXML
+        private ListView qualitiesListView;
+
+        @FXML
+        private Label qualitiesLabel;
+
 
     public void init(ViewHandler viewHandler, ViewModel vm){
         instance = this;
         this.viewHandler = viewHandler;
         this.profileVM = (ProfileViewModel) vm;
-        if(list !=null){
-            rootVBox.getChildren().remove(list);
+        if(profileVM.getApplicantList()!=null){
+            qualitiesListView.setItems(getObservableList(profileVM.getApplicantList()));
         }
-        list = profileVM.getApplicantList();
-        rootVBox.getChildren().add(list);
         applicantName.textProperty().bindBidirectional(profileVM.applicantNameProperty());
         personalInformation.textProperty().bindBidirectional(profileVM.personalInformationProperty());
         subtitle.textProperty().bindBidirectional(profileVM.subtitleProperty());
         getProfileColour(profileVM.getUserType());
 
+    }
+    private ObservableList<String> getObservableList(ArrayList<String> arrayList){
+        List<String> list = arrayList;
+        return FXCollections.observableList(list);
     }
     public static ProfileController getInstance(){
         return instance;

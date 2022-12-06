@@ -10,6 +10,9 @@ public class MenuCompanyViewModel implements ViewModel {
         clientModel = model;
         clientModel.attachObserver(this);
     }
+    public void resetModel(){
+        clientModel.resetModel();
+    }
     @Override
     public void update() {
         Platform.runLater(new Runnable() {

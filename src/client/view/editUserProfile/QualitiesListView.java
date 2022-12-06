@@ -1,9 +1,7 @@
-package client.view.User;
+package client.view.editUserProfile;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -16,18 +14,9 @@ import java.util.List;
 
 
 public  class QualitiesListView {
-    private static QualitiesListView instance = null;
     private ArrayList<QualityCell> qualityCells;
 
-    private QualitiesListView(){
-        instance = this;
-    }
-
-    public static QualitiesListView getInstance(){
-        if(instance == null){
-            return new QualitiesListView();
-        }
-        return instance;
+    public QualitiesListView(){
     }
 
     public ArrayList<QualityCell> getQualityCellsArrayList(){

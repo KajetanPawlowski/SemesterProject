@@ -2,6 +2,7 @@ package client.view.User;
 
 import client.core.ViewModel;
 import client.model.IUserModel;
+import client.view.editUserProfile.QualitiesListView;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -34,8 +35,8 @@ public class ProfileViewModel implements ViewModel {
         return clientModel.getUserState().getUserProfile().getType();
      }
 
-     public Node getApplicantList(){
-         return QualitiesListView.getInstance().createCheckedList("Skills", null, clientModel.getUserState().getUserProfile().getQualities());
+     public ArrayList<String> getApplicantList(){
+         return clientModel.getUserState().getUserProfile().getQualities();
      }
 
     public StringProperty applicantNameProperty() {
@@ -48,15 +49,6 @@ public class ProfileViewModel implements ViewModel {
 
     public StringProperty personalInformationProperty() {
         return personalInformation;
-    }
-
-
-    public  ArrayList<String> getQualities(){
-        return clientModel.getUserState().getUserProfile().getQualities();
-    }
-
-    public  ArrayList<String> getAllQualities(){
-        return clientModel.getAllQualities();
     }
 
 

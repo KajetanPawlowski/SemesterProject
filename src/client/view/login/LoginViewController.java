@@ -5,7 +5,7 @@ import client.core.ViewHandler;
 import client.core.ViewModel;
 import client.model.UserNotFoundException;
 import client.view.menu.MenuController;
-import common.Applicant;
+import common.util.UserAlreadyConnectedException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -13,7 +13,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
@@ -50,10 +49,13 @@ public class LoginViewController implements FXMLController {
             }catch (UserNotFoundException userNotFound){
                 System.out.println("LoginViewController::onLoginBtn::UserNotFoundException");
                 showPopUp();
-        }catch (InvalidLoginData invalidData){
-            System.out.println("LoginViewController::onLoginBtn::InvalidLoginDataException");
-            logInVM.logInError(invalidData.getMsg());
-        }
+            }catch (InvalidLoginData invalidData){
+                System.out.println("LoginViewController::onLoginBtn::InvalidLoginDataException");
+                logInVM.logInError(invalidData.getMsg());
+            }catch (UserAlreadyConnectedException userAlreadyConnected){
+                System.out.println("LoginViewController::onLoginBtn::UserAlreadyConnected");
+                logInVM.logInError(userAlreadyConnected.getMsg());
+            }
     }
     Label popupLabel = new Label("Welcome to our app. WHO ARE YOU?");
     Button popupButtonApplicant = new Button("Applicant");

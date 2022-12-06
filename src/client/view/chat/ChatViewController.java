@@ -31,7 +31,6 @@ public class ChatViewController implements FXMLController{
         this.viewHandler = viewHandler;
         this.chatVM = (ChatViewModel) vm;
         inputTextField.textProperty().bindBidirectional(chatVM.getMessageInputProperty());
-        accountNameLabel.textProperty().bindBidirectional(chatVM.getAccountNameLabelProperty());
         accountListView.setItems(chatVM.getAccountsList());
         messagesListView.setItems(chatVM.getMessagesList());
         

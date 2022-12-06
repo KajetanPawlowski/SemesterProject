@@ -1,4 +1,4 @@
-package common;
+package common.transferObjects;
 
 import java.util.ArrayList;
 
@@ -13,5 +13,6 @@ public interface User {
     String getFullName();
     void setSubtitle(String subtitle);
     String getSubtitle();
+    void updateUser(User newUser);
 
 }

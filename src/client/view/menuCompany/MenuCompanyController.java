@@ -28,7 +28,7 @@ public class MenuCompanyController implements FXMLController {
 
     @FXML
     void onEditProfileBtn(ActionEvent event) {
-
+        viewHandler.openEditUserProfileView();
     }
 
     @FXML
@@ -38,6 +38,7 @@ public class MenuCompanyController implements FXMLController {
 
     @FXML
     void onLogoutBtn(ActionEvent event) {
+        menuVM.resetModel();
         viewHandler.openLoginView();
     }
 

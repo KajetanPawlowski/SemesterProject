@@ -38,6 +38,7 @@ public class MenuController implements FXMLController {
 
     @FXML
     void onLogoutBtn(ActionEvent event) {
+        menuVM.resetModel();
         viewHandler.openLoginView();
     }
 

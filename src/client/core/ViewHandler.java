@@ -1,19 +1,13 @@
 package client.core;
 
 
-import common.LogBook;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import common.util.LogBook;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.IOException;
 
@@ -66,7 +60,7 @@ public class ViewHandler {
 
             mainScene = new Scene(root,800, 600);
             stage.setScene(mainScene);
-            stage.setTitle("OverView");
+            stage.setTitle("Applicant Profile Overview");
             stage.show();
     }
 

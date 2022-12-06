@@ -6,34 +6,42 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="client.view.chat.ChatViewController">
-   <left>
-      <VBox prefHeight="383.0" prefWidth="177.0" BorderPane.alignment="CENTER">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.chat.ChatViewController">
+   <top>
+      <Label fx:id="accountNameLabel" text="Chat with Others" BorderPane.alignment="TOP_CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
+   <right>
+      <VBox BorderPane.alignment="CENTER_LEFT">
          <children>
-            <ListView fx:id="accountListView" onContextMenuRequested="#onContextRequested" onMousePressed="#onListMousePress">
+            <ListView fx:id="accountListView" onContextMenuRequested="#onContextRequested" onMousePressed="#onListMousePress" prefHeight="600.0" prefWidth="150.0">
                <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" top="5.0" />
+                  <Insets bottom="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </ListView>
          </children></VBox>
-   </left>
+   </right>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
          <children>
-            <ListView fx:id="messagesListView" prefHeight="319.0" prefWidth="423.0">
+            <ListView fx:id="messagesListView" prefHeight="550.0">
                <VBox.margin>
                   <Insets left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </ListView>
             <HBox alignment="CENTER">
                <children>
-                  <TextField fx:id="inputTextField" prefHeight="25.0" prefWidth="358.0" promptText="Aa">
+                  <TextField fx:id="inputTextField" prefWidth="480.0" promptText="Aa">
                      <HBox.margin>
                         <Insets bottom="5.0" right="10.0" top="5.0" />
                      </HBox.margin>
@@ -44,22 +52,4 @@
          </children>
       </VBox>
    </center>
-   <top>
-      <FlowPane BorderPane.alignment="CENTER">
-         <children>
-            <Label fx:id="accountNameLabel" text="Account Name">
-               <font>
-                  <Font size="20.0" />
-               </font>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-               <FlowPane.margin>
-                  <Insets left="30.0" />
-               </FlowPane.margin>
-            </Label>
-            <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#onLogoutBtn" text="Log out" />
-         </children>
-      </FlowPane>
-   </top>
 </BorderPane>

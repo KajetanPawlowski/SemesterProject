@@ -2,7 +2,6 @@ package client.view.editUserProfile;
 
 import client.core.ViewModel;
 import client.model.IUserModel;
-import client.view.User.QualitiesListView;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -15,7 +14,7 @@ public class EditUserProfileViewModel implements ViewModel {
     private StringProperty applicantName = new SimpleStringProperty("");
     private StringProperty subtitle = new SimpleStringProperty("");
     private StringProperty personalInformation = new SimpleStringProperty("");
-    private QualitiesListView qualityList = QualitiesListView.getInstance();
+    private QualitiesListView qualityList = new QualitiesListView();
     public EditUserProfileViewModel(IUserModel model){
         clientModel = model;
         clientModel.attachObserver(this);
@@ -41,11 +40,12 @@ public class EditUserProfileViewModel implements ViewModel {
         personalInformation = new SimpleStringProperty(clientModel.getUserState().getUserProfile().getDetails());
     }
 
-    public void safeInfoToModel(){
+    public void safeInfo(){
         clientModel.getUserState().getUserProfile().setFullName(applicantName.get());
         clientModel.getUserState().getUserProfile().setSubtitle(subtitle.get());
         clientModel.getUserState().getUserProfile().setDetails(personalInformation.get());
         clientModel.getUserState().getUserProfile().setQualities(qualityList.getPickedQualities());
+        clientModel.updateUserToServer();
     }
     public Node getFullList(){
         ArrayList<String> temp = new ArrayList<>();

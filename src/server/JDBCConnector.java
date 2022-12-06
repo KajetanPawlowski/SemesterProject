@@ -1,10 +1,10 @@
 package server;
 
 import client.model.UserNotFoundException;
-import common.Applicant;
-import common.Company;
-import common.JobAdd;
-import common.User;
+import common.transferObjects.Applicant;
+import common.transferObjects.Company;
+import common.transferObjects.JobAdd;
+import common.transferObjects.User;
 import org.postgresql.util.PSQLException;
 
 import java.sql.*;

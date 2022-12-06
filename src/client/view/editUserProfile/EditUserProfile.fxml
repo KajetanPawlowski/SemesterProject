@@ -22,11 +22,6 @@
    <center>
       <VBox fx:id="rootVBox" maxWidth="400.0" prefHeight="200.0" prefWidth="400.0" spacing="5.0" BorderPane.alignment="CENTER">
       <children>
-            <Label text="Edit Your Profile">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
          <HBox>
             <children>
                <VBox prefWidth="277.0" spacing="5.0" HBox.hgrow="ALWAYS">
@@ -55,4 +50,14 @@
          </padding>
       </VBox>
    </center>
+   <top>
+      <Label text="Edit Your Profile" BorderPane.alignment="TOP_CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
 </BorderPane>

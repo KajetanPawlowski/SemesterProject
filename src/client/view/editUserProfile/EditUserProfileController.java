@@ -74,7 +74,7 @@ public class EditUserProfileController implements FXMLController {
     private void lockEditing(){
         EditBtn.setText("Edit");
         isEditing = false;
-        editApplicantProfileVM.safeInfoToModel();
+        editApplicantProfileVM.safeInfo();
         rootVBox.getChildren().remove(list);
         //list = get applicant list
         //rootVBox.getChildren().add(list);

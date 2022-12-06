@@ -1,11 +1,9 @@
 package client.view.jobSearch;
 
 import client.core.ViewModel;
-import common.JobAdd;
+import common.transferObjects.JobAdd;
 import client.model.IUserModel;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
 public class JobSearchViewModel implements ViewModel {
     private IUserModel clientModel;

@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -36,8 +37,9 @@
                       </padding>
                   </HBox>
                         <Label text="Job Description" />
-                        <TextArea fx:id="jobDescriptionField" editable="false" prefHeight="100.0" prefWidth="400.0" wrapText="true" />
+                        <TextArea fx:id="jobDescriptionField" editable="false" prefHeight="100.0" prefWidth="500.0" wrapText="true" />
       <Label text="Requirements" />
+      <ListView prefHeight="100.0" prefWidth="500.0" />
             </children>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

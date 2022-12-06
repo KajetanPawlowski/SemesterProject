@@ -3,6 +3,7 @@ package client.view.login;
 import client.core.ViewModel;
 import client.model.IUserModel;
 import client.model.UserNotFoundException;
+import common.util.UserAlreadyConnectedException;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -11,7 +12,7 @@ public class LoginViewModel implements ViewModel {
     private IUserModel clientModel;
 
     private StringProperty userNameProperty = new SimpleStringProperty("");
-    private StringProperty ipProperty = new SimpleStringProperty("10.154.222.101");
+    private StringProperty ipProperty = new SimpleStringProperty("10.154.220.129");
     private StringProperty errorLabelProperty = new SimpleStringProperty("");
 
 
@@ -30,7 +31,7 @@ public class LoginViewModel implements ViewModel {
     public StringProperty getErrorLabelProperty(){
         return errorLabelProperty;
     }
-    public void login() throws UserNotFoundException, InvalidLoginData{
+    public void login() throws UserNotFoundException, InvalidLoginData, UserAlreadyConnectedException {
         if(userNameProperty.get().equals("")){
             throw new InvalidLoginData("Invalid Username");
         }
@@ -38,7 +39,7 @@ public class LoginViewModel implements ViewModel {
             throw new InvalidLoginData("Invalid IP");
         }
         //IMPORTANT ORDER
-        if(clientModel.connectToServer(ipProperty.get())){
+        if(clientModel.connectToServer(userNameProperty.get(), ipProperty.get())){
             System.out.println("LoginView::login::success");
             clientModel.setCurrentUserState(userNameProperty.get());
         }else{

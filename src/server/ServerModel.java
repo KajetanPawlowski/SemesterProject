@@ -1,15 +1,16 @@
 package server;
 
-import common.Applicant;
-import common.Company;
-import common.JobAdd;
-import common.User;
+import common.transferObjects.Applicant;
+import common.transferObjects.Company;
+import common.transferObjects.JobAdd;
+import common.transferObjects.User;
+import common.util.LogBook;
+import common.util.UserAlreadyConnectedException;
 
 import java.net.InetAddress;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class ServerModel  {
     private JDBCConnector database;
@@ -17,7 +18,7 @@ public class ServerModel  {
     public ServerModel(JDBCConnector database){
         this.database = database;
     }
-
+    private ArrayList<String> connectionPool = new ArrayList<>();
     private ArrayList<User> users = new ArrayList<User>();
     private ArrayList<Applicant> applicants = new ArrayList<>();
     private ArrayList<Company> companies = new ArrayList<>();
@@ -37,9 +38,10 @@ public class ServerModel  {
 
             database.connect("hattie.db.elephantsql.com", 5432, "zdpvllpz", "DkaoNfKGKMNfkg8bVfKyN3pJxPM2GWmn");
 //--------------------------------------------------------------SETUP----------------------------------------
-            String[] names = {"Kajetan","Maja","Maciej", "Ari","Rado"};
+            String[] names = {"Kajetan","Maja","Maciej", "Ari","Rado","Kamstrup", "LEGO", "Arla Foods", "Wolt"};
             users = new ArrayList<>();
-            for(int i = 0; i <2 ;i++){
+            int i = 0;
+            for(; i <5 ;i++){
                 Applicant nextApplicant = new Applicant(names[i]);
                 nextApplicant.setFullName( names[i] + " Rasmussen");
                 nextApplicant.setSubtitle("Student");
@@ -47,7 +49,7 @@ public class ServerModel  {
                 users.add(nextApplicant);
                 applicants.add(nextApplicant);
             }
-            for(int i = 2; i <5 ;i++){
+            for(; i < names.length ;i++){
                 Company nextCompany = new Company(names[i]);
                 nextCompany.setFullName( names[i] + " Company");
                 nextCompany.setSubtitle("Company");
@@ -96,15 +98,36 @@ public class ServerModel  {
     }
 
     public void createNewApplicantUser(Applicant newApplicant) {
-        database.insertNewApplicant(newApplicant);
+        createNewUser(newApplicant);
+        applicants.add(newApplicant);
+        LogBook.getInstance().quickServerLog("ServerModel::createNewApplicantUser::"+newApplicant.getUsername());
+        //database.insertNewApplicant(newApplicant);
     }
 
     public void createNewCompanyUser(Company newCompany) {
-        database.insertNewCompany(newCompany);
+        createNewUser(newCompany);
+        companies.add(newCompany);
+        LogBook.getInstance().quickServerLog("ServerModel::createNewCompanyUser::"+newCompany.getUsername());
+        //database.insertNewCompany(newCompany);
     }
 
     public void createNewUser(User newUser){
-        database.insertNewUser(newUser);
+        users.add(newUser);
+        //database.insertNewUser(newUser);
+    }
+
+    public void updateUser(User newUser){
+        LogBook.getInstance().quickServerLog("ServerModel::updateUser");
+        getUser(newUser.getUsername()).updateUser(newUser);
+
+    }
+    private User getUser(String username){
+        for(int i = 0; i < users.size(); i ++){
+            if(users.get(i).getUsername().equals(username)){
+                return users.get(i);
+            }
+        }
+        return null;
     }
 
     public ArrayList<Applicant> getAllApplicants(String username){
@@ -119,6 +142,25 @@ public class ServerModel  {
 
     public void createJobAd(JobAdd nextJobAd) {
         database.insertNewJobAdd(nextJobAd);
+    }
+    public void openConnection(String username) throws UserAlreadyConnectedException {
+        checkIfAlreadyConnected(username);
+        connectionPool.add(username);
+    }
+    public void closeConnection(String username){
+        for (int i = 0; i < connectionPool.size(); i++){
+            if(connectionPool.get(i).equals(username)){
+                connectionPool.remove(i);
+                break;
+            }
+        }
+    }
+    private void checkIfAlreadyConnected(String username)throws UserAlreadyConnectedException{
+        for (int i = 0; i < connectionPool.size(); i++){
+            if(connectionPool.get(i).equals(username)){
+                throw new UserAlreadyConnectedException();
+            }
+        }
     }
 
 

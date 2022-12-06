@@ -2,7 +2,7 @@ package client.view.jobAd;
 
 import client.core.ViewModel;
 import client.model.IUserModel;
-import common.JobAdd;
+import common.transferObjects.JobAdd;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

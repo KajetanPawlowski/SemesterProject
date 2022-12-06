@@ -1,10 +1,13 @@
 package client.model;
 
-import common.Applicant;
-import common.User;
+import common.networking.IServerApplicantConnector;
+import common.networking.IServerConnector;
+import common.transferObjects.Applicant;
+import common.transferObjects.User;
 
 public class ApplicantState implements UserModelState{
     private Applicant applicant;
+    private IServerApplicantConnector server;
 
     public ApplicantState (Applicant applicant){
         this.applicant = applicant;
@@ -25,7 +28,13 @@ public class ApplicantState implements UserModelState{
     }
 
     @Override
-    public void setUserProfile(User user) {
-        applicant = (Applicant) user;
+    public IServerConnector getServerConnection() {
+        return server;
     }
+
+    @Override
+    public void setServerConnection(IServerConnector serverConnection) {
+        server = (IServerApplicantConnector) serverConnection;
+    }
+
 }

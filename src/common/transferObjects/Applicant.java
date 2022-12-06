@@ -1,17 +1,19 @@
-package common;
+package common.transferObjects;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Company implements User, Serializable {
-    private final char TYPE = 'C';
+public class Applicant implements User, Serializable {
+    final char TYPE = 'A';
     private String username;
-    private String companyName;
-    private String description;
+    private String fullName;
+    private String subtitle;
+    private String personalInformation;
+    private ArrayList<String> qualities;
 
 
 
-    public Company(String username) {
+    public Applicant(String username) {
         this.username = username;
     }
 
@@ -27,41 +29,51 @@ public class Company implements User, Serializable {
 
     @Override
     public ArrayList<String> getQualities() {
-        return null;
+        return qualities;
     }
 
     @Override
     public void setFullName(String name) {
-        companyName = name;
+        fullName = name;
     }
 
     @Override
     public void setQualities(ArrayList<String> qualities) {
-        //nothing
+        this.qualities = qualities;
     }
 
     @Override
     public String getDetails() {
-        return description;
+        return personalInformation;
     }
 
     @Override
     public void setDetails(String details) {
-        description = details;
+        personalInformation = details;
     }
 
     @Override
     public String getFullName() {
-        return companyName;
+        return fullName;
     }
 
     @Override
     public void setSubtitle(String subtitle) {
-
+        this.subtitle = subtitle;
     }
 
     @Override
     public String getSubtitle() {
-        return null;
+        return subtitle;
     }
+
+    @Override
+    public void updateUser(User newUser) {
+        setFullName(newUser.getFullName());
+        setDetails(newUser.getDetails());
+        setSubtitle(newUser.getSubtitle());
+        setQualities(newUser.getQualities());
+    }
+
+
 }

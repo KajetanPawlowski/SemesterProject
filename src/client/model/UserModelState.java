@@ -1,11 +1,14 @@
 package client.model;
 
-import common.User;
+import common.networking.IServerConnector;
+import common.transferObjects.User;
 
 public interface UserModelState {
     void init(String username);
     String getUsername();
     User getUserProfile();
-    void setUserProfile(User user);
+    IServerConnector getServerConnection();
+    void setServerConnection(IServerConnector serverConnection);
+
 
 }

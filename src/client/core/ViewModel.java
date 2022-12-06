@@ -1,6 +1,6 @@
 package client.core;
 
-import common.Observer;
+import common.util.Observer;
 
 public interface ViewModel extends Observer {
 }

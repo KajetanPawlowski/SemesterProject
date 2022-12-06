@@ -9,16 +9,6 @@
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.jobSearch.JobSearchController">
    <center>
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <top>
-            <Label alignment="CENTER" text="Job Search" BorderPane.alignment="CENTER">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <padding>
-                  <Insets top="10.0" />
-               </padding>
-            </Label>
-         </top>
          <left>
             <Button fx:id="prevAddBtn" alignment="CENTER" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onAction="#onPrevAddBtn" prefHeight="40.0" prefWidth="40.0" text="&lt;--" BorderPane.alignment="CENTER" />
          </left>
@@ -28,6 +18,19 @@
          <bottom>
             <Button fx:id="applyNowBtn" mnemonicParsing="false" onAction="#onApplyNowBtn" text="Apply Now" BorderPane.alignment="CENTER" />
          </bottom>
+         <BorderPane.margin>
+            <Insets bottom="200.0" left="50.0" right="50.0" />
+         </BorderPane.margin>
       </BorderPane>
    </center>
+   <top>
+      <Label alignment="CENTER" text="Job Search" BorderPane.alignment="TOP_CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
 </BorderPane>

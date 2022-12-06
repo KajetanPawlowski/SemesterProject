@@ -1,11 +1,13 @@
 package client.model;
 
-import common.Applicant;
-import common.Company;
-import common.User;
+import common.networking.IServerCompanyConnector;
+import common.networking.IServerConnector;
+import common.transferObjects.Company;
+import common.transferObjects.User;
 
 public class CompanyState implements UserModelState{
     private Company company;
+    private IServerCompanyConnector server;
 
     public CompanyState (Company company){
         this.company = company;
@@ -27,7 +29,13 @@ public class CompanyState implements UserModelState{
     }
 
     @Override
-    public void setUserProfile(User user) {
-        company = (Company) user;
+    public IServerConnector getServerConnection() {
+        return server;
     }
+
+    @Override
+    public void setServerConnection(IServerConnector serverConnection) {
+        server = (IServerCompanyConnector) serverConnection;
+    }
+
 }

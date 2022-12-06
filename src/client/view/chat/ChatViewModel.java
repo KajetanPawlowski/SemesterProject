@@ -14,7 +14,6 @@ public class ChatViewModel implements ViewModel {
     private IUserModel clientModel;
 
     private StringProperty messageInputProperty = new SimpleStringProperty("");
-    private StringProperty accountNameLabelProperty = new SimpleStringProperty("");
     private ObservableList<String> messageList;
     private ObservableList<String> accountList;
     
@@ -23,7 +22,6 @@ public class ChatViewModel implements ViewModel {
     public ChatViewModel(IUserModel model){
         clientModel = model;
         clientModel.attachObserver(this);
-        accountNameLabelProperty.set("Hi " + clientModel.getUsername());
         messageList = FXCollections.observableArrayList();
         accountList = FXCollections.observableArrayList();
         
@@ -31,9 +29,6 @@ public class ChatViewModel implements ViewModel {
 
     public StringProperty getMessageInputProperty(){
         return messageInputProperty;
-    }
-    public StringProperty getAccountNameLabelProperty(){
-        return accountNameLabelProperty;
     }
     public ObservableList<String> getMessagesList(){
         return messageList;

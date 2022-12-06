@@ -1,4 +1,4 @@
-package common;
+package common.transferObjects;
 
 
 import java.util.ArrayList;

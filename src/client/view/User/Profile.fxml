@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
@@ -45,6 +46,12 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </Label>
+      <Label fx:id="qualitiesLabel" text="Skills">
+         <VBox.margin>
+            <Insets left="5.0" />
+         </VBox.margin>
+      </Label>
+      <ListView fx:id="qualitiesListView" prefHeight="200.0" prefWidth="200.0" />
    </children>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
