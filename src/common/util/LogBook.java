@@ -56,4 +56,10 @@ public class LogBook {
         System.out.println("Server::" + activity);
     }
 
+    public void quickDBLog(String activity){
+        String result = "Server::JDBC::"+activity;
+        saveServerActivity(result);
+        System.out.println(result);
+    }
+
 }

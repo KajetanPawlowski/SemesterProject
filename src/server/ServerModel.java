@@ -61,9 +61,9 @@ public class ServerModel  {
                 companies.add(nextCompany);
             }
 
-            for(int j = 0; j < 10; j++){
-                qualities.add("Skill " + j);
-            }
+//            for(int j = 0; j < 10; j++){
+//                qualities.add("Skill " + j);
+//            }
 
         } catch( Exception ex ) {
             ex.printStackTrace();

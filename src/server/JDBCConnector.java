@@ -2,8 +2,11 @@ package server;
 
 import client.model.UserNotFoundException;
 import common.transferObjects.*;
+import common.util.LogBook;
+import org.postgresql.jdbc.PgArray;
 import org.postgresql.util.PSQLException;
 
+import java.nio.file.LinkOption;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,7 +41,7 @@ public class JDBCConnector implements IJDBCConnector{
             statement.executeQuery(SQL);
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            LogBook.getInstance().quickDBLog("insertNewUser::"+ex.getMessage());
         }
 
     }
@@ -55,7 +58,7 @@ public class JDBCConnector implements IJDBCConnector{
             result =  rs.getString(1).charAt(0);
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            LogBook.getInstance().quickDBLog("getUserType::"+ex.getMessage());
         }
         if(result == 0){
             throw new UserNotFoundException();
@@ -76,7 +79,7 @@ public class JDBCConnector implements IJDBCConnector{
             statement.executeQuery(SQL);
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            LogBook.getInstance().quickDBLog("insertNewApplicant::"+ex.getMessage());
         }
     }
 
@@ -88,7 +91,7 @@ public class JDBCConnector implements IJDBCConnector{
             statement.executeQuery(SQL);
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            LogBook.getInstance().quickDBLog("updateApplicant::"+ex.getMessage());
         }
     }
 
@@ -113,7 +116,7 @@ public class JDBCConnector implements IJDBCConnector{
             applicant.setConvs(getConversationsList(new ArrayList<Integer>(list)));
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            LogBook.getInstance().quickDBLog("getApplicantProfile::"+ex.getMessage());
         }
         return applicant;
     }
@@ -147,7 +150,7 @@ public class JDBCConnector implements IJDBCConnector{
 
 
     public ArrayList<String> getAllQualities (){
-        String SQL = "SELECT qualities FROM sep5.Qualities ;";
+        String SQL = "SELECT* FROM sep5.qualities ;";
         ResultSet rs;
         ArrayList<String> result = new ArrayList<>();
 
@@ -155,12 +158,12 @@ public class JDBCConnector implements IJDBCConnector{
             Statement statement = connection.createStatement();
             rs = statement.executeQuery(SQL);
 
-            rs.next();
-            Array temp = rs.getArray(0);
-            List list = Arrays.asList(temp);
-            result = new ArrayList<String>(list);
+            while(rs.next()){
+                result.add(rs.getString(1));
+            }
+
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            LogBook.getInstance().quickDBLog("getAllQualities::"+ex.getMessage());
         }
         return result;
     }
@@ -179,7 +182,7 @@ public class JDBCConnector implements IJDBCConnector{
 
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            LogBook.getInstance().quickDBLog("insertNewCompany::"+ex.getMessage());
         }
     }
 
