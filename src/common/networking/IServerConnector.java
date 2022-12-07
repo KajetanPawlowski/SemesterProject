@@ -16,7 +16,9 @@ public interface IServerConnector extends Remote {
     void createNewUser(String username, char type)throws RemoteException;
     void updateUser(User newUser) throws RemoteException;
     User getUser(String Username)throws RemoteException;
-    ArrayList<String> getAllQualities() throws RemoteException;
+    ArrayList<String> getAllQualities(String username) throws RemoteException;
     void createJobAd(JobAdd nextJobAd)throws RemoteException;
-   // ArrayList<JobAdd> getRelevantJobAds(Applicant applicant, JobAdd relevantJobAd) throws RemoteException;
+
+    ArrayList<String> getAllQualities() throws RemoteException;
+    // ArrayList<JobAdd> getRelevantJobAds(Applicant applicant, JobAdd relevantJobAd) throws RemoteException;
 }
