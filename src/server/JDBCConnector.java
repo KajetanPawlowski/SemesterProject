@@ -8,6 +8,7 @@ import common.transferObjects.User;
 import org.postgresql.util.PSQLException;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 //KAJETAN WAS HERE HHEHEHEHEHEHE
 
@@ -29,7 +30,7 @@ public class JDBCConnector {
         }
     }
 
-//-----------------------------------------------------------------------------------------------------------User OPERATIONS
+    //-----------------------------------------------------------------------------------------------------------User OPERATIONS
     // Stores a new User in the DB
     public void insertNewUser(User user){
         String SQL = "INSERT INTO sep5.User VALUES "
@@ -43,7 +44,7 @@ public class JDBCConnector {
         }
 
     }
-    // Gets the user type
+    // Gets the user type from the DB
     public char getUserType(String username) throws UserNotFoundException{
         String SQL = "SELECT type FROM sep5.User WHERE username = '"+username+"';";
         ResultSet rs;
@@ -65,17 +66,16 @@ public class JDBCConnector {
     }
 
 
-//-----------------------------------------------------------------------------------------------------------Applicant OPERATIONS
+    //-----------------------------------------------------------------------------------------------------------Applicant OPERATIONS
     // Stores a new Applicant in the DB
     public void insertNewApplicant(Applicant applicant) {
-        //insertNewUser(applicant);
-        //String SQL = "INSERT INTO sep5.Applicant VALUES "
-        //        + "( '" + applicant.getUsername() + "','" + applicant.getFullName() + "', '" + applicant.getPersonalInformation() +"', '"
-        //+ applicant.getContact()+"', '"+applicant.getEducation()+"' , '"+applicant.getLanguages()+"' , '"
-        //        +applicant.getExperience()+"' , '"+applicant.getSkills()+"');";
+        insertNewUser(applicant);
+        String SQL = "INSERT INTO sep5.Applicant VALUES "
+                + "( '" + applicant.getUsername() + "','" + applicant.getFullName() + "', '" + applicant.getSubtitle() +"', '"
+                + applicant.getDetails()+"', '"+applicant.getQualities()+"');";
         try {
             Statement statement = connection.createStatement();
-        //    statement.executeQuery(SQL);
+            statement.executeQuery(SQL);
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -104,13 +104,27 @@ public class JDBCConnector {
             rs = statement.executeQuery(SQL);
 
             rs.next();
-//            result.setFullName(rs.getString(1));
-//            result.setProfileInformation(rs.getString(2));
-//            result.setContact(rs.getString(3));
-//            result.setEducation(rs.getString(4));
-//            result.setLanguages(rs.getString(5));
-//            result.setExperience(rs.getString(6));
-//            result.setSkills(rs.getString(7));
+            result.setFullName(rs.getString(1));
+            result.setDetails(rs.getString(2));
+            result.setSubtitle(rs.getString(3));
+            result.setQualities((ArrayList<String>) rs.getArray(4));
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return result;
+    }
+
+    public ArrayList<String> getQualities (String username){
+        String SQL = "SELECT qualities FROM sep5.Applicant WHERE username = ' " + username + " ';";
+        ResultSet rs;
+        ArrayList<String> result = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            rs = statement.executeQuery(SQL);
+
+            rs.next();
+            result = (ArrayList<String>) rs.getArray(4);
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -119,21 +133,21 @@ public class JDBCConnector {
     }
 
 
-//-----------------------------------------------------------------------------------------------------------Company OPERATIONS
+    //-----------------------------------------------------------------------------------------------------------Company OPERATIONS
     // Stores a new Company in the DB
     public void insertNewCompany(Company company) {
         insertNewUser(company);
-//        String SQL = "INSERT INTO sep5.company VALUES "
-//                + "(DEFAULT, '" + company.getUsername() + "', '" + company.getCompanyName() +"', '"
-//                + company.getDescription()+"');";
-//        try {
-//            Statement statement = connection.createStatement();
-//            statement.executeQuery(SQL);
-//
-//
-//        } catch (SQLException ex) {
-//            System.out.println(ex.getMessage());
-//        }
+        String SQL = "INSERT INTO sep5.company VALUES "
+                + "(DEFAULT, '" + company.getUsername() + "', '" + company.getFullName() +"', '"
+                + company.getDetails()+"');";
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeQuery(SQL);
+
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     //Get a CompanyProfile from the DB
@@ -146,8 +160,8 @@ public class JDBCConnector {
             rs = statement.executeQuery(SQL);
 
             rs.next();
-//            result.setCompanyName(rs.getString(1));
-//            result.setDescription(rs.getString(2));
+            result.setFullName(rs.getString(1));
+            result.setDetails(rs.getString(2));
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -157,7 +171,25 @@ public class JDBCConnector {
 
 
 
-//-----------------------------------------------------------------------------------------------------------JobAdd OPERATIONS
+    //-----------------------------------------------------------------------------------------------------------JobAdd OPERATIONS
+    // Get JobAd ID from the DB
+    public int getJobAdId(String jobTitle){
+        String SQL = "SELECT jobId FROM sep5.jobAd WHERE jobTitle = '" + jobTitle + "';";
+        ResultSet rs;
+        int result = 0;
+        try{
+            Statement statement = connection.createStatement();
+            rs = statement.executeQuery(SQL);
+
+            rs.next();
+            result = rs.getInt(0);
+
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        return result;
+    }
+
     // Stores a new JobAd in the DB
     public void insertNewJobAdd(JobAdd jobAdd) {
         String SQL = "INSERT INTO sep5.jobad VALUES "
