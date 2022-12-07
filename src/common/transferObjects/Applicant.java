@@ -1,6 +1,7 @@
 package common.transferObjects;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Applicant implements User, Serializable {
@@ -10,6 +11,7 @@ public class Applicant implements User, Serializable {
     private String subtitle = "";
     private String personalInformation = "";
     private ArrayList<String> qualities = new ArrayList<>();
+    private ArrayList<Conversation> conversations = new ArrayList<>();
 
 
 
@@ -73,6 +75,16 @@ public class Applicant implements User, Serializable {
         setDetails(newUser.getDetails());
         setSubtitle(newUser.getSubtitle());
         setQualities(newUser.getQualities());
+    }
+
+    @Override
+    public void setConvs(ArrayList<Conversation> convs) {
+        conversations = convs;
+    }
+
+    @Override
+    public ArrayList<Conversation> getConvs() {
+        return conversations;
     }
 
 

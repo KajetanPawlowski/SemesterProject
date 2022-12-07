@@ -38,6 +38,8 @@ public class ServerModel  {
             System.out.println( "Server listening on " + InetAddress.getLocalHost().getHostAddress() );
 
             database.connect("hattie.db.elephantsql.com", 5432, "zdpvllpz", "DkaoNfKGKMNfkg8bVfKyN3pJxPM2GWmn");
+
+            qualities = database.getAllQualities();
 //--------------------------------------------------------------SETUP----------------------------------------
             String[] names = {"Kajetan","Maja","Maciej", "Ari","Rado","Kamstrup", "LEGO", "Arla Foods", "Wolt"};
             users = new ArrayList<>();
@@ -158,7 +160,8 @@ public class ServerModel  {
     public void closeConnection(String username){
         for (int i = 0; i < connectionPool.size(); i++){
             if(connectionPool.get(i).equals(username)){
-                connectionPool.remove(i);
+                connectionPool.remove(connectionPool.get(i));
+                LogBook.getInstance().quickServerLog("ServerModel::CloseConnection::" + username);
                 break;
             }
         }

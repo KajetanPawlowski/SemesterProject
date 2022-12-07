@@ -14,5 +14,7 @@ public interface User {
     void setSubtitle(String subtitle);
     String getSubtitle();
     void updateUser(User newUser);
+    void setConvs(ArrayList<Conversation> convs);
+    ArrayList<Conversation> getConvs();
 
 }

@@ -1,18 +1,16 @@
 package server;
 
 import client.model.UserNotFoundException;
-import common.transferObjects.Applicant;
-import common.transferObjects.Company;
-import common.transferObjects.JobAdd;
-import common.transferObjects.User;
+import common.transferObjects.*;
 import org.postgresql.util.PSQLException;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-//KAJETAN WAS HERE HHEHEHEHEHEHE
 
-public class JDBCConnector {
+public class JDBCConnector implements IJDBCConnector{
     private Connection connection;
 
     public void connect(String host, int portNo, String userName, String password) {
@@ -95,37 +93,72 @@ public class JDBCConnector {
     }
 
     // Get an ApplicantProfile from the DB
-    public Applicant getApplicantProfile(String username){
+    private Applicant getApplicantProfile(String username){
         String SQL = "SELECT* FROM sep5.Applicant WHERE username = ' " + username + "';";
         ResultSet rs;
-        Applicant result = new Applicant(username);
+        Applicant applicant = new Applicant(username);
         try {
             Statement statement = connection.createStatement();
             rs = statement.executeQuery(SQL);
 
             rs.next();
-            result.setFullName(rs.getString(1));
-            result.setDetails(rs.getString(2));
-            result.setSubtitle(rs.getString(3));
-            result.setQualities((ArrayList<String>) rs.getArray(4));
+            applicant.setFullName(rs.getString(1));
+            applicant.setDetails(rs.getString(2));
+            applicant.setSubtitle(rs.getString(3));
+            Array temp = rs.getArray(4);
+            List list = Arrays.asList(temp);
+            applicant.setQualities(new ArrayList<String>(list));
+            temp = rs.getArray(5);
+            list = Arrays.asList(temp);
+            applicant.setConvs(getConversationsList(new ArrayList<Integer>(list)));
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        return result;
+        return applicant;
     }
 
-    public ArrayList<String> getQualities (String username){
-        String SQL = "SELECT qualities FROM sep5.Applicant WHERE username = ' " + username + " ';";
+    @Override
+    public User getUser(String username) {
+        User user;
+        if(getUserType(username) =='A'){
+            user = getApplicantProfile(username);
+        }else{
+            user = getCompanyProfile(username);
+        }
+        return  user;
+
+    }
+    private ArrayList<Conversation> getConversationsList(ArrayList<Integer> convIds){
+        ArrayList conversations = new ArrayList<Conversation>();
+        for(Integer convId : convIds ){
+            conversations.add(getConversation(convId));
+        }
+        return conversations;
+
+
+    }
+    private Conversation getConversation(Integer id){
+        /// SQL SHIIIT OUT OUF THISSSSS METH CONVESATION WHERE ID = ID
+
+        //Conversation result......
+        return new Conversation();
+    }
+
+
+    public ArrayList<String> getAllQualities (){
+        String SQL = "SELECT qualities FROM sep5.Qualities ;";
         ResultSet rs;
         ArrayList<String> result = new ArrayList<>();
+
         try {
             Statement statement = connection.createStatement();
             rs = statement.executeQuery(SQL);
 
             rs.next();
-            result = (ArrayList<String>) rs.getArray(4);
-
+            Array temp = rs.getArray(0);
+            List list = Arrays.asList(temp);
+            result = new ArrayList<String>(list);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -162,6 +195,7 @@ public class JDBCConnector {
             rs.next();
             result.setFullName(rs.getString(1));
             result.setDetails(rs.getString(2));
+            //do convs
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
