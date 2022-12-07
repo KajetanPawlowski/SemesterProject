@@ -50,6 +50,11 @@ public class ServerController implements IServerConnector {
     }
 
     @Override
+    public ArrayList<String> getAllQualities(String username) throws RemoteException{
+        return serverModel.getQualities();
+    }
+
+    @Override
     public ArrayList<String> getAllQualities() throws RemoteException {
         return serverModel.getQualities();
     }
