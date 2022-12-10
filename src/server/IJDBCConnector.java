@@ -1,6 +1,7 @@
 package server;
 
 import client.model.UserNotFoundException;
+import common.transferObjects.Applicant;
 import common.transferObjects.Conversation;
 import common.transferObjects.JobAd;
 import common.transferObjects.User;
@@ -15,6 +16,8 @@ public interface IJDBCConnector {
     void insertNewJobAdd(JobAd jobAd);
     void insertQuality(String quality);
     int insertConversation(Conversation conversation);
+
+    void updateApplicant(Applicant applicant);
 
     User getUser(String username) throws UserNotFoundException;
     ArrayList<String> getAllQualities ();

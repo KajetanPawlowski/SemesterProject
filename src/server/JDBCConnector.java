@@ -279,13 +279,21 @@ public class JDBCConnector implements IJDBCConnector{
 
     @Override
     public ArrayList<JobAd> getAllJobAds() {
+        ArrayList<JobAd> allJobAds = new ArrayList<>();
+        String SQL = "SELECT jobId FROM sep5.jobAd;";
+        ResultSet rs;
+        try{
+            Statement statement = connection.createStatement();
+            rs = statement.executeQuery(SQL);
 
-      ArrayList<JobAd> allJobAds = new ArrayList<>();
-//        int jobId = getJobAdId();
-//
-//        allJobAds.add(getJobAd(jobId));
-        // I AM STUCK WITH THIS ONE; tried
-//
+            while(rs.next()){
+                allJobAds.add(new JobAd(rs.getString("jobtitle"), getCompanyProfile(rs.getString("companyname")), rs.getString("jobdesciption"), new ArrayList<String>()));
+            }
+
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+
        return allJobAds;
     }
 }
