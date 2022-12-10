@@ -10,6 +10,7 @@ public class JobAd {
     private ArrayList<Applicant> applicants;
     private ArrayList<String>requirements;
 
+
     public JobAd(String jobTitle, Company company, String jobDescription, ArrayList<String> requirements) {
         this.jobTitle = jobTitle;
         this.company = company;
