@@ -3,7 +3,6 @@ package client.model;
 import common.networking.IServerConnector;
 import common.transferObjects.Applicant;
 import common.transferObjects.Company;
-import common.transferObjects.JobAdd;
 import common.transferObjects.User;
 import common.util.LogBook;
 import common.util.Observer;
@@ -24,9 +23,6 @@ public class UserModel implements IUserModel {
     private static UserModel currentInstance = null;
     private UserModel(){
         currentInstance = this;
-        for(int i = 0; i <10 ; i++){
-            allQualities.add("Quality " + i);
-        }
     }
 
     public static UserModel getInstance(){
@@ -51,11 +47,19 @@ public class UserModel implements IUserModel {
     @Override
     public ArrayList<String> getAllQualities() {
         try {
-            return server.getAllQualities();
+          return server.getAllQualities();
         }catch (RemoteException ex){
-            log.quickClientLog("UserModel::getAlQualities::RemoteException");
-        }
+            log.quickClientLog("UserModel::getAlQualities::RemoteException");}
         return null;
+    }
+
+    @Override
+    public void addNewQuality(String quality){
+        try {
+            server.addNewQuality(quality);
+        }catch (RemoteException ex){
+            log.quickClientLog("UserModel::addNewQuality::RemoteException");
+        }
     }
 
 

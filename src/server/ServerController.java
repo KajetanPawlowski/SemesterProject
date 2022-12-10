@@ -1,9 +1,7 @@
 package server;
 
 import common.networking.IServerConnector;
-import common.transferObjects.Applicant;
-import common.transferObjects.Company;
-import common.transferObjects.JobAdd;
+import common.transferObjects.JobAd;
 import common.transferObjects.User;
 import common.util.LogBook;
 import common.util.UserAlreadyConnectedException;
@@ -14,7 +12,7 @@ import java.util.ArrayList;
 
 
 public class ServerController implements IServerConnector {
-    private ServerModel serverModel = new ServerModel(new JDBCConnector());
+    private ServerModel serverModel;
     LogBook log = LogBook.getInstance();
     public ServerController(ServerModel serverModel) throws RemoteException{
         this.serverModel = serverModel;
@@ -25,13 +23,11 @@ public class ServerController implements IServerConnector {
     @Override
     public void openConnection(String username) throws RemoteException, UserAlreadyConnectedException {
         serverModel.openConnection(username);
-        log.quickServerLog("ServerConnector::openConnection::"+username);
     }
 
     @Override
     public void closeConnection(String username) throws RemoteException {
         serverModel.closeConnection(username);
-        log.quickServerLog("ServerConnector::closeConnection::"+username);
     }
 
     @Override
@@ -50,18 +46,18 @@ public class ServerController implements IServerConnector {
     }
 
     @Override
-    public ArrayList<String> getAllQualities(String username) throws RemoteException{
+    public ArrayList<String> getAllQualities() throws RemoteException{
         return serverModel.getQualities();
     }
 
     @Override
-    public ArrayList<String> getAllQualities() throws RemoteException {
-        return serverModel.getQualities();
-    }
-
-    @Override
-    public void createJobAd(JobAdd nextJobAd) throws RemoteException {
+    public void createJobAd(JobAd nextJobAd) throws RemoteException {
         serverModel.createJobAd(nextJobAd);
+    }
+
+    @Override
+    public void addNewQuality(String quality) throws RemoteException {
+        serverModel.insertNewQuality(quality);
     }
 
 

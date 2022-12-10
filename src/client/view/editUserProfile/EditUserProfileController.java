@@ -65,10 +65,10 @@ public class EditUserProfileController implements FXMLController {
 
     @FXML
     void onAddNextQualityBtn(ActionEvent event){
-        editApplicantProfileVM.addQuality();
         if (list != null) {
             rootVBox.getChildren().remove(list);
         }
+        editApplicantProfileVM.addQuality();
         list = editApplicantProfileVM.getFullList();
         rootVBox.getChildren().add(list);
         editApplicantProfileVM.setQualityListEditable(true);

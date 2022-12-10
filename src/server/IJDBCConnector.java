@@ -1,34 +1,23 @@
 package server;
 
+import client.model.UserNotFoundException;
 import common.transferObjects.Conversation;
-import common.transferObjects.JobAdd;
+import common.transferObjects.JobAd;
 import common.transferObjects.User;
 
 import java.util.ArrayList;
 
 public interface IJDBCConnector {
-    void connect(String host, int portNo, String userName, String password);
+    void connect(String host, int portNo, String userName, String password) throws ConnectionFailedException;
     void close();
 
     void insertNewUser(User user);
-    void insertNewJobAdd(JobAdd jobAd);
+    void insertNewJobAdd(JobAd jobAd);
     void insertQuality(String quality);
     int insertConversation(Conversation conversation);
 
-    User getUser(String username);
+    User getUser(String username) throws UserNotFoundException;
     ArrayList<String> getAllQualities ();
-    ArrayList<JobAdd> getAllJobAds();
-
-
-
-//    new Conversation(COmpany, Applicant, JobId)
-//    int id;
-//    public  Conversation(COmpany, Applicant, JobId){
-//        id = insertConversation(this)
-//    }
-
-
-
-
+    ArrayList<JobAd> getAllJobAds();
 
 }

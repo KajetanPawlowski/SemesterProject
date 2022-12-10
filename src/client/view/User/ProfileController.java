@@ -71,7 +71,6 @@ public class ProfileController implements FXMLController {
         if(profileType ==0){
             return;
         }
-        System.out.println("ProfileController::getProfileColour::" + profileType);
         if(profileType == 'A'){
             profilePicture.setFill(javafx.scene.paint.Color.rgb(112,160,204));
         }else{

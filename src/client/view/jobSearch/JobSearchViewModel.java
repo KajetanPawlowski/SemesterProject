@@ -1,13 +1,13 @@
 package client.view.jobSearch;
 
 import client.core.ViewModel;
-import common.transferObjects.JobAdd;
+import common.transferObjects.JobAd;
 import client.model.IUserModel;
 import javafx.application.Platform;
 
 public class JobSearchViewModel implements ViewModel {
     private IUserModel clientModel;
-    private JobAdd jobAdd;
+    private JobAd jobAdd;
     private int noOfAdds;
     private int currentAdd;
 
@@ -43,7 +43,7 @@ public class JobSearchViewModel implements ViewModel {
         ///setJobAdd(clientModel.getJobAdds().get(prevAdd));
         currentAdd--;
     }
-    private void setJobAdd(JobAdd add){
+    private void setJobAdd(JobAd add){
         jobAdd = add;
         //fillJobInfo();
     }

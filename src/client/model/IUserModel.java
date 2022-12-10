@@ -1,6 +1,5 @@
 package client.model;
 
-import common.transferObjects.JobAdd;
 import common.transferObjects.User;
 import common.util.Subject;
 import common.util.UserAlreadyConnectedException;
@@ -15,6 +14,7 @@ public interface IUserModel extends Subject {
     User getUser();
     void resetModel();
     ArrayList<String> getAllQualities();
+    void addNewQuality(String quality);
 
 
 

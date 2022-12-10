@@ -13,7 +13,7 @@ public class LoginViewModel implements ViewModel {
     private IUserModel clientModel;
 
     private StringProperty userNameProperty = new SimpleStringProperty("");
-    private StringProperty ipProperty = new SimpleStringProperty("10.154.220.129");
+    private StringProperty ipProperty = new SimpleStringProperty("192.168.87.163");
     private StringProperty errorLabelProperty = new SimpleStringProperty("");
 
 

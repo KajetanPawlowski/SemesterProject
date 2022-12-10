@@ -2,14 +2,14 @@ package client.view.jobAd;
 
 import client.core.ViewModel;
 import client.model.IUserModel;
-import common.transferObjects.JobAdd;
+import common.transferObjects.JobAd;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class JobAdViewModel implements ViewModel {
     private IUserModel clientModel;
-    private static JobAdd jobAdd;
+    private static JobAd jobAdd;
 
     private static StringProperty positionName = new SimpleStringProperty("");
     private static StringProperty subtitle = new SimpleStringProperty("");

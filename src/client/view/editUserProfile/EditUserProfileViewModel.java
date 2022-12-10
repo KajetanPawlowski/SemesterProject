@@ -52,6 +52,8 @@ public class EditUserProfileViewModel implements ViewModel {
         clientModel.updateUser();
     }
     public Node getFullList(){
+        qualityList = new QualitiesListView();
+        System.out.println(clientModel.getAllQualities().toString());
         return qualityList.createCheckedList("Skills", clientModel.getAllQualities(), clientModel.getUser().getQualities());
     }
     public void setQualityListEditable(boolean isEditable){
@@ -59,12 +61,10 @@ public class EditUserProfileViewModel implements ViewModel {
     }
 
     public void addQuality(){
-
-            clientModel.getAllQualities().add(nextQuality.get());
-            clientModel.getUser().getQualities().add(nextQuality.get());
-            nextQuality.setValue("");
-
-
+        System.out.println("addQuality::" + nextQuality.get());
+        clientModel.addNewQuality(nextQuality.get());
+        clientModel.getUser().getQualities().add(nextQuality.get());
+        nextQuality.setValue("");
     }
 
     @Override

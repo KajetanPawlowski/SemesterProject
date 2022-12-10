@@ -3,14 +3,14 @@ package common.transferObjects;
 
 import java.util.ArrayList;
 
-public class JobAdd {
+public class JobAd {
     private String jobTitle;
     private Company company;
     private String jobDescription;
     private ArrayList<Applicant> applicants;
     private ArrayList<String>requirements;
 
-    public JobAdd(String jobTitle, Company company, String jobDescription, ArrayList<String> requirements) {
+    public JobAd(String jobTitle, Company company, String jobDescription, ArrayList<String> requirements) {
         this.jobTitle = jobTitle;
         this.company = company;
         this.jobDescription = jobDescription;

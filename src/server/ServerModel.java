@@ -2,7 +2,7 @@ package server;
 
 import common.transferObjects.Applicant;
 import common.transferObjects.Company;
-import common.transferObjects.JobAdd;
+import common.transferObjects.JobAd;
 import common.transferObjects.User;
 import common.util.LogBook;
 import common.util.UserAlreadyConnectedException;
@@ -12,19 +12,19 @@ import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 import java.util.ArrayList;
 
-public class ServerModel  {
+public class ServerModel {
     private JDBCConnector database;
 
     public ServerModel(JDBCConnector database){
         this.database = database;
     }
-    private ArrayList<String> connectionPool = new ArrayList<>();
+    private ArrayList<User> connectionPool = new ArrayList<>();
     private ArrayList<User> users = new ArrayList<User>();
     private ArrayList<Applicant> applicants = new ArrayList<>();
     private ArrayList<Company> companies = new ArrayList<>();
     private ArrayList<String> qualities = new ArrayList<>();
 
-    private ArrayList<JobAdd> relevantJobAds = new ArrayList<JobAdd>();
+    private ArrayList<JobAd> relevantJobAds = new ArrayList<JobAd>();
 
 
     public void run(){
@@ -37,7 +37,12 @@ public class ServerModel  {
 
             System.out.println( "Server listening on " + InetAddress.getLocalHost().getHostAddress() );
 
-            database.connect("hattie.db.elephantsql.com", 5432, "zdpvllpz", "DkaoNfKGKMNfkg8bVfKyN3pJxPM2GWmn");
+            try{
+                database.connect("hattie.db.elephantsql.com", 5432, "zdpvllpz", "DkaoNfKGKMNfkg8bVfKyN3pJxPM2GWmn");
+            }catch (ConnectionFailedException ex){
+                System.exit(2);
+            }
+
 
             qualities = database.getAllQualities();
 //--------------------------------------------------------------SETUP----------------------------------------
@@ -137,8 +142,13 @@ public class ServerModel  {
         return null;
     }
     public ArrayList<String> getQualities(){
-        return qualities;
+        return database.getAllQualities();
     }
+    public void insertNewQuality(String nextQuality){
+        database.insertQuality(nextQuality);
+    }
+
+
 
     public ArrayList<Applicant> getAllApplicants(String username){
         applicants.add(getApplicantProfile(username));
@@ -150,12 +160,14 @@ public class ServerModel  {
         return companies;
     }
 
-    public void createJobAd(JobAdd nextJobAd) {
+    public void createJobAd(JobAd nextJobAd) {
         database.insertNewJobAdd(nextJobAd);
     }
+
+
     public void openConnection(String username) throws UserAlreadyConnectedException {
         checkIfAlreadyConnected(username);
-        connectionPool.add(username);
+        connectionPool.add(database.getUser(username));
     }
     public void closeConnection(String username){
         for (int i = 0; i < connectionPool.size(); i++){
