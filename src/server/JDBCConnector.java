@@ -144,6 +144,11 @@ public class JDBCConnector implements IJDBCConnector{
     }
 
     @Override
+    public void updateApplicant(Applicant applicant) {
+
+    }
+
+    @Override
     public User getUser(String username) throws UserNotFoundException{
         User user;
         if(getUserType(username) =='A'){
