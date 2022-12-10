@@ -45,9 +45,10 @@ public class LoginViewController implements FXMLController {
         logInVM.logInError("");
             try {
                 if(logInVM.login()){
+                    viewHandler.openOverview();
                     return;
                 }
-                viewHandler.openOverview();
+
             }catch (UserNotFoundException userNotFound){
                 System.out.println("LoginViewController::onLoginBtn::UserNotFoundException");
                 showPopUp();
@@ -59,9 +60,9 @@ public class LoginViewController implements FXMLController {
                 logInVM.logInError(userAlreadyConnected.getMsg());
             }
     }
-    Label popupLabel = new Label("Welcome to our app. WHO ARE YOU?");
-    Button popupButtonApplicant = new Button("Applicant");
-    Button popupButtonCompany = new Button("Business User");
+    private Label popupLabel = new Label("Welcome to our app. WHO ARE YOU?");
+    private Button popupButtonApplicant = new Button("Applicant");
+    private Button popupButtonCompany = new Button("Business User");
 
     private void showPopUp(){
         VBox popupVBox = new VBox();

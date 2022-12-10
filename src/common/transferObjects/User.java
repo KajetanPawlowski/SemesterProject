@@ -16,5 +16,6 @@ public interface User {
     void updateUser(User newUser);
     void setConvs(ArrayList<Conversation> convs);
     ArrayList<Conversation> getConvs();
+    String getConvsId();
 
 }

@@ -51,8 +51,9 @@ public class LoginViewModel implements ViewModel {
                 System.out.println("LoginView::login::fail");
                 throw new InvalidLoginData("Server not found");
             }
+            return false;
         }
-        return false;
+
     }
 
     public void logInError(String msg){

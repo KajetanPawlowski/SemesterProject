@@ -31,8 +31,8 @@ public class ServerController implements IServerConnector {
     }
 
     @Override
-    public void createNewUser(String username, char type) throws RemoteException {
-
+    public void createNewUser(User user) throws RemoteException {
+        serverModel.createNewUser(user);
     }
 
     @Override

@@ -46,7 +46,7 @@ public class JDBCConnector implements IJDBCConnector{
     @Override
     public void insertNewUser(User user){
         String SQL = "INSERT INTO sep5.User VALUES "
-                + "(DEFAULT, '" + user.getUsername() + "', '" + user.getType() +"');";
+                + "('" + user.getUsername() + "', '" + user.getType() +"');";
         try {
             Statement statement = connection.createStatement();
             statement.executeQuery(SQL);
@@ -62,9 +62,11 @@ public class JDBCConnector implements IJDBCConnector{
     }
 
     private void insertNewCompany(Company company) {
+//        String SQL = "INSERT INTO sep5.company VALUES "
+//                + "(DEFAULT, '" + company.getUsername() + "', '" + company.getFullName() + "', '"
+//                + company.getDetails() + "');";
         String SQL = "INSERT INTO sep5.company VALUES "
-                + "(DEFAULT, '" + company.getUsername() + "', '" + company.getFullName() + "', '"
-                + company.getDetails() + "');";
+                + "('" + company.getUsername() + "', NULL, NULL, NULL, NULL, NULL);";
         try {
             Statement statement = connection.createStatement();
             statement.executeQuery(SQL);
@@ -76,9 +78,13 @@ public class JDBCConnector implements IJDBCConnector{
     }
 
     private void insertNewApplicant(Applicant applicant) {
-        String SQL = "INSERT INTO sep5.company VALUES "
-                + "(DEFAULT, '" + applicant.getUsername() + "', '" + applicant.getFullName() + "', '"
-                + applicant.getDetails() + "');";
+//        String SQL = "INSERT INTO sep5.applicant VALUES "
+//                + "('" + applicant.getUsername() + "', '" + applicant.getFullName() + "', '" + applicant.getSubtitle()  + "', '"
+//                + applicant.getDetails() + "', ARRAY " + applicant.getQualities().toString()  + ", ARRAY [" + applicant.getConvsId() +"]);";
+        String SQL = "INSERT INTO sep5.applicant VALUES "
+                + "('" + applicant.getUsername() + "', NULL, NULL, NULL, NULL, NULL);";
+
+        System.out.println(SQL);
         try {
             Statement statement = connection.createStatement();
             statement.executeQuery(SQL);
@@ -155,7 +161,7 @@ public class JDBCConnector implements IJDBCConnector{
 
     //Get a CompanyProfile from the DB
     private Company getCompanyProfile(String username){
-        String SQL = "SELECT* FROM sep5.Company WHERE username = ' " + username + "';";
+        String SQL = "SELECT* FROM sep5.Company WHERE username = '" + username + "';";
         ResultSet rs;
         Company result = new Company(username);
         try {
@@ -175,7 +181,8 @@ public class JDBCConnector implements IJDBCConnector{
 
     // Get an ApplicantProfile from the DB
     private Applicant getApplicantProfile(String username){
-        String SQL = "SELECT* FROM sep5.Applicant WHERE username = ' " + username + "';";
+        String SQL = "SELECT* FROM sep5.applicant WHERE username = '" + username + "';";
+        System.out.println(SQL);
         ResultSet rs;
         Applicant applicant = new Applicant(username);
         try {
@@ -183,16 +190,18 @@ public class JDBCConnector implements IJDBCConnector{
             rs = statement.executeQuery(SQL);
 
             rs.next();
-            applicant.setFullName(rs.getString(1));
-            applicant.setDetails(rs.getString(2));
-            applicant.setSubtitle(rs.getString(3));
-            Array temp = rs.getArray(4);
-            List list = Arrays.asList(temp);
-            applicant.setQualities(new ArrayList<String>(list));
-            temp = rs.getArray(5);
-            list = Arrays.asList(temp);
-            applicant.setConvs(getConversationsList(new ArrayList<Integer>(list)));
+            applicant.setFullName(rs.getString("fullname"));
+            applicant.setSubtitle(rs.getString("subtitle"));
+            applicant.setDetails(rs.getString("personalinformation"));
+//            Array temp = rs.getArray(4);
+//            List list = Arrays.asList(temp);
+//            applicant.setQualities(new ArrayList<String>(list));
+//            temp = rs.getArray(5);
+//            list = Arrays.asList(temp);
+//            applicant.setConvs(getConversationsList(new ArrayList<Integer>(list)));
 
+            applicant.setQualities(null);
+            applicant.setConvs(null);
         } catch (SQLException ex) {
             LogBook.getInstance().quickDBLog("getApplicantProfile::"+ex.getMessage());
         }

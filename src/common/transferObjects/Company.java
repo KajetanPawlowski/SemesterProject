@@ -80,4 +80,16 @@ public class Company implements User, Serializable {
     public ArrayList<Conversation> getConvs() {
         return conversations;
     }
+
+    @Override
+    public String getConvsId() {
+        String result = "";
+        for(int i = 0; i<conversations.size(); i++){
+            result +="\"" + conversations.get(i).getId() + "\"";
+            if(i+1 < conversations.size()){
+                result += ",";
+            }
+        }
+        return result;
+    }
 }

@@ -1,5 +1,6 @@
 package server;
 
+import client.model.UserNotFoundException;
 import common.transferObjects.Applicant;
 import common.transferObjects.Company;
 import common.transferObjects.JobAd;
@@ -109,23 +110,9 @@ public class ServerModel {
         return null;
     }
 
-    public void createNewApplicantUser(Applicant newApplicant) {
-        createNewUser(newApplicant);
-        applicants.add(newApplicant);
-        LogBook.getInstance().quickServerLog("ServerModel::createNewApplicantUser::"+newApplicant.getUsername());
-        //database.insertNewApplicant(newApplicant);
-    }
-
-    public void createNewCompanyUser(Company newCompany) {
-        createNewUser(newCompany);
-        companies.add(newCompany);
-        LogBook.getInstance().quickServerLog("ServerModel::createNewCompanyUser::"+newCompany.getUsername());
-        //database.insertNewCompany(newCompany);
-    }
-
     public void createNewUser(User newUser){
-        users.add(newUser);
-        //database.insertNewUser(newUser);
+        database.insertNewUser(newUser);
+        connectionPool.add(newUser);
     }
 
     public void updateUser(User newUser){
@@ -133,13 +120,8 @@ public class ServerModel {
         getUser(newUser.getUsername()).updateUser(newUser);
 
     }
-    public User getUser(String username){
-        for(int i = 0; i < users.size(); i ++){
-            if(users.get(i).getUsername().equals(username)){
-                return users.get(i);
-            }
-        }
-        return null;
+    public User getUser(String username) throws UserNotFoundException {
+        return database.getUser(username);
     }
     public ArrayList<String> getQualities(){
         return database.getAllQualities();

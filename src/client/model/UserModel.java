@@ -159,12 +159,12 @@ public class UserModel implements IUserModel {
     @Override
     public void createNewUser(String username, char type) {
         try {
-            server.createNewUser(username,type);
             if(type == 'A'){
                 clientUser = new Applicant(username);
             }else{
                 clientUser = new Company(username);
             }
+            server.createNewUser(clientUser);
             log.quickClientLog("UserModel::createNewUser::"+username);
         } catch( RemoteException ex ) {
             log.quickClientLog("UserModel::createNewUser::RemoteException");
