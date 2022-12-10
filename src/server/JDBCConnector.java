@@ -288,6 +288,7 @@ public class JDBCConnector implements IJDBCConnector{
 //
        return allJobAds;
     }
+}
 
 
 //    //-----------------------------------------------------------------------------------------------------------User OPERATIONS
