@@ -111,8 +111,7 @@ public class JDBCConnector implements IJDBCConnector{
 
     @Override
     public void insertQuality(String quality) {
-        String SQL = "INSERT INTO sep5.qualities VALUES "
-                + "('"+ quality+"');";
+        String SQL = "INSERT INTO sep5.qualities VALUES " + "('"+ quality+"');";
         try {
             Statement statement = connection.createStatement();
             statement.executeQuery(SQL);
@@ -125,7 +124,23 @@ public class JDBCConnector implements IJDBCConnector{
 
     @Override
     public int insertConversation(Conversation conversation) {
-        return 0;
+        String SQL = "INSERT INTO sep5.converastion VALUES "
+                + "(DEFAULT, '" + Arrays.toString(conversation.getUsers()) + "', '" + conversation.getJobId() +"', '"
+                + conversation.getMessages()+"');";
+        ResultSet rs;
+        int convId =0;
+        try {
+            Statement statement = connection.createStatement();
+            rs = statement.executeQuery(SQL);
+
+            rs.next();
+            convId = rs.getInt(1);
+
+        } catch (SQLException ex) {
+            LogBook.getInstance().quickDBLog("insertNewConversation::" + ex.getMessage());
+        }
+
+        return convId;
     }
 
     @Override
@@ -142,41 +157,43 @@ public class JDBCConnector implements IJDBCConnector{
     private char getUserType(String username) throws UserNotFoundException{
         String SQL = "SELECT type FROM sep5.User WHERE username = '"+username+"';";
         ResultSet rs;
-        char result = 0;
+        char userType = 0;
         try {
             Statement statement = connection.createStatement();
             rs = statement.executeQuery(SQL);
 
             rs.next();
-            result =  rs.getString(1).charAt(0);
+            userType =  rs.getString(1).charAt(0);
 
         } catch (SQLException ex) {
             LogBook.getInstance().quickDBLog("getUserType::"+ex.getMessage());
         }
-        if(result == 0){
+        if(userType == 0){
             throw new UserNotFoundException();
         }
-        return result;
+        return userType;
     }
 
     //Get a CompanyProfile from the DB
     private Company getCompanyProfile(String username){
         String SQL = "SELECT* FROM sep5.Company WHERE username = '" + username + "';";
         ResultSet rs;
-        Company result = new Company(username);
+        Company company = new Company(username);
         try {
             Statement statement = connection.createStatement();
             rs = statement.executeQuery(SQL);
 
             rs.next();
-            result.setFullName(rs.getString(1));
-            result.setDetails(rs.getString(2));
-            //do convs
+            company.setFullName(rs.getString(1));
+            company.setDetails(rs.getString(2));
+            Array temp = rs.getArray(3);
+            List list =Arrays.asList(temp);
+            company.setConvs(getConversationsList(new ArrayList<Integer>(list)));
 
         } catch (SQLException ex) {
             LogBook.getInstance().quickDBLog("getCompanyProfile::"+ex.getMessage());
         }
-        return result;
+        return company;
     }
 
     // Get an ApplicantProfile from the DB
@@ -200,8 +217,6 @@ public class JDBCConnector implements IJDBCConnector{
 //            list = Arrays.asList(temp);
 //            applicant.setConvs(getConversationsList(new ArrayList<Integer>(list)));
 
-            applicant.setQualities(null);
-            applicant.setConvs(null);
         } catch (SQLException ex) {
             LogBook.getInstance().quickDBLog("getApplicantProfile::"+ex.getMessage());
         }
@@ -227,28 +242,52 @@ public class JDBCConnector implements IJDBCConnector{
     public ArrayList<String> getAllQualities (){
         String SQL = "SELECT* FROM sep5.qualities ;";
         ResultSet rs;
-        ArrayList<String> result = new ArrayList<>();
+        ArrayList<String> allQualities = new ArrayList<>();
 
         try {
             Statement statement = connection.createStatement();
             rs = statement.executeQuery(SQL);
 
             while(rs.next()){
-                result.add(rs.getString(1));
+                allQualities.add(rs.getString(1));
             }
 
         } catch (SQLException ex) {
             LogBook.getInstance().quickDBLog("getAllQualities::"+ex.getMessage());
+        }
+        return allQualities;
+    }
+
+
+    // Get JobAd ID from the DB
+    private int getJobAdId(String jobTitle){
+        String SQL = "SELECT jobId FROM sep5.jobAd WHERE jobTitle = '" + jobTitle + "';";
+        ResultSet rs;
+        int result = 0;
+        try{
+            Statement statement = connection.createStatement();
+            rs = statement.executeQuery(SQL);
+
+            rs.next();
+            result = rs.getInt(1);
+
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
         }
         return result;
     }
 
     @Override
     public ArrayList<JobAd> getAllJobAds() {
-        return new ArrayList<>();
-    }
 
-}
+      ArrayList<JobAd> allJobAds = new ArrayList<>();
+//        int jobId = getJobAdId();
+//
+//        allJobAds.add(getJobAd(jobId));
+        // I AM STUCK WITH THIS ONE; tried
+//
+       return allJobAds;
+    }
 
 
 //    //-----------------------------------------------------------------------------------------------------------User OPERATIONS

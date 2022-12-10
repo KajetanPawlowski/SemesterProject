@@ -6,15 +6,18 @@ import java.util.ArrayList;
 public class Conversation implements Serializable {
     private int id;
     private User[] users = new User[2];
+    private int jobId;
+
+    public int getJobId() {
+        return jobId;
+    }
+
     private ArrayList<String> messages = new ArrayList<String>();
 
     public Conversation(int id){
         this.id = id;
     }
 
-    public int getId(){
-        return id;
-    }
 
     public void addMsg(User sender, String text){
         String nextMsg;
@@ -29,4 +32,14 @@ public class Conversation implements Serializable {
     public ArrayList<String> getMessages() {
         return messages;
     }
+
+    public int getId(){
+        return id;
+    }
+
+    public User[] getUsers() {
+        return users;
+    }
+
+
 }
