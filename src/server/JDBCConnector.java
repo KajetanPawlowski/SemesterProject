@@ -64,7 +64,7 @@ public class JDBCConnector implements IJDBCConnector{
     private void insertNewCompany(Company company) {
         String SQL = "INSERT INTO sep5.company VALUES "
                 + "(DEFAULT, '" + company.getUsername() + "', '" + company.getFullName() + "', '"
-                + company.getDetails() + "');";
+                + company.getDetails() + "', '" + company.getConvs() + "');";
         try {
             Statement statement = connection.createStatement();
             statement.executeQuery(SQL);
@@ -77,8 +77,8 @@ public class JDBCConnector implements IJDBCConnector{
 
     private void insertNewApplicant(Applicant applicant) {
         String SQL = "INSERT INTO sep5.company VALUES "
-                + "(DEFAULT, '" + applicant.getUsername() + "', '" + applicant.getFullName() + "', '"
-                + applicant.getDetails() + "');";
+                + "(DEFAULT, '" + applicant.getUsername() + "', '" + applicant.getFullName() + "', '" + applicant.getSubtitle()
+                + "'  , '" + applicant.getDetails() + "', '" + applicant.getQualities() + "', '" + applicant.getConvs() + "');";
         try {
             Statement statement = connection.createStatement();
             statement.executeQuery(SQL);
@@ -157,20 +157,22 @@ public class JDBCConnector implements IJDBCConnector{
     private Company getCompanyProfile(String username){
         String SQL = "SELECT* FROM sep5.Company WHERE username = ' " + username + "';";
         ResultSet rs;
-        Company result = new Company(username);
+        Company company = new Company(username);
         try {
             Statement statement = connection.createStatement();
             rs = statement.executeQuery(SQL);
 
             rs.next();
-            result.setFullName(rs.getString(1));
-            result.setDetails(rs.getString(2));
-            //do convs
+            company.setFullName(rs.getString(1));
+            company.setDetails(rs.getString(2));
+            Array temp = rs.getArray(3);
+            List list =Arrays.asList(temp);
+            company.setConvs(getConversationsList(new ArrayList<Integer>(list)));
 
         } catch (SQLException ex) {
             LogBook.getInstance().quickDBLog("getCompanyProfile::"+ex.getMessage());
         }
-        return result;
+        return company;
     }
 
     // Get an ApplicantProfile from the DB
@@ -242,13 +244,6 @@ public class JDBCConnector implements IJDBCConnector{
 }
 
 
-//    //-----------------------------------------------------------------------------------------------------------User OPERATIONS
-//    // Stores a new User in the DB
-
-//    // Gets the user type from the DB
-
-//
-//
 //    //-----------------------------------------------------------------------------------------------------------Applicant OPERATIONS
 
 //
