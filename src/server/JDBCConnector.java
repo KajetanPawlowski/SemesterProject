@@ -43,6 +43,8 @@ public class JDBCConnector implements IJDBCConnector{
         } catch (SQLException ex) {
             LogBook.getInstance().quickDBLog("insertNewUser::"+ex.getMessage());
         }
+        //modify with applicant and company
+
 
     }
     // Gets the user type from the DB
@@ -69,7 +71,7 @@ public class JDBCConnector implements IJDBCConnector{
 
     //-----------------------------------------------------------------------------------------------------------Applicant OPERATIONS
     // Stores a new Applicant in the DB
-    public void insertNewApplicant(Applicant applicant) {
+    private void insertNewApplicant(Applicant applicant) {
         insertNewUser(applicant);
         String SQL = "INSERT INTO sep5.Applicant VALUES "
                 + "( '" + applicant.getUsername() + "','" + applicant.getFullName() + "', '" + applicant.getSubtitle() +"', '"
@@ -168,10 +170,15 @@ public class JDBCConnector implements IJDBCConnector{
         return result;
     }
 
+    @Override
+    public ArrayList<JobAdd> getAllJobAds() {
+        return null;
+    }
+
 
     //-----------------------------------------------------------------------------------------------------------Company OPERATIONS
     // Stores a new Company in the DB
-    public void insertNewCompany(Company company) {
+    private void insertNewCompany(Company company) {
         insertNewUser(company);
         String SQL = "INSERT INTO sep5.company VALUES "
                 + "(DEFAULT, '" + company.getUsername() + "', '" + company.getFullName() +"', '"
@@ -239,6 +246,24 @@ public class JDBCConnector implements IJDBCConnector{
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    @Override
+    public void insertQuality(String quality) {
+//        String SQL = "INSERT INTO sep5.qualities VALUES "
+//                + "(DEFAULT, '" + quality.getQualities() + "');";
+//        try {
+//            Statement statement = connection.createStatement();
+//            statement.executeQuery(SQL);
+//
+//        } catch (SQLException ex) {
+//            System.out.println(ex.getMessage());
+//        }
+    }
+
+    @Override
+    public int insertConversation(Conversation conversation) {
+        return 0;
     }
 
     // Updates the table JobAd in the DB

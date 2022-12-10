@@ -7,6 +7,7 @@ import common.util.UserAlreadyConnectedException;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import server.DatabaseSetUp;
 
 public class LoginViewModel implements ViewModel {
     private IUserModel clientModel;
@@ -32,22 +33,26 @@ public class LoginViewModel implements ViewModel {
         return errorLabelProperty;
     }
 
-    public void login() throws UserNotFoundException, InvalidLoginData, UserAlreadyConnectedException {
-        if(userNameProperty.get().equals("")){
-            throw new InvalidLoginData("Invalid Username");
-        }
-        if(ipProperty.get().equals("")){
-            throw new InvalidLoginData("Invalid IP");
-        }
-        //IMPORTANT ORDER
-        if(clientModel.connectToServer(userNameProperty.get(), ipProperty.get())){
-            System.out.println("LoginView::login::success");
+    public boolean login() throws UserNotFoundException, InvalidLoginData, UserAlreadyConnectedException {
+        if(userNameProperty.get().equals("admin1234")){
+            DatabaseSetUp.getInstance().doStuff(userNameProperty.get());//admin  access
+            return true;
         }else{
-            System.out.println("LoginView::login::fail");
-            throw new InvalidLoginData("Server not found");
+            if(userNameProperty.get().equals("")){
+                throw new InvalidLoginData("Invalid Username");
+            }
+            if(ipProperty.get().equals("")){
+                throw new InvalidLoginData("Invalid IP");
+            }
+            //IMPORTANT ORDER
+            if(clientModel.connectToServer(userNameProperty.get(), ipProperty.get())){
+                System.out.println("LoginView::login::success");
+            }else{
+                System.out.println("LoginView::login::fail");
+                throw new InvalidLoginData("Server not found");
+            }
         }
-
-
+        return false;
     }
 
     public void logInError(String msg){

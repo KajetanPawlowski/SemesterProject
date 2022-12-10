@@ -44,7 +44,9 @@ public class LoginViewController implements FXMLController {
     public void onLoginBtn(){
         logInVM.logInError("");
             try {
-                logInVM.login();
+                if(logInVM.login()){
+                    return;
+                }
                 viewHandler.openOverview();
             }catch (UserNotFoundException userNotFound){
                 System.out.println("LoginViewController::onLoginBtn::UserNotFoundException");
