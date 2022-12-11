@@ -186,8 +186,8 @@ public class JDBCConnector implements IJDBCConnector{
             rs = statement.executeQuery(SQL);
 
             rs.next();
-            company.setFullName(rs.getString(1));
-            company.setDetails(rs.getString(2));
+            company.setFullName(rs.getString("companyname"));
+            company.setDetails(rs.getString("description"));
 
             Array conversations = rs.getArray(3);
             if(conversations != null){

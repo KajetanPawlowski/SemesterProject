@@ -16,6 +16,12 @@ public class EditCompanyProfileViewModel implements ViewModel {
     public EditCompanyProfileViewModel(IUserModel model){
         clientModel = model;
         clientModel.attachObserver(this);
+        loadInfoFromModel();
+    }
+
+    private void loadInfoFromModel(){
+        companyNameProperty = new SimpleStringProperty(clientModel.getUser().getFullName());
+        companyDescriptionProperty = new SimpleStringProperty(clientModel.getUser().getDetails());
     }
 
     public void safeInfo(){

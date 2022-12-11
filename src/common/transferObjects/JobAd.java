@@ -1,17 +1,18 @@
 package common.transferObjects;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class JobAd {
+public class JobAd implements Serializable {
     private String jobTitle;
-    private Company company;
+    private User company;
     private String jobDescription;
     private ArrayList<Applicant> applicants;
     private ArrayList<String>requirements;
 
 
-    public JobAd(String jobTitle, Company company, String jobDescription, ArrayList<String> requirements) {
+    public JobAd(String jobTitle, User company, String jobDescription, ArrayList<String> requirements) {
         this.jobTitle = jobTitle;
         this.company = company;
         this.jobDescription = jobDescription;
@@ -42,7 +43,7 @@ public class JobAd {
         return jobTitle;
     }
 
-    public Company getCompany() {
+    public User getCompany() {
         return company;
     }
 

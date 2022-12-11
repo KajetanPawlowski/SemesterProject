@@ -8,10 +8,6 @@ public class Conversation implements Serializable {
     private User[] users = new User[2];
     private int jobId;
 
-    public int getJobId() {
-        return jobId;
-    }
-
     private ArrayList<String> messages = new ArrayList<String>();
 
     public Conversation(int id){
@@ -29,7 +25,7 @@ public class Conversation implements Serializable {
         messages.add(nextMsg);
     }
 
-    public ArrayList<String> getMessages() {
+    public ArrayList<String> getAllMessages() {
         return messages;
     }
 
@@ -39,6 +35,10 @@ public class Conversation implements Serializable {
 
     public User[] getUsers() {
         return users;
+    }
+
+    public int getJobId() {
+        return jobId;
     }
 
 

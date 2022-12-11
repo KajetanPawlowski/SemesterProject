@@ -60,5 +60,10 @@ public class ServerController implements IServerConnector {
         serverModel.insertNewQuality(quality);
     }
 
+    @Override
+    public void addNewJobAd(JobAd nextAd) throws RemoteException {
+        serverModel.createJobAd(nextAd);
+    }
+
 
 }
