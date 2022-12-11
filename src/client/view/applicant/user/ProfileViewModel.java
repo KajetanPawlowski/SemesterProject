@@ -1,12 +1,10 @@
-package client.view.User;
+package client.view.applicant.user;
 
 import client.core.ViewModel;
 import client.model.IUserModel;
-import client.view.editUserProfile.QualitiesListView;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.Node;
 
 import java.util.ArrayList;
 

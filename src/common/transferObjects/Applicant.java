@@ -35,6 +35,24 @@ public class Applicant implements User, Serializable {
     }
 
     @Override
+    public String getQualitiesForDB() {
+        String result = "ARRAY [";
+        if(qualities.size() == 0){
+            return "NULL";
+        }else{
+            for(int i = 0; i<qualities.size(); i++){
+                result +="'" + qualities.get(i) + "'";
+                if(i+1 < qualities.size()){
+                    result += ", ";
+                }
+            }
+            result += "]";
+            return result;
+        }
+
+    }
+
+    @Override
     public void setFullName(String name) {
         fullName = name;
     }
@@ -88,15 +106,21 @@ public class Applicant implements User, Serializable {
     }
 
     @Override
-    public String getConvsId() {
-        String result = "";
-        for(int i = 0; i<conversations.size(); i++){
-            result +="\"" + conversations.get(i).getId() + "\"";
-            if(i+1 < conversations.size()){
-                result += ",";
+    public String getConvsIdForDB() {
+        String result = "ARRAY [";
+        if(conversations.size() == 0){
+            return "NULL";
+        }else{
+            for(int i = 0; i<conversations.size(); i++){
+                result +="'" + conversations.get(i).getId() + "'";
+                if(i+1 < conversations.size()){
+                    result += ", ";
+                }
             }
+            result += "]";
+            return result;
         }
-        return result;
+
     }
 
 

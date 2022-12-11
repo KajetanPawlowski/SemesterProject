@@ -5,9 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="client.view.menu.MenuController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.company.menuCompany.MenuCompanyController">
    <children>
       <Button fx:id="overviewBtn" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#onOverviewBtn" prefHeight="50.0" prefWidth="50.0" text="Profile Overview" textAlignment="CENTER" wrapText="true">
          <font>
@@ -15,7 +13,7 @@
          </font>
       </Button>
       <Button fx:id="editProfileBtn" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#onEditProfileBtn" prefHeight="50.0" prefWidth="50.0" text="Edit Profile" textAlignment="CENTER" wrapText="true" />
-      <Button fx:id="jobSearchBtn" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#onJobSearchBtn" prefHeight="50.0" prefWidth="50.0" text="Job Search" textAlignment="CENTER" wrapText="true">
+      <Button fx:id="jobAdsBtn" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#onJobAdsBtn" prefHeight="50.0" prefWidth="50.0" text="Add job" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="11.0" />
          </font>

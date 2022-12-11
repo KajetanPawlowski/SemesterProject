@@ -1,4 +1,4 @@
-package client.view.menu;
+package client.view.company.menuCompany;
 
 import client.core.FXMLController;
 import client.core.ViewHandler;
@@ -7,16 +7,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public class MenuController implements FXMLController {
+public class MenuCompanyController implements FXMLController {
     public ViewHandler viewHandler;
-    public MenuViewModel menuVM;
+    public MenuCompanyViewModel menuVM;
 
     @FXML
     Button overviewBtn;
     @FXML
     Button editProfileBtn;
     @FXML
-    Button jobSearchBtn;
+    Button jobAdsBtn;
     @FXML
     Button chatBtn;
     @FXML
@@ -28,12 +28,12 @@ public class MenuController implements FXMLController {
 
     @FXML
     void onEditProfileBtn(ActionEvent event) {
-        viewHandler.openEditUserProfileView();
+        viewHandler.openEditCompanyProfileView();
     }
 
     @FXML
-    void onJobSearchBtn(ActionEvent event) {
-        viewHandler.openJobSearch();
+    void onJobAdsBtn(ActionEvent event) {
+
     }
 
     @FXML
@@ -44,13 +44,13 @@ public class MenuController implements FXMLController {
 
     @FXML
     void onOverviewBtn(ActionEvent event) {
-        viewHandler.openOverview();
+        viewHandler.openCompanyOverview();
     }
 
 
 
     public void init(ViewHandler viewHandler, ViewModel menuVM) {
         this.viewHandler = viewHandler;
-        this.menuVM = (MenuViewModel)menuVM;
+        this.menuVM = (MenuCompanyViewModel)menuVM;
     }
 }

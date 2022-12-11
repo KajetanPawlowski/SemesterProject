@@ -34,12 +34,7 @@ public class UserModel implements IUserModel {
     @Override
     public void resetModel() {
         if(clientUser != null){
-            try {
-                server.closeConnection(clientUser.getUsername());
-                updateUser();
-            }catch (RemoteException ex){
-                log.quickClientLog("UserModel::resetModel::RemoteException");
-            }
+            disconnectFromServer(clientUser.getUsername());
         }
         currentInstance = null;
     }
@@ -62,48 +57,6 @@ public class UserModel implements IUserModel {
         }
     }
 
-
-    //    public ArrayList<String> getAllQualities() {
-//        return allQualities;
-//    }
-//
-//    @Override
-//    public void resetModel() {
-//        try{
-//            server.closeConnection(currentInstance.getUsername());
-//        }catch(RemoteException ex){
-//            log.quickClientLog("UserModel::resetModel::RemoteException");
-//        }
-//
-//        currentInstance = new UserModel();
-//    }
-//
-//    @Override
-//    public void updateUserToServer() {
-//        try{
-//            server.updateUser(currentUserState.getUserProfile());
-//            log.quickClientLog("UserModel::UpdateUserToServer");
-//        }catch (RemoteException ex){
-//            log.quickClientLog("UserModel::UpdateUserToServer::RemoteException");
-//        }
-//    }
-//
-//
-//    public String getUsername(){
-//        System.out.println("UserModel::getUserName");
-//        return currentUserState.getUsername();
-//    }
-//
-//    public UserModelState getUserState(){
-//        return currentUserState;
-//    }
-//
-//
-//
-//    public ArrayList<JobAdd> getJobAdds(){
-//        return null;
-//    }
-//
     private ArrayList<Observer> observers = new ArrayList<Observer>();
 
     @Override
@@ -133,6 +86,7 @@ public class UserModel implements IUserModel {
             clientUser = server.getUser(username);
             return true;
         } catch( RemoteException | MalformedURLException | NotBoundException ex ) {
+            ex.printStackTrace();
             return false;
         }
     }
@@ -149,8 +103,8 @@ public class UserModel implements IUserModel {
     @Override
     public void updateUser() {
         try {
-            server.updateUser(clientUser);
             log.quickClientLog("UserModel::updateUser::"+clientUser.getUsername());
+            server.updateUser(clientUser);
         } catch( RemoteException ex ) {
             log.quickClientLog("UserModel::updateUser::RemoteException");
         }
@@ -164,8 +118,8 @@ public class UserModel implements IUserModel {
             }else{
                 clientUser = new Company(username);
             }
-            server.createNewUser(clientUser);
             log.quickClientLog("UserModel::createNewUser::"+username);
+            server.createNewUser(clientUser);
         } catch( RemoteException ex ) {
             log.quickClientLog("UserModel::createNewUser::RemoteException");
         }

@@ -1,4 +1,4 @@
-package client.view.overview;
+package client.view.applicant.overview;
 
 import client.core.FXMLController;
 import client.core.ViewHandler;

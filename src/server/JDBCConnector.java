@@ -62,11 +62,10 @@ public class JDBCConnector implements IJDBCConnector{
     }
 
     private void insertNewCompany(Company company) {
-//        String SQL = "INSERT INTO sep5.company VALUES "
-//                + "(DEFAULT, '" + company.getUsername() + "', '" + company.getFullName() + "', '"
-//                + company.getDetails() + "');";
         String SQL = "INSERT INTO sep5.company VALUES "
-                + "('" + company.getUsername() + "', NULL, NULL, NULL, NULL, NULL);";
+                + "('" + company.getUsername() + "', '" + company.getFullName() + "', '"
+                + company.getDetails() + "', " + company.getConvsIdForDB() +");";
+
         try {
             Statement statement = connection.createStatement();
             statement.executeQuery(SQL);
@@ -78,13 +77,9 @@ public class JDBCConnector implements IJDBCConnector{
     }
 
     private void insertNewApplicant(Applicant applicant) {
-//        String SQL = "INSERT INTO sep5.applicant VALUES "
-//                + "('" + applicant.getUsername() + "', '" + applicant.getFullName() + "', '" + applicant.getSubtitle()  + "', '"
-//                + applicant.getDetails() + "', ARRAY " + applicant.getQualities().toString()  + ", ARRAY [" + applicant.getConvsId() +"]);";
         String SQL = "INSERT INTO sep5.applicant VALUES "
-                + "('" + applicant.getUsername() + "', NULL, NULL, NULL, NULL, NULL);";
-
-        System.out.println(SQL);
+                + "('" + applicant.getUsername() + "', '" + applicant.getFullName() + "', '" + applicant.getSubtitle()  + "', '"
+                + applicant.getDetails() + "', " + applicant.getQualitiesForDB() + ", " + applicant.getConvsIdForDB() +");";
         try {
             Statement statement = connection.createStatement();
             statement.executeQuery(SQL);
@@ -98,8 +93,9 @@ public class JDBCConnector implements IJDBCConnector{
     @Override
     public void insertNewJobAdd(JobAd jobAd) {
         String SQL = "INSERT INTO sep5.jobad VALUES "
-                + "(DEFAULT, '" + jobAd.getJobTitle() + "', '" + jobAd.getCompany() +"', '"
-                + jobAd.getJobDescription()+"', '"+jobAd.getRequirements()+"');";
+                + "(DEFAULT, '" + jobAd.getJobTitle() + "', '" + jobAd.getCompany().getUsername() +"', '"
+                + jobAd.getJobDescription()+"', ARRAY " + jobAd.getRequirementsForDB() +");";
+        System.out.println(SQL);
         try {
             Statement statement = connection.createStatement();
             statement.executeQuery(SQL);
@@ -123,10 +119,10 @@ public class JDBCConnector implements IJDBCConnector{
     }
 
     @Override
-    public int insertConversation(Conversation conversation) {
-        String SQL = "INSERT INTO sep5.converastion VALUES "
-                + "(DEFAULT, '" + Arrays.toString(conversation.getUsers()) + "', '" + conversation.getJobId() +"', '"
-                + conversation.getMessages()+"');";
+    public int insertConversation(User user1, User user2) {
+        String SQL = "INSERT INTO sep5.converastion VALUES ";
+//                + "(DEFAULT, ARRAY " + "', '" + conversation.getJobId() +"', '"
+//                + conversation.getMessages()+"');";
         ResultSet rs;
         int convId =0;
         try {
@@ -144,8 +140,9 @@ public class JDBCConnector implements IJDBCConnector{
     }
 
     @Override
-    public void updateApplicant(Applicant applicant) {
-
+    public void updateUser(User user) {
+        deleteUser(user);
+        insertNewUser(user);
     }
 
     @Override
@@ -191,9 +188,12 @@ public class JDBCConnector implements IJDBCConnector{
             rs.next();
             company.setFullName(rs.getString(1));
             company.setDetails(rs.getString(2));
-            Array temp = rs.getArray(3);
-            List list =Arrays.asList(temp);
-            company.setConvs(getConversationsList(new ArrayList<Integer>(list)));
+
+            Array conversations = rs.getArray(3);
+            if(conversations != null){
+                Integer[] int_conversations = (Integer[])conversations.getArray();
+                company.setConvs(getConversationsList(int_conversations));
+            }
 
         } catch (SQLException ex) {
             LogBook.getInstance().quickDBLog("getCompanyProfile::"+ex.getMessage());
@@ -214,21 +214,36 @@ public class JDBCConnector implements IJDBCConnector{
             rs.next();
             applicant.setFullName(rs.getString("fullname"));
             applicant.setSubtitle(rs.getString("subtitle"));
-            applicant.setDetails(rs.getString("personalinformation"));
-//            Array temp = rs.getArray(4);
-//            List list = Arrays.asList(temp);
-//            applicant.setQualities(new ArrayList<String>(list));
-//            temp = rs.getArray(5);
-//            list = Arrays.asList(temp);
-//            applicant.setConvs(getConversationsList(new ArrayList<Integer>(list)));
+            applicant.setDetails(rs.getString(4));
+
+
+            Array qualities = rs.getArray(5);
+            if(qualities != null){
+                String[] str_qualities = (String[])qualities.getArray();
+                applicant.setQualities(getQualitiesList(str_qualities));
+            }
+
+            Array conversations = rs.getArray(6);
+            if(conversations != null){
+                Integer[] int_conversations = (Integer[])conversations.getArray();
+                applicant.setConvs(getConversationsList(int_conversations));
+            }
+
 
         } catch (SQLException ex) {
             LogBook.getInstance().quickDBLog("getApplicantProfile::"+ex.getMessage());
         }
         return applicant;
     }
+    private ArrayList<String> getQualitiesList(String[] strQualities){
+        ArrayList<String> result = new ArrayList<>();
+        for(int i = 0; i < strQualities.length; i ++){
+            result.add(strQualities[i]);
+        }
+        return result;
+    }
 
-    private ArrayList<Conversation> getConversationsList(ArrayList<Integer> convIds){
+    private ArrayList<Conversation> getConversationsList(Integer[] convIds){
         ArrayList conversations = new ArrayList<Conversation>();
         for(Integer convId : convIds ){
             conversations.add(getConversation(convId));
@@ -240,7 +255,7 @@ public class JDBCConnector implements IJDBCConnector{
         /// SQL CONVESATION WHERE ID = ID
 
         //Conversation result......
-        return new Conversation(id);
+        return null;
     }
 
     @Override
@@ -301,6 +316,28 @@ public class JDBCConnector implements IJDBCConnector{
 
        return allJobAds;
     }
+
+    private void deleteUser(User user){
+        String SQL ="";
+        if(user.getType()== 'A'){
+            SQL = "DELETE FROM sep5.applicant WHERE username = '" + user.getUsername() + "'; " +
+                    "DELETE FROM sep5.user WHERE username = '"+ user.getUsername() + "'; ";
+        }else{
+            SQL = "DELETE FROM sep5.company WHERE username = '" + user.getUsername() + "'; " +
+                    "DELETE FROM sep5.user WHERE username = '"+ user.getUsername() + "';";
+        }
+
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeQuery(SQL);
+
+        } catch (SQLException ex) {
+            LogBook.getInstance().quickDBLog("deleteUser::" + ex.getMessage());
+        }
+
+    }
+
+
 }
 
 

@@ -1,4 +1,4 @@
-package client.view.editUserProfile;
+package client.view.applicant.editUserProfile;
 
 import client.core.FXMLController;
 import client.core.ViewHandler;

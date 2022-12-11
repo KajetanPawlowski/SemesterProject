@@ -1,4 +1,4 @@
-package client.view.editUserProfile;
+package client.view.applicant.editUserProfile;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

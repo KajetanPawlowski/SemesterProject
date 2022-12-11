@@ -2,6 +2,7 @@ package client.view.login;
 
 import client.core.ViewModel;
 import client.model.IUserModel;
+import client.model.UserModel;
 import client.model.UserNotFoundException;
 import common.util.UserAlreadyConnectedException;
 import javafx.application.Platform;
@@ -33,27 +34,28 @@ public class LoginViewModel implements ViewModel {
         return errorLabelProperty;
     }
 
-    public boolean login() throws UserNotFoundException, InvalidLoginData, UserAlreadyConnectedException {
-        if(userNameProperty.get().equals("admin1234")){
-            DatabaseSetUp.getInstance().doStuff(userNameProperty.get());//admin  access
-            return true;
-        }else{
-            if(userNameProperty.get().equals("")){
-                throw new InvalidLoginData("Invalid Username");
-            }
-            if(ipProperty.get().equals("")){
-                throw new InvalidLoginData("Invalid IP");
-            }
-            //IMPORTANT ORDER
-            if(clientModel.connectToServer(userNameProperty.get(), ipProperty.get())){
-                System.out.println("LoginView::login::success");
-            }else{
-                System.out.println("LoginView::login::fail");
-                throw new InvalidLoginData("Server not found");
-            }
-            return false;
+    public void login() throws UserNotFoundException, InvalidLoginData, UserAlreadyConnectedException {
+        //checkAdmin(userNameProperty.get());
+        if(userNameProperty.get().equals("")){
+            throw new InvalidLoginData("Invalid Username");
         }
-
+        if(ipProperty.get().equals("")){
+            throw new InvalidLoginData("Invalid IP");
+        }
+        //IMPORTANT ORDER
+        if(clientModel.connectToServer(userNameProperty.get(), ipProperty.get())){
+            System.out.println("LoginView::login::success");
+        }else{
+            System.out.println("LoginView::login::fail");
+            throw new InvalidLoginData("Server not found");
+        }
+    }
+    private void checkAdmin(String username){
+        if(username.equals("admin1234")){
+            DatabaseSetUp.getInstance().doStuff("sdsd");
+            UserModel.getInstance().resetModel();
+            System.exit(22);
+        }
     }
 
     public void logInError(String msg){

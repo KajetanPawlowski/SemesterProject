@@ -30,6 +30,10 @@ public class Company implements User, Serializable {
     }
 
     @Override
+    public String getQualitiesForDB() {
+        return null;
+    }
+    @Override
     public void setFullName(String name) {
         companyName = name;
     }
@@ -56,7 +60,7 @@ public class Company implements User, Serializable {
 
     @Override
     public void setSubtitle(String subtitle) {
-
+        // NO NOTHING
     }
 
     @Override
@@ -69,6 +73,7 @@ public class Company implements User, Serializable {
         setFullName(newUser.getFullName());
         setDetails(newUser.getDetails());
         setSubtitle(newUser.getSubtitle());
+        setConvs(newUser.getConvs());
     }
 
     @Override
@@ -82,14 +87,20 @@ public class Company implements User, Serializable {
     }
 
     @Override
-    public String getConvsId() {
-        String result = "";
-        for(int i = 0; i<conversations.size(); i++){
-            result +="\"" + conversations.get(i).getId() + "\"";
-            if(i+1 < conversations.size()){
-                result += ",";
+    public String getConvsIdForDB() {
+        String result = "ARRAY [";
+        if(conversations.size() == 0){
+            return "NULL";
+        }else{
+            for(int i = 0; i<conversations.size(); i++){
+                result +="'" + conversations.get(i).getId() + "'";
+                if(i+1 < conversations.size()){
+                    result += ", ";
+                }
             }
+            result += "]";
+            return result;
         }
-        return result;
+
     }
 }

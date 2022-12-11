@@ -1,4 +1,4 @@
-package client.view.editUserProfile;
+package client.view.applicant.editUserProfile;
 
 import client.core.ViewModel;
 import client.model.IUserModel;
@@ -6,8 +6,6 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
-
-import java.util.ArrayList;
 
 public class EditUserProfileViewModel implements ViewModel {
     private IUserModel clientModel;

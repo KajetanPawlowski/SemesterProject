@@ -15,9 +15,9 @@ public interface IJDBCConnector {
     void insertNewUser(User user);
     void insertNewJobAdd(JobAd jobAd);
     void insertQuality(String quality);
-    int insertConversation(Conversation conversation);
+    int insertConversation(User user1, User user2);
 
-    void updateApplicant(Applicant applicant);
+    void updateUser(User user);
 
     User getUser(String username) throws UserNotFoundException;
     ArrayList<String> getAllQualities ();

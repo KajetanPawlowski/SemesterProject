@@ -1,4 +1,4 @@
-package client.view.menuCompany;
+package client.view.company.menuCompany;
 
 import client.core.ViewModel;
 import client.model.IUserModel;

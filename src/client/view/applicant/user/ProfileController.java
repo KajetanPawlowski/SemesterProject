@@ -1,10 +1,9 @@
-package client.view.User;
+package client.view.applicant.user;
 
 import client.core.FXMLController;
 import client.core.ViewHandler;
 
 import client.core.ViewModel;
-import client.view.editUserProfile.QualitiesListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,7 +13,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +51,6 @@ public class ProfileController implements FXMLController {
         applicantName.textProperty().bindBidirectional(profileVM.applicantNameProperty());
         personalInformation.textProperty().bindBidirectional(profileVM.personalInformationProperty());
         subtitle.textProperty().bindBidirectional(profileVM.subtitleProperty());
-        getProfileColour(profileVM.getUserType());
 
     }
     private ObservableList<String> getObservableList(ArrayList<String> arrayList){
@@ -67,15 +64,6 @@ public class ProfileController implements FXMLController {
         return instance;
     }
 
-    private void getProfileColour(char profileType){
-        if(profileType ==0){
-            return;
-        }
-        if(profileType == 'A'){
-            profilePicture.setFill(javafx.scene.paint.Color.rgb(112,160,204));
-        }else{
-            profilePicture.setFill(javafx.scene.paint.Color.rgb(204,112,156));
-        }
-    }
+
 
 }

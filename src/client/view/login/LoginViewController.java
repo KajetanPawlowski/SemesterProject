@@ -4,7 +4,7 @@ import client.core.FXMLController;
 import client.core.ViewHandler;
 import client.core.ViewModel;
 import client.model.UserNotFoundException;
-import client.view.menu.MenuController;
+import client.view.applicant.menu.MenuController;
 import common.util.UserAlreadyConnectedException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -44,10 +44,8 @@ public class LoginViewController implements FXMLController {
     public void onLoginBtn(){
         logInVM.logInError("");
             try {
-                if(logInVM.login()){
-                    viewHandler.openOverview();
-                    return;
-                }
+                logInVM.login();
+                viewHandler.openOverview();
 
             }catch (UserNotFoundException userNotFound){
                 System.out.println("LoginViewController::onLoginBtn::UserNotFoundException");
@@ -85,11 +83,15 @@ public class LoginViewController implements FXMLController {
         {
             if(e.getSource() == popupButtonApplicant){
                 logInVM.createNewUser('A');
-            }if(e.getSource() == popupButtonCompany){
-            logInVM.createNewUser('C');
-        }
-            popup.hide();
-            viewHandler.openEditUserProfileView();
+                popup.hide();
+                viewHandler.openEditUserProfileView();
+            }else if(e.getSource() == popupButtonCompany){
+                logInVM.createNewUser('C');
+                popup.hide();
+                viewHandler.openEditCompanyProfileView();
+            }
+
+
         }
     };
 

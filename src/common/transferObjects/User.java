@@ -6,6 +6,7 @@ public interface User {
     String getUsername();
     char getType();
     ArrayList<String> getQualities();
+    String getQualitiesForDB();
     void setFullName(String name);
     void setQualities(ArrayList<String> qualities);
     String getDetails();
@@ -16,6 +17,7 @@ public interface User {
     void updateUser(User newUser);
     void setConvs(ArrayList<Conversation> convs);
     ArrayList<Conversation> getConvs();
-    String getConvsId();
+    String getConvsIdForDB();
+
 
 }

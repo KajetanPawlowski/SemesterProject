@@ -58,6 +58,18 @@ public class JobAd {
         return requirements;
     }
 
+    public String getRequirementsForDB(){
+        String result = "[";
+        for(int i = 0; i < requirements.size(); i++){
+            result += "'" + requirements.get(i) + "'";
+            if(i+1 < requirements.size()){
+                result += ", ";
+            }
+        }
+        result += "]";
+        return result;
+    }
+
     public void addApplicant(Applicant newApplicant){
         applicants.add(newApplicant);
     }

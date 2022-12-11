@@ -13,17 +13,15 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class ViewHandler {
-    private LogBook log = LogBook.getInstance();
+    private final LogBook log = LogBook.getInstance();
     private ViewModelFactory vmf;
     private Scene mainScene;
     private Stage stage;
-    private Stage popupStage;
-    private Scene popupScene;
+
 
     public ViewHandler(ViewModelFactory vmf) {
         this.vmf = vmf;
         stage = new Stage();
-        popupStage = new Stage();
         stage.setOnCloseRequest(ev -> {
             UserModel.getInstance().resetModel();
         });
@@ -45,10 +43,28 @@ public class ViewHandler {
             stage.show();
 
     }
+
+    public void openOverview(){
+        if(vmf.getModel().getUser().getType()== 'A'){
+            openApplicantOverview();
+        }else{
+            openCompanyOverview();
+        }
+    }
+
     public void openEditUserProfileView(){
-        BorderPane root = (BorderPane)createFromFXML(vmf.getEditUserVM(),"../view/editUserProfile/EditUserProfile.fxml");
+        BorderPane root = (BorderPane)createFromFXML(vmf.getEditUserVM(),"../view/applicant/editUserProfile/EditUserProfile.fxml");
         root.setLeft(getMenuBar());
 
+        mainScene = new Scene(root,800, 600);
+        stage.setScene(mainScene);
+        stage.setTitle("Edit Profile");
+        stage.show();
+
+    }
+    public void openEditCompanyProfileView(){
+        BorderPane root = (BorderPane)createFromFXML(vmf.getEditCompanyProfileVM(),"../view/company/editCompanyProfile/EditCompanyProfile.fxml");
+        root.setLeft(getMenuBar());
 
         mainScene = new Scene(root,800, 600);
         stage.setScene(mainScene);
@@ -57,15 +73,27 @@ public class ViewHandler {
 
     }
 
-    public void openOverview() {
-            BorderPane root = (BorderPane)createFromFXML(vmf.getOverviewVM(),"../view/overview/Overview.fxml");
 
-            root.setLeft(getMenuBar());
+    public void openApplicantOverview() {
+            BorderPane root = (BorderPane)createFromFXML(vmf.getOverviewVM(),"../view/applicant/overview/Overview.fxml");
+
+            root.setLeft(getApplicantMenuBar());
 
             mainScene = new Scene(root,800, 600);
             stage.setScene(mainScene);
             stage.setTitle("Applicant Profile Overview");
             stage.show();
+    }
+
+    public void openCompanyOverview() {
+        BorderPane root = (BorderPane)createFromFXML(vmf.getOverviewCompanyVM(),"../view/company/overviewCompany/OverviewCompany.fxml");
+
+        root.setLeft(getCompanyMenuBar());
+
+        mainScene = new Scene(root,800, 600);
+        stage.setScene(mainScene);
+        stage.setTitle("Company Profile Overview");
+        stage.show();
     }
 
     public void openJobSearch(){
@@ -99,13 +127,13 @@ public class ViewHandler {
     }
 
     private VBox getApplicantMenuBar(){
-        return(VBox)(createFromFXML(vmf.getMenuVM(), "../view/menu/Menu.fxml"));
+        return(VBox)(createFromFXML(vmf.getMenuVM(), "../view/applicant/menu/Menu.fxml"));
     }
     private VBox getCompanyMenuBar(){
-        return(VBox)(createFromFXML(vmf.getMenuCompanyVM(), "../view/menuCompany/MenuCompany.fxml"));
+        return(VBox)(createFromFXML(vmf.getMenuCompanyVM(), "../view/company/menuCompany/MenuCompany.fxml"));
     }
     public VBox getUserProfile(){
-        return (VBox)(createFromFXML(vmf.getUserVM(), "../view/user/Profile.fxml"));
+        return (VBox)(createFromFXML(vmf.getUserVM(), "../view/applicant/user/Profile.fxml"));
     }
     public VBox getJobAd(){
         return (VBox)(createFromFXML(vmf.getJobAdVM(), "../view/jobAd/JobAd.fxml"));

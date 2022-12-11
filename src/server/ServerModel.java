@@ -46,30 +46,6 @@ public class ServerModel {
 
 
             qualities = database.getAllQualities();
-//--------------------------------------------------------------SETUP----------------------------------------
-            String[] names = {"Kajetan","Maja","Maciej", "Ari","Rado","Kamstrup", "LEGO", "Arla Foods", "Wolt"};
-            users = new ArrayList<>();
-            int i = 0;
-            for(; i <5 ;i++){
-                Applicant nextApplicant = new Applicant(names[i]);
-                nextApplicant.setFullName( names[i] + " Rasmussen");
-                nextApplicant.setSubtitle("Student");
-                nextApplicant.setDetails("Hello, \n ny name is " + names[i] + ". Nice to meet you!" );
-                users.add(nextApplicant);
-                applicants.add(nextApplicant);
-            }
-            for(; i < names.length ;i++){
-                Company nextCompany = new Company(names[i]);
-                nextCompany.setFullName( names[i] + " Company");
-                nextCompany.setSubtitle("Company");
-                nextCompany.setDetails("Nice to meet you!" );
-                users.add(nextCompany);
-                companies.add(nextCompany);
-            }
-
-//            for(int j = 0; j < 10; j++){
-//                qualities.add("Skill " + j);
-//            }
 
         } catch( Exception ex ) {
             ex.printStackTrace();
@@ -117,7 +93,7 @@ public class ServerModel {
 
     public void updateUser(User newUser){
         LogBook.getInstance().quickServerLog("ServerModel::updateUser");
-        getUser(newUser.getUsername()).updateUser(newUser);
+        database.updateUser(newUser);
 
     }
     public User getUser(String username) throws UserNotFoundException {
@@ -156,7 +132,9 @@ public class ServerModel {
             if(connectionPool.get(i).equals(username)){
                 connectionPool.remove(connectionPool.get(i));
                 LogBook.getInstance().quickServerLog("ServerModel::CloseConnection::" + username);
-                break;
+                if(connectionPool.size()== 0){
+                    database.close();
+                }
             }
         }
     }
@@ -167,6 +145,11 @@ public class ServerModel {
             }
         }
     }
+
+    public int createNewConversation(User user1, User user2){
+        return 0;
+    }
+
 
 
 
