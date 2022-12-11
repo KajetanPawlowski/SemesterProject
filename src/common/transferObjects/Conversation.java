@@ -41,5 +41,15 @@ public class Conversation implements Serializable {
         return users;
     }
 
+    public void setUsers(User[] users) {
+        this.users = users;
+    }
 
+    public void setJobId(int jobId) {
+        this.jobId = jobId;
+    }
+
+    public void setMessages(ArrayList<String> messages) {
+        this.messages = messages;
+    }
 }

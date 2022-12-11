@@ -7,8 +7,6 @@ import org.postgresql.util.PSQLException;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 public class JDBCConnector implements IJDBCConnector{
@@ -135,14 +133,49 @@ public class JDBCConnector implements IJDBCConnector{
         } catch (SQLException ex) {
             LogBook.getInstance().quickDBLog("insertNewConversation::" + ex.getMessage());
         }
+        //do another try catch block with another string sql, by id decending
 
         return convId;
     }
 
     @Override
     public void updateUser(User user) {
-        deleteUser(user);
-        insertNewUser(user);
+        //deleteUser(user);
+        //insertNewUser(user);
+        //update statement here for both applicant and company
+        if(user.getType() == 'A'){
+            updateApplicant(user);
+        }else{
+            updateCompany(user);
+        }
+    }
+
+    private void updateApplicant(User user) {
+        String SQL = "UPDATE sep5.Applicant SET fullName = '" + user.getFullName() + "'," +
+                " subtitle = '" + user.getSubtitle() + "'," +
+                "personalinfromation = '" + user.getDetails() + "'," +
+                "skills = " + user.getQualitiesForDB() + "," +
+                "conversationsIds = " + user.getConvsIdForDB() + " WHERE username = '" + user.getUsername() + "';";
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeQuery(SQL);
+
+        } catch (SQLException ex) {
+            LogBook.getInstance().quickDBLog("updateApplicant::"+ex.getMessage());
+        }
+    }
+
+    private void updateCompany(User user) {
+        String SQL = "UPDATE sep5.Company SET companyName = '" + user.getFullName() + "'," +
+                "description = '" + user.getDetails() + "'," +
+                "conversationsIds = " + user.getConvsIdForDB() + " WHERE username = '" + user.getUsername() + "';";
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeQuery(SQL);
+
+        } catch (SQLException ex) {
+            LogBook.getInstance().quickDBLog("updateCompany::"+ex.getMessage());
+        }
     }
 
     @Override
@@ -251,12 +284,56 @@ public class JDBCConnector implements IJDBCConnector{
         return conversations;
     }
 
+    private ArrayList<User> getUsersList(String[] strUsers){
+        ArrayList users = new ArrayList<User>();
+        for(String username : strUsers){
+            users.add(getUser(username));
+        }
+        return users;
+    }
+
+    private ArrayList<String> getMessageList(String[] strMessages){
+        ArrayList messages = new ArrayList<String>();
+        for(int i = 0; i< strMessages.length; i++){
+            messages.add(strMessages[i]);
+        }
+        return messages;
+    }
+    //get all users method
+
     private Conversation getConversation(Integer id){
+        String SQL = "SELECT* FROM sep5.conversation WHERE conversationId = '" + id + "';";
+        ResultSet rs;
+        Conversation conversation = new Conversation(id);
+        try {
+            Statement statement = connection.createStatement();
+            rs = statement.executeQuery(SQL);
+
+            rs.next();
+            Array users = rs.getArray("users");
+            if(users != null){
+                String[] string_user = (String[])users.getArray();
+                //conversation.setUsers(getUsersList(string_user));
+            }
+            conversation.setJobId(rs.getInt("jobId"));
+
+            Array messages = rs.getArray("messages");
+            if(messages != null){
+                String[] str_message = (String[])messages.getArray();
+                conversation.setMessages(getMessageList(str_message));
+            }
+
+
+        } catch (SQLException ex) {
+            LogBook.getInstance().quickDBLog("getCompanyProfile::"+ex.getMessage());
+        }
+        return conversation;
         /// SQL CONVESATION WHERE ID = ID
 
         //Conversation result......
-        return null;
     }
+
+    // public ArrayLis<Conversation> getConversations(ArrayList<Integer> convIds)
 
     @Override
     public ArrayList<String> getAllQualities (){
@@ -361,25 +438,8 @@ public class JDBCConnector implements IJDBCConnector{
 //        } catch (SQLException ex) {
 //            LogBook.getInstance().quickDBLog("updateApplicant::"+ex.getMessage());
 //        }
+        // insert instead of update
 //    }
-//
-
-//
-
-
-
-//
-//
-
-//
-//
-//    //-----------------------------------------------------------------------------------------------------------Company OPERATIONS
-//    // Stores a new Company in the DB
-
-//
-
-//
-//
 //
 //    //-----------------------------------------------------------------------------------------------------------JobAdd OPERATIONS
 //    // Get JobAd ID from the DB

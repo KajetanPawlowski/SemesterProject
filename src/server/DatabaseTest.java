@@ -15,10 +15,12 @@ public class DatabaseTest {
         ArrayList<String> test = new ArrayList<>();
         database.connect("hattie.db.elephantsql.com", 5432, "zdpvllpz", "DkaoNfKGKMNfkg8bVfKyN3pJxPM2GWmn");
 
-        test.add("SUPER COOL");
+        //test.add("SUPER COOL");
 
         //database.insertNewJobAdd(new JobAd("Backend Dev", new Company("Kamstrup"), "Job Description dfasjdsakjdnaksdnasdnasda", test));
-        database.insertNewUser(new Applicant("maja"));
+        //database.insertNewUser(new Applicant("maja"));
+
+        database.updateUser(database.getUser("arla"));
 
         database.close();
 
