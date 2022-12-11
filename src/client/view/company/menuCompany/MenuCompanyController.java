@@ -21,6 +21,7 @@ public class MenuCompanyController implements FXMLController {
     Button chatBtn;
     @FXML
     Button logoutBtn;
+
     @FXML
     void onChatBtn(ActionEvent event) {
         viewHandler.openChatView();
@@ -33,7 +34,7 @@ public class MenuCompanyController implements FXMLController {
 
     @FXML
     void onJobAdsBtn(ActionEvent event) {
-
+        viewHandler.openAddJobView();
     }
 
     @FXML

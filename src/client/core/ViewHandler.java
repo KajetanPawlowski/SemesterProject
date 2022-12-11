@@ -118,6 +118,17 @@ public class ViewHandler {
         stage.setTitle("Chat");
         stage.show();
     }
+
+    public void openAddJobView(){
+        BorderPane root = (BorderPane)createFromFXML(vmf.getCreateJobAdVM(),"../view/company/createJobAd/CreateJobAd.fxml");
+
+        root.setLeft(getMenuBar());
+
+        mainScene = new Scene(root,800, 600);
+        stage.setScene(mainScene);
+        stage.setTitle("Chat");
+        stage.show();
+    }
     public VBox getMenuBar(){
         if(vmf.getModel().getUser().getType()=='A'){
             return getApplicantMenuBar();

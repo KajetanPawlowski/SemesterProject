@@ -3,6 +3,7 @@ package client.model;
 import common.networking.IServerConnector;
 import common.transferObjects.Applicant;
 import common.transferObjects.Company;
+import common.transferObjects.JobAd;
 import common.transferObjects.User;
 import common.util.LogBook;
 import common.util.Observer;
@@ -123,6 +124,17 @@ public class UserModel implements IUserModel {
         } catch( RemoteException ex ) {
             log.quickClientLog("UserModel::createNewUser::RemoteException");
         }
+    }
+
+    @Override
+    public void createNewJobAd(JobAd nextJobAd) {
+        try {
+            server.addNewJobAd(nextJobAd);
+        } catch( RemoteException ex ) {
+            ex.printStackTrace();
+            log.quickClientLog("UserModel::createNewJobAd::RemoteException");
+        }
+
     }
 
     @Override

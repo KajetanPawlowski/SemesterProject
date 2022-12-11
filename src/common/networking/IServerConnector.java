@@ -19,5 +19,6 @@ public interface IServerConnector extends Remote {
     ArrayList<String> getAllQualities() throws RemoteException;
     void createJobAd(JobAd nextJobAd)throws RemoteException;
     void addNewQuality(String quality) throws RemoteException;
+    void addNewJobAd(JobAd nextAd) throws RemoteException;
     // ArrayList<JobAdd> getRelevantJobAds(Applicant applicant, JobAdd relevantJobAd) throws RemoteException;
 }
