@@ -12,7 +12,6 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.company.createJobAd.CreateJobAdController">
    <top>
       <Label text="Create New Job Ad" BorderPane.alignment="TOP_CENTER">
@@ -49,7 +48,7 @@
                </children>
             </HBox>
             <Label text="Job description" />
-            <TextArea fx:id="jobDescriptionTextArea" prefHeight="100.0" prefWidth="200.0" promptText="Write mpore about the possition" />
+            <TextArea fx:id="jobDescriptionTextArea" prefHeight="100.0" prefWidth="200.0" promptText="Write mpore about the possition" wrapText="true" />
             <Label text="Add other requirement" />
             <FlowPane hgap="10.0">
                <children>

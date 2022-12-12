@@ -377,14 +377,28 @@ public class JDBCConnector implements IJDBCConnector{
     @Override
     public ArrayList<JobAd> getAllJobAds() {
         ArrayList<JobAd> allJobAds = new ArrayList<>();
-        String SQL = "SELECT jobId FROM sep5.jobAd;";
+        String SQL = "SELECT * FROM sep5.jobAd;";
         ResultSet rs;
         try{
             Statement statement = connection.createStatement();
             rs = statement.executeQuery(SQL);
 
             while(rs.next()){
-                allJobAds.add(new JobAd(rs.getString("jobtitle"), getCompanyProfile(rs.getString("companyname")), rs.getString("jobdesciption"), new ArrayList<String>()));
+                Array requirements = rs.getArray("requirements");
+                if(requirements != null){
+                    String[] string_requirements = (String[])requirements.getArray();
+                    allJobAds.add(new JobAd(rs.getInt(0),
+                            rs.getString("jobTitle"),
+                            getCompanyProfile(rs.getString("companyname")),
+                            rs.getString("jobdescription"),
+                            getQualitiesList(string_requirements)));
+                }else{
+                    allJobAds.add(new JobAd(rs.getInt(0),
+                            rs.getString("jobTitle"),
+                            getCompanyProfile(rs.getString("companyname")),
+                            rs.getString("jobdescription"),
+                            new ArrayList<String>()));
+                }
             }
 
         }catch(SQLException ex){

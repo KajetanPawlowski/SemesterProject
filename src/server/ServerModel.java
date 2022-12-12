@@ -122,6 +122,10 @@ public class ServerModel {
         database.insertNewJobAdd(nextJobAd);
     }
 
+    public ArrayList<JobAd> getRelevantJobAds(User user){
+        return database.getAllJobAds();
+    }
+
 
     public void openConnection(String username) throws UserAlreadyConnectedException {
         checkIfAlreadyConnected(username);

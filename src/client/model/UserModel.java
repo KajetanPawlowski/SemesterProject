@@ -21,6 +21,7 @@ public class UserModel implements IUserModel {
     private User clientUser;
     ArrayList<String> allQualities = new ArrayList<>();
 
+
     private static UserModel currentInstance = null;
     private UserModel(){
         currentInstance = this;
@@ -140,5 +141,15 @@ public class UserModel implements IUserModel {
     @Override
     public User getUser() {
         return clientUser;
+    }
+
+    @Override
+    public ArrayList<JobAd> getClientJobAds() {
+        try{
+            return server.getRelevantJobAds(clientUser);
+        }catch (RemoteException ex){
+            log.quickClientLog("UserModel::getClientJobAds::RemoteException");
+        }
+        return null;
     }
 }

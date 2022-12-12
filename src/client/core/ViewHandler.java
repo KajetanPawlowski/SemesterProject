@@ -2,6 +2,8 @@ package client.core;
 
 
 import client.model.UserModel;
+import client.view.company.createJobAd.CreateJobAdViewModel;
+import common.transferObjects.JobAd;
 import common.util.LogBook;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -100,8 +102,6 @@ public class ViewHandler {
         BorderPane root = (BorderPane)createFromFXML(vmf.getJobSearchVM(),"../view/jobSearch/JobSearch.fxml");
 
         root.setLeft(getMenuBar());
-        BorderPane center = (BorderPane)root.getCenter();
-        center.setCenter(getJobAd());
 
         mainScene = new Scene(root,800, 600);
         stage.setScene(mainScene);
@@ -126,7 +126,19 @@ public class ViewHandler {
 
         mainScene = new Scene(root,800, 600);
         stage.setScene(mainScene);
-        stage.setTitle("Chat");
+        stage.setTitle("Add Job");
+        stage.show();
+    }
+    public void openEditJobView(JobAd ad){
+        CreateJobAdViewModel vm = vmf.getCreateJobAdVM();
+        vm.loadJobAdForEdit(ad);
+        BorderPane root = (BorderPane)createFromFXML(vm,"../view/company/createJobAd/CreateJobAd.fxml");
+
+        root.setLeft(getMenuBar());
+
+        mainScene = new Scene(root,800, 600);
+        stage.setScene(mainScene);
+        stage.setTitle("Edit Job");
         stage.show();
     }
     public VBox getMenuBar(){

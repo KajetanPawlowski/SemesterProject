@@ -11,6 +11,7 @@ import javafx.scene.Node;
 
 public class CreateJobAdViewModel implements ViewModel {
     private IUserModel clientModel;
+    private JobAd ad = null; // if null we are creating new, else we edit;
 
     private StringProperty jobTitle = new SimpleStringProperty("");
     private StringProperty companyName;
@@ -51,8 +52,15 @@ public class CreateJobAdViewModel implements ViewModel {
     }
 
     public void createNewAd(){
-        JobAd nextAd = new JobAd(jobTitle.get(), clientModel.getUser(), jobDescription.get(), qualityList.getPickedQualities());
-        clientModel.createNewJobAd(nextAd);
+        if(ad != null){
+            ad.setJobTitle(jobTitle.get());
+            ad.setJobDescription(jobDescription.get());
+            ad.setRequirements(qualityList.getPickedQualities());
+            //clientModel.updateAd(ad);
+        }else{
+            JobAd nextAd = new JobAd(jobTitle.get(), clientModel.getUser(), jobDescription.get(), qualityList.getPickedQualities());
+            clientModel.createNewJobAd(nextAd);
+        }
 
     }
 
@@ -61,6 +69,14 @@ public class CreateJobAdViewModel implements ViewModel {
         clientModel.addNewQuality(nextQuality.get());
         nextQuality.setValue("");
     }
+    public void loadJobAdForEdit(JobAd ad){
+        this.ad = ad;
+        jobTitle.setValue(ad.getJobTitle());
+        companyName.setValue(ad.getCompany().getFullName());
+        jobDescription.setValue(ad.getJobDescription());
+    }
+
+
 
     @Override
     public void update() {

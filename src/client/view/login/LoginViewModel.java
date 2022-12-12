@@ -14,7 +14,7 @@ public class LoginViewModel implements ViewModel {
     private IUserModel clientModel;
 
     private StringProperty userNameProperty = new SimpleStringProperty("");
-    private StringProperty ipProperty = new SimpleStringProperty("192.168.87.163");
+    private StringProperty ipProperty = new SimpleStringProperty("10.154.220.113");
     private StringProperty errorLabelProperty = new SimpleStringProperty("");
 
 
@@ -35,7 +35,7 @@ public class LoginViewModel implements ViewModel {
     }
 
     public void login() throws UserNotFoundException, InvalidLoginData, UserAlreadyConnectedException {
-        //checkAdmin(userNameProperty.get());
+        checkAdmin(userNameProperty.get());
         if(userNameProperty.get().equals("")){
             throw new InvalidLoginData("Invalid Username");
         }

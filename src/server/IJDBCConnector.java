@@ -22,5 +22,6 @@ public interface IJDBCConnector {
     User getUser(String username) throws UserNotFoundException;
     ArrayList<String> getAllQualities ();
     ArrayList<JobAd> getAllJobAds();
+    //ArrayLis<Conversation> getConversations(ArrayList<Integer> convIds);
 
 }

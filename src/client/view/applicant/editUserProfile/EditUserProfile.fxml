@@ -44,7 +44,7 @@
             </padding>
          </HBox>
          <Label text="Personal Information" />
-         <TextArea fx:id="personalInformation" editable="false" maxHeight="100.0" minHeight="100.0" prefHeight="100.0" prefWidth="200.0" promptText="Write something about youself" />
+         <TextArea fx:id="personalInformation" editable="false" maxHeight="100.0" minHeight="100.0" prefHeight="100.0" prefWidth="200.0" promptText="Write something about youself" wrapText="true" />
             <Label text="Add other skill" />
             <FlowPane hgap="10.0">
                <children>

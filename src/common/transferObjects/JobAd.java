@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class JobAd implements Serializable {
+    private int jobId;
     private String jobTitle;
     private User company;
     private String jobDescription;
@@ -13,6 +14,22 @@ public class JobAd implements Serializable {
 
 
     public JobAd(String jobTitle, User company, String jobDescription, ArrayList<String> requirements) {
+        this.jobTitle = jobTitle;
+        this.company = company;
+        this.jobDescription = jobDescription;
+        this.requirements = requirements;
+    }
+
+    public int getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(int jobId) {
+        this.jobId = jobId;
+    }
+
+    public JobAd(int id, String jobTitle, User company, String jobDescription, ArrayList<String> requirements) {
+        jobId = id;
         this.jobTitle = jobTitle;
         this.company = company;
         this.jobDescription = jobDescription;
@@ -69,6 +86,10 @@ public class JobAd implements Serializable {
         }
         result += "]";
         return result;
+    }
+
+    public String toString(){
+        return jobTitle + "::" + company.getFullName() + "::" + jobDescription;
     }
 
     public void addApplicant(Applicant newApplicant){
