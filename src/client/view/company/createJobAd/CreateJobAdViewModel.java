@@ -56,7 +56,8 @@ public class CreateJobAdViewModel implements ViewModel {
             ad.setJobTitle(jobTitle.get());
             ad.setJobDescription(jobDescription.get());
             ad.setRequirements(qualityList.getPickedQualities());
-            //clientModel.updateAd(ad);
+            System.out.println(ad.toString());
+            clientModel.updateJobAd(ad);
         }else{
             JobAd nextAd = new JobAd(jobTitle.get(), clientModel.getUser(), jobDescription.get(), qualityList.getPickedQualities());
             clientModel.createNewJobAd(nextAd);

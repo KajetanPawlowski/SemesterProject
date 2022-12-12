@@ -9,8 +9,8 @@ public class JobAd implements Serializable {
     private String jobTitle;
     private User company;
     private String jobDescription;
-    private ArrayList<Applicant> applicants;
     private ArrayList<String>requirements;
+    private ArrayList<Applicant> applicants;
 
 
     public JobAd(String jobTitle, User company, String jobDescription, ArrayList<String> requirements) {
@@ -18,6 +18,7 @@ public class JobAd implements Serializable {
         this.company = company;
         this.jobDescription = jobDescription;
         this.requirements = requirements;
+        applicants = new ArrayList<>();
     }
 
     public int getJobId() {
@@ -28,12 +29,13 @@ public class JobAd implements Serializable {
         this.jobId = jobId;
     }
 
-    public JobAd(int id, String jobTitle, User company, String jobDescription, ArrayList<String> requirements) {
+    public JobAd(int id, String jobTitle, User company, String jobDescription, ArrayList<String> requirements, ArrayList<Applicant> applicants) {
         jobId = id;
         this.jobTitle = jobTitle;
         this.company = company;
         this.jobDescription = jobDescription;
         this.requirements = requirements;
+        this.applicants = applicants;
     }
 
     public void setJobTitle(String jobTitle) {
@@ -77,22 +79,52 @@ public class JobAd implements Serializable {
     }
 
     public String getRequirementsForDB(){
-        String result = "[";
-        for(int i = 0; i < requirements.size(); i++){
-            result += "'" + requirements.get(i) + "'";
-            if(i+1 < requirements.size()){
-                result += ", ";
+        String result = "ARRAY [";
+        if(requirements.size() == 0){
+            return "NULL";
+        }else{
+            for(int i = 0; i<requirements.size(); i++){
+                result +="'" + requirements.get(i) + "'";
+                if(i+1 < requirements.size()){
+                    result += ", ";
+                }
             }
+            result += "]";
+            return result;
         }
-        result += "]";
-        return result;
+    }
+    public String getApplicantsForDB(){
+        String result = "ARRAY [";
+        if(applicants.size() == 0){
+            return "NULL";
+        }else{
+            for(int i = 0; i<applicants.size(); i++){
+                result +="'" + applicants.get(i).getUsername() + "'";
+                if(i+1 < applicants.size()){
+                    result += ", ";
+                }
+            }
+            result += "]";
+            return result;
+        }
     }
 
     public String toString(){
-        return jobTitle + "::" + company.getFullName() + "::" + jobDescription;
+        return jobTitle + "::" + company.getFullName() + "::" + jobDescription + "::" + applicants.toString();
     }
 
     public void addApplicant(Applicant newApplicant){
-        applicants.add(newApplicant);
+        if(!alreadyApplied(newApplicant)){
+            applicants.add(newApplicant);
+        }
+    }
+    public boolean alreadyApplied(Applicant newApplicant){
+        boolean alreadyApplied = false;
+        for(int i = 0; i < applicants.size(); i++){
+            if(applicants.get(i).getUsername().equals(newApplicant.getUsername())){
+                return true;
+            }
+        }
+        return false;
     }
 }

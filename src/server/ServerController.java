@@ -41,6 +41,11 @@ public class ServerController implements IServerConnector {
     }
 
     @Override
+    public void updateJobAd(JobAd ad) throws RemoteException {
+        serverModel.updateJobAd(ad);
+    }
+
+    @Override
     public User getUser(String username) {
         return serverModel.getUser(username);
     }

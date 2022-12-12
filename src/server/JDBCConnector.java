@@ -92,7 +92,7 @@ public class JDBCConnector implements IJDBCConnector{
     public void insertNewJobAdd(JobAd jobAd) {
         String SQL = "INSERT INTO sep5.jobad VALUES "
                 + "(DEFAULT, '" + jobAd.getJobTitle() + "', '" + jobAd.getCompany().getUsername() +"', '"
-                + jobAd.getJobDescription()+"', ARRAY " + jobAd.getRequirementsForDB() +");";
+                + jobAd.getJobDescription()+"', " + jobAd.getRequirementsForDB() +");";
         System.out.println(SQL);
         try {
             Statement statement = connection.createStatement();
@@ -180,13 +180,14 @@ public class JDBCConnector implements IJDBCConnector{
         String SQL = "UPDATE sep5.jobAd SET jobTitle = '" + jobAd.getJobTitle() + "'," +
                 "companyName = '" + jobAd.getCompany().getUsername() + "'," +
                 "jobDescription = '" + jobAd.getJobDescription() + "'," +
-                "requirements = " + jobAd.getRequirementsForDB() + " WHERE jobId = '" + jobAd.getJobId() + "';";
+                "requirements = " + jobAd.getRequirementsForDB() + ", " +
+                "applicants = " + jobAd.getApplicantsForDB() +  " WHERE jobId = '" + jobAd.getJobId() + "';";
         try {
             Statement statement = connection.createStatement();
             statement.executeQuery(SQL);
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            LogBook.getInstance().quickDBLog("updateJobAd::"+ ex.getMessage());
         }
     }
 
@@ -261,12 +262,8 @@ public class JDBCConnector implements IJDBCConnector{
             applicant.setSubtitle(rs.getString("subtitle"));
             applicant.setDetails(rs.getString(4));
 
+            applicant.setQualities(getQualitiesList(rs.getArray(5)));
 
-            Array qualities = rs.getArray(5);
-            if(qualities != null){
-                String[] str_qualities = (String[])qualities.getArray();
-                applicant.setQualities(getQualitiesList(str_qualities));
-            }
 
             Array conversations = rs.getArray(6);
             if(conversations != null){
@@ -280,7 +277,11 @@ public class JDBCConnector implements IJDBCConnector{
         }
         return applicant;
     }
-    private ArrayList<String> getQualitiesList(String[] strQualities){
+    private ArrayList<String> getQualitiesList(Array requirements) throws SQLException {
+        if(requirements == null){
+            return new ArrayList<String>();
+        }
+        String[] strQualities = (String[])requirements.getArray();
         ArrayList<String> result = new ArrayList<>();
         for(int i = 0; i < strQualities.length; i ++){
             result.add(strQualities[i]);
@@ -398,23 +399,14 @@ public class JDBCConnector implements IJDBCConnector{
         try{
             Statement statement = connection.createStatement();
             rs = statement.executeQuery(SQL);
-
-            while(rs.next()){
-                Array requirements = rs.getArray("requirements");
-                if(requirements != null){
-                    String[] string_requirements = (String[])requirements.getArray();
-                    allJobAds.add(new JobAd(rs.getInt(0),
-                            rs.getString("jobTitle"),
-                            getCompanyProfile(rs.getString("companyname")),
-                            rs.getString("jobdescription"),
-                            getQualitiesList(string_requirements)));
-                }else{
-                    allJobAds.add(new JobAd(rs.getInt(0),
-                            rs.getString("jobTitle"),
-                            getCompanyProfile(rs.getString("companyname")),
-                            rs.getString("jobdescription"),
-                            new ArrayList<String>()));
-                }
+            while(rs.next()) {
+                int id = rs.getInt(1);
+                String title = rs.getString("jobTitle");
+                Company company = getCompanyProfile(rs.getString("companyname"));
+                String jobDescriptionJobAd = rs.getString("jobdescription");
+                ArrayList<String> requirements = getQualitiesList(rs.getArray("requirements"));
+                ArrayList<Applicant> applicants = getApplicants(getQualitiesList(rs.getArray("applicants")));
+                allJobAds.add(new JobAd(id,title,company,jobDescriptionJobAd,requirements,applicants));
             }
 
         }catch(SQLException ex){
@@ -422,6 +414,13 @@ public class JDBCConnector implements IJDBCConnector{
         }
 
        return allJobAds;
+    }
+    private ArrayList<Applicant> getApplicants(ArrayList<String> usernames){
+        ArrayList<Applicant> result = new ArrayList<>();
+        for(int i = 0; i < usernames.size(); i++){
+            result.add(getApplicantProfile(usernames.get(i)));
+        }
+        return result;
     }
 
     private void deleteUser(User user){

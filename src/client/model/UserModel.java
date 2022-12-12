@@ -59,6 +59,17 @@ public class UserModel implements IUserModel {
         }
     }
 
+    @Override
+    public void applyForJob(JobAd jobAd) {
+        jobAd.addApplicant((Applicant)clientUser);
+        System.out.println("applyForJob" + jobAd.toString());
+        try {
+            server.updateJobAd(jobAd);
+        } catch (RemoteException e) {
+            log.quickClientLog("UserModel::applyForJob::RemoteException");
+        }
+    }
+
     private ArrayList<Observer> observers = new ArrayList<Observer>();
 
     @Override
@@ -136,6 +147,15 @@ public class UserModel implements IUserModel {
             log.quickClientLog("UserModel::createNewJobAd::RemoteException");
         }
 
+    }
+
+    @Override
+    public void updateJobAd(JobAd nextJobAd) {
+        try {
+            server.updateJobAd(nextJobAd);
+        } catch (RemoteException e) {
+            log.quickClientLog("UserModel::updateJobAd::RemoteException");
+        }
     }
 
     @Override

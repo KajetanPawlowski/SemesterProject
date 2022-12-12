@@ -13,11 +13,13 @@ public interface IUserModel extends Subject {
     void updateUser();
     void createNewUser(String username, char type);
     void createNewJobAd(JobAd nextJobAd);
+    void updateJobAd(JobAd nextJobAd);
     User getUser();
     ArrayList<JobAd> getClientJobAds();
     void resetModel();
     ArrayList<String> getAllQualities();
     void addNewQuality(String quality);
+    void applyForJob(JobAd jobAd);
 
 
 

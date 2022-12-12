@@ -2,6 +2,7 @@ package client.view.jobSearch;
 
 import client.core.ViewModel;
 import client.view.applicant.overview.ListViewBtnCustom;
+import common.transferObjects.Applicant;
 import common.transferObjects.JobAd;
 import client.model.IUserModel;
 import javafx.application.Platform;
@@ -24,14 +25,25 @@ public class JobSearchViewModel implements ViewModel {
     private  StringProperty companyName= new SimpleStringProperty("");
     private  StringProperty jobDescription= new SimpleStringProperty("");
     private  StringProperty companyDescription= new SimpleStringProperty("");
+    private  StringProperty actionBtnProperty= new SimpleStringProperty("");
 
 
     public JobSearchViewModel(IUserModel model){
         clientModel = model;
         clientModel.attachObserver(this);
         allJobAds = clientModel.getClientJobAds();
+        if(getActionBtn()=='A'){
+            actionBtnProperty.setValue("Apply now");
+        }else{
+            actionBtnProperty.setValue("Edit");
+        }
         setJobAdd(allJobAds.get(0));
     }
+
+    public char getActionBtn(){
+        return clientModel.getUser().getType();
+    }
+
 
     private void showNextAdd(){
         int nextAdd = currentAdd +1;
@@ -73,6 +85,23 @@ public class JobSearchViewModel implements ViewModel {
         companyDescription.setValue(jobAdd.getCompany().getDetails());
     }
 
+    public void onApplyBtn(){
+        clientModel.applyForJob(jobAdd);
+    }
+    public boolean alreadyApplied(){
+        if(jobAdd.alreadyApplied((Applicant) clientModel.getUser())){
+            actionBtnProperty.setValue("You already applied");
+            return true;
+        }else{
+            actionBtnProperty.setValue("Apply now");
+            return false;
+        }
+    }
+
+    public JobAd getCurrentJobAd(){
+        return jobAdd;
+    }
+
     public StringProperty positionNameProperty() {
         return positionName;
     }
@@ -84,6 +113,9 @@ public class JobSearchViewModel implements ViewModel {
     }
     public StringProperty companyDescriptionProperty() {
         return companyDescription;
+    }
+    public StringProperty actionBtnProperty(){
+        return actionBtnProperty;
     }
     public ObservableList<String> jobRequirementsList(){
         List<String> list = new ArrayList<>();

@@ -48,7 +48,7 @@
                </children>
             </HBox>
             <Label text="Job description" />
-            <TextArea fx:id="jobDescriptionTextArea" prefHeight="100.0" prefWidth="200.0" promptText="Write mpore about the possition" wrapText="true" />
+            <TextArea fx:id="jobDescriptionTextArea" minHeight="100.0" prefHeight="100.0" prefWidth="200.0" promptText="Write more about the possition" wrapText="true" />
             <Label text="Add other requirement" />
             <FlowPane hgap="10.0">
                <children>

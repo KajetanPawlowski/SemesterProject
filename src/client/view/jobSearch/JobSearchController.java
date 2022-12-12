@@ -27,6 +27,8 @@ public class JobSearchController implements FXMLController {
         companyNameLabel.textProperty().bindBidirectional(jobSearchVM.companyNameProperty());
         jobDescriptionField.textProperty().bindBidirectional(jobSearchVM.jobDescriptionProperty());
         companyDescriptionField.textProperty().bindBidirectional(jobSearchVM.companyDescriptionProperty());
+        applyNowBtn.textProperty().bindBidirectional(jobSearchVM.actionBtnProperty());
+        applyNowBtn.setDisable(jobSearchVM.alreadyApplied());
         loadReqList();
     }
     @FXML
@@ -58,7 +60,14 @@ public class JobSearchController implements FXMLController {
 
     @FXML
     void onApplyNowBtn(ActionEvent event) {
-        LogBook.getInstance().quickClientLog("JobSearchController::onApplyBtn");
+        if(jobSearchVM.getActionBtn()=='A'){
+            jobSearchVM.onApplyBtn();
+            jobSearchVM.onNextAddBtn();
+            loadReqList();
+        }else{
+            viewHandler.openEditJobView(jobSearchVM.getCurrentJobAd());
+        }
+
     }
 
     @FXML
@@ -75,6 +84,7 @@ public class JobSearchController implements FXMLController {
 
     private void loadReqList(){
         reqListView.setItems(jobSearchVM.jobRequirementsList());
+        applyNowBtn.setDisable(jobSearchVM.alreadyApplied());
     }
 
 }
