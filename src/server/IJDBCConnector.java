@@ -18,10 +18,14 @@ public interface IJDBCConnector {
     int insertConversation(User user1, User user2);
 
     void updateUser(User user);
+    void updateJobAd(JobAd jobAd);
 
     User getUser(String username) throws UserNotFoundException;
     ArrayList<String> getAllQualities ();
     ArrayList<JobAd> getAllJobAds();
-    //ArrayLis<Conversation> getConversations(ArrayList<Integer> convIds);
+    ArrayList<Conversation> getConversations(ArrayList<Integer> convIds);
+
+    void truncateAllTables();
+    void truncateQualitiesTable();
 
 }

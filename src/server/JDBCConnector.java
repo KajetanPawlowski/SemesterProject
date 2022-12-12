@@ -140,9 +140,6 @@ public class JDBCConnector implements IJDBCConnector{
 
     @Override
     public void updateUser(User user) {
-        //deleteUser(user);
-        //insertNewUser(user);
-        //update statement here for both applicant and company
         if(user.getType() == 'A'){
             updateApplicant(user);
         }else{
@@ -175,6 +172,21 @@ public class JDBCConnector implements IJDBCConnector{
 
         } catch (SQLException ex) {
             LogBook.getInstance().quickDBLog("updateCompany::"+ex.getMessage());
+        }
+    }
+
+    @Override
+    public void updateJobAd(JobAd jobAd) {
+        String SQL = "UPDATE sep5.jobAd SET jobTitle = '" + jobAd.getJobTitle() + "'," +
+                "companyName = '" + jobAd.getCompany().getUsername() + "'," +
+                "jobDescription = '" + jobAd.getJobDescription() + "'," +
+                "requirements = " + jobAd.getRequirementsForDB() + " WHERE jobId = '" + jobAd.getJobId() + "';";
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeQuery(SQL);
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -313,7 +325,7 @@ public class JDBCConnector implements IJDBCConnector{
             Array users = rs.getArray("users");
             if(users != null){
                 String[] string_user = (String[])users.getArray();
-                //conversation.setUsers(getUsersList(string_user));
+                conversation.setUsers(getUsersList(string_user));
             }
             conversation.setJobId(rs.getInt("jobId"));
 
@@ -328,12 +340,16 @@ public class JDBCConnector implements IJDBCConnector{
             LogBook.getInstance().quickDBLog("getCompanyProfile::"+ex.getMessage());
         }
         return conversation;
-        /// SQL CONVESATION WHERE ID = ID
-
-        //Conversation result......
     }
 
-    // public ArrayLis<Conversation> getConversations(ArrayList<Integer> convIds)
+    @Override
+    public ArrayList<Conversation> getConversations(ArrayList<Integer> convIds){
+        ArrayList<Conversation> allConversations = new ArrayList<>();
+
+
+        return allConversations;
+    }
+
 
     @Override
     public ArrayList<String> getAllQualities (){
@@ -402,7 +418,7 @@ public class JDBCConnector implements IJDBCConnector{
             }
 
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            LogBook.getInstance().quickDBLog("getAllJobAds::"+ex.getMessage());
         }
 
        return allJobAds;
@@ -428,16 +444,44 @@ public class JDBCConnector implements IJDBCConnector{
 
     }
 
+    @Override
+    public void truncateAllTables() {
+        String SQL = "TRUNCATE ONLY applicant CASCADE;\n" +
+                "TRUNCATE ONLY company CASCADE;\n" +
+                "TRUNCATE ONLY \"user\" CASCADE;\n" +
+                "TRUNCATE ONLY jobAd RESTART IDENTITY CASCADE;\n" +
+                "TRUNCATE ONLY conversation RESTART IDENTITY CASCADE;";
+
+        try{
+            Statement statement = connection.createStatement();
+            statement.executeQuery(SQL);
+
+
+        }catch(SQLException ex){
+            LogBook.getInstance().quickDBLog("truncateTables::"+ex.getMessage());
+        }
+    }
+
+    @Override
+    public void truncateQualitiesTable(){
+        String SQL = "TRUNCATE ONLY qualities CASCADE;";
+
+        try{
+            Statement statement = connection.createStatement();
+            statement.executeQuery(SQL);
+
+
+        }catch(SQLException ex){
+            LogBook.getInstance().quickDBLog("truncateQualitiesTable::"+ex.getMessage());
+        }
+    }
+
 
 }
 
 
-//    //-----------------------------------------------------------------------------------------------------------User OPERATIONS
-//    // Stores a new User in the DB
 
-//    // Gets the user type from the DB
 
-//
 //
 //    //-----------------------------------------------------------------------------------------------------------Applicant OPERATIONS
 
@@ -479,14 +523,3 @@ public class JDBCConnector implements IJDBCConnector{
 
 //    }
 //
-//    // Updates the table JobAd in the DB
-//    public void updateJobAd(String name, String attribute, String newValue) {
-//        String SQL = "UPDATE sep5.jobad SET " + attribute + " = '" + newValue + "' WHERE jobtitle = '" + name + "';";
-//        try {
-//            Statement statement = connection.createStatement();
-//            statement.executeQuery(SQL);
-//
-//        } catch (SQLException ex) {
-//            System.out.println(ex.getMessage());
-//        }
-//    }

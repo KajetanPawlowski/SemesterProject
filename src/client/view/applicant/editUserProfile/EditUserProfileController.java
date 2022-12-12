@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -16,6 +17,7 @@ public class EditUserProfileController implements FXMLController {
     private boolean isEditing = true;
     private ViewHandler viewHandler;
     private EditUserProfileViewModel editApplicantProfileVM;
+
 
     @Override
     public void init(ViewHandler vh, ViewModel vm) {
