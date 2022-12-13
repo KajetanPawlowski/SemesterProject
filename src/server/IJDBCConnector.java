@@ -15,7 +15,7 @@ public interface IJDBCConnector {
     void insertNewUser(User user);
     void insertNewJobAdd(JobAd jobAd);
     void insertQuality(String quality);
-    int insertConversation(User user1, User user2);
+    int insertConversation(User applicant, JobAd jobAd);
 
     void updateUser(User user);
     void updateJobAd(JobAd jobAd);

@@ -117,23 +117,33 @@ public class JDBCConnector implements IJDBCConnector{
     }
 
     @Override
-    public int insertConversation(User user1, User user2) {
-        String SQL = "INSERT INTO sep5.converastion VALUES ";
-//                + "(DEFAULT, ARRAY " + "', '" + conversation.getJobId() +"', '"
-//                + conversation.getMessages()+"');";
-        ResultSet rs;
-        int convId =0;
+    public int insertConversation(User applicant, JobAd jobAd) {
+        String SQL = "INSERT INTO sep5.conversation VALUES "
+                + "(DEFAULT, ARRAY [ '" + applicant.getUsername()+ "' , '" + jobAd.getCompany().getUsername() +"'], '" + jobAd.getJobId()+ "');";
+
         try {
             Statement statement = connection.createStatement();
-            rs = statement.executeQuery(SQL);
+            statement.executeQuery(SQL);
 
-            rs.next();
-            convId = rs.getInt(1);
 
         } catch (SQLException ex) {
             LogBook.getInstance().quickDBLog("insertNewConversation::" + ex.getMessage());
         }
-        //do another try catch block with another string sql, by id decending
+
+        ResultSet rs;
+        int convId =0;
+        String SQL2 = "SELECT converastionId FROM sep5.conversation " +
+                "WHERE users = ARRAY [ '"  + applicant.getUsername() + "','"+ jobAd.getCompany().getUsername() + "'] ORDER BY converastionId DESC;";
+        try{
+            Statement statement = connection.createStatement();
+            rs = statement.executeQuery(SQL2);
+
+            rs.next();
+            convId = rs.getInt("converastionId");
+
+        }catch (SQLException ex) {
+            LogBook.getInstance().quickDBLog("getConversationId::" + ex.getMessage());
+        }
 
         return convId;
     }
@@ -346,8 +356,9 @@ public class JDBCConnector implements IJDBCConnector{
     @Override
     public ArrayList<Conversation> getConversations(ArrayList<Integer> convIds){
         ArrayList<Conversation> allConversations = new ArrayList<>();
-
-
+        for(int i = 0; i < convIds.size(); i++){
+            allConversations.add(getConversation(convIds.get(i)));
+        }
         return allConversations;
     }
 

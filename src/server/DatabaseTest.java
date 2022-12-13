@@ -20,7 +20,9 @@ public class DatabaseTest {
         //database.insertNewJobAdd(new JobAd("Backend Dev", new Company("Kamstrup"), "Job Description dfasjdsakjdnaksdnasdnasda", test));
         //database.insertNewUser(new Applicant("maja"));
 
-        database.updateUser(database.getUser("arla"));
+        //database.updateUser(database.getUser("arla"));
+       // System.out.println(database.insertConversation(database.getUser("alice"), database.getAllJobAds().get(1) ));
+
 
         database.close();
 
