@@ -25,7 +25,7 @@ public class ServerModel {
     private ArrayList<Company> companies = new ArrayList<>();
     private ArrayList<String> qualities = new ArrayList<>();
 
-    private ArrayList<JobAd> relevantJobAds = new ArrayList<JobAd>();
+    private ArrayList<JobAd> allJobAds = new ArrayList<JobAd>();
 
 
     public void run(){
@@ -44,7 +44,6 @@ public class ServerModel {
                 System.exit(2);
             }
 
-
             qualities = database.getAllQualities();
 
         } catch( Exception ex ) {
@@ -62,29 +61,6 @@ public class ServerModel {
 
     }
 
-    public Applicant getApplicantProfile(String username) {
-        //Applicant applicantProfile = database.getApplicantProfile(username);
-        //return applicantProfile;
-        //write the code for DATABASE
-        for(int i = 0; i < applicants.size(); i++){
-            if(applicants.get(i).getUsername().equals(username)){
-                return applicants.get(i);
-            }
-        }
-        return null;
-    }
-
-    public Company getCompanyProfile(String username) {
-        //Company companyProfile = database.getCompanyProfile(username);
-        //return companyProfile;
-        //write the code for DATABASE
-        for(int i = 0; i < companies.size(); i++){
-            if(companies.get(i).getUsername().equals(username)){
-                return companies.get(i);
-            }
-        }
-        return null;
-    }
 
     public void createNewUser(User newUser){
         database.insertNewUser(newUser);
@@ -92,13 +68,14 @@ public class ServerModel {
     }
 
     public void updateUser(User newUser){
-        LogBook.getInstance().quickServerLog("ServerModel::updateUser");
         database.updateUser(newUser);
+        LogBook.getInstance().quickServerLog("ServerModel::updateUser");
 
     }
     public User getUser(String username) throws UserNotFoundException {
         return database.getUser(username);
     }
+
     public ArrayList<String> getQualities(){
         return database.getAllQualities();
     }
@@ -106,19 +83,8 @@ public class ServerModel {
         database.insertQuality(nextQuality);
     }
 
-
-
-    public ArrayList<Applicant> getAllApplicants(String username){
-        applicants.add(getApplicantProfile(username));
-        return applicants;
-    }
-
-    public ArrayList<Company> getAllCompanies(String username){
-        companies.add(getCompanyProfile(username));
-        return companies;
-    }
-
     public void createJobAd(JobAd nextJobAd) {
+        allJobAds.add(nextJobAd);
         database.insertNewJobAdd(nextJobAd);
     }
 

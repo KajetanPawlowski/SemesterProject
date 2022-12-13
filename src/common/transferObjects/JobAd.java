@@ -12,14 +12,6 @@ public class JobAd implements Serializable {
     private String jobDescription;
     private ArrayList<String>requirements;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        JobAd jobAd = (JobAd) o;
-        return jobId == jobAd.jobId && Objects.equals(jobTitle, jobAd.jobTitle) && Objects.equals(company, jobAd.company) && Objects.equals(jobDescription, jobAd.jobDescription) && Objects.equals(requirements, jobAd.requirements) && Objects.equals(applicants, jobAd.applicants);
-    }
-
 
     private ArrayList<Applicant> applicants;
 
@@ -138,4 +130,13 @@ public class JobAd implements Serializable {
         }
         return false;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        JobAd jobAd = (JobAd) o;
+        return jobId == jobAd.jobId && Objects.equals(jobTitle, jobAd.jobTitle) && Objects.equals(company, jobAd.company) && Objects.equals(jobDescription, jobAd.jobDescription) && Objects.equals(requirements, jobAd.requirements) && Objects.equals(applicants, jobAd.applicants);
+    }
+
 }

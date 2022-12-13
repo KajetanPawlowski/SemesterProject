@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
 public class OverviewController implements FXMLController {
     private ViewHandler viewHandler;
     private OverviewViewModel overviewVM;
-    private ListViewBtnCustom customList = new ListViewBtnCustom();
+
 
     @FXML
     HBox centerHBox;
@@ -26,7 +26,7 @@ public class OverviewController implements FXMLController {
         this.viewHandler = viewHandler;
         overviewVM = (OverviewViewModel) vm;
         titleLabel.textProperty().bindBidirectional(overviewVM.getTitleLabelProperty());
-        listsVBox.getChildren().addAll(customList.createList(10, "Jobs you applied for: "), customList.createList(15, "Jobs you might be interested in: "));
+        listsVBox.getChildren().addAll(overviewVM.getRelevantJobs(), overviewVM.getAppliedJobs());
         centerHBox.getChildren().add(viewHandler.getUserProfile());
     }
 

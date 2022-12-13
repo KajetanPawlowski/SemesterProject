@@ -5,6 +5,7 @@ import client.model.IUserModel;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.Node;
 
 public class OverviewViewModel implements ViewModel {
     private IUserModel clientModel;
@@ -14,6 +15,16 @@ public class OverviewViewModel implements ViewModel {
         clientModel = model;
         clientModel.attachObserver(this);
         titleLabelProperty = new SimpleStringProperty("Welcome " + clientModel.getUser().getUsername());
+    }
+
+    public Node getRelevantJobs(){
+        ListViewBtnCustom customList = new ListViewBtnCustom();
+        return customList.createList(clientModel.getClientJobAds(), "Jobs for you");
+
+    }
+    public Node getAppliedJobs(){
+        ListViewBtnCustom customList = new ListViewBtnCustom();
+        return customList.createList(clientModel.getClientJobAds(), "Jobs you applied");
     }
 
     public StringProperty getTitleLabelProperty() {

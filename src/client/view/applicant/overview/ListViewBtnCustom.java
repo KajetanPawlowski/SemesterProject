@@ -2,6 +2,7 @@ package client.view.applicant.overview;
 import java.util.ArrayList;
 import java.util.List;
 
+import common.transferObjects.JobAd;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Parent;
@@ -32,12 +33,12 @@ public class ListViewBtnCustom {
         }
     }
 
-    public Parent createList(int size, String title) {
+    public Parent createList(ArrayList<JobAd> jobAds, String title) {
         BorderPane layout = new BorderPane();
 
         List<HBoxCell> list = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            list.add(new HBoxCell("Job ID " + i, "See more"));
+        for (int i = 0; i < jobAds.size(); i++) {
+            list.add(new HBoxCell(jobAds.get(i).getJobTitle(), "See more"));
         }
 
         ListView<HBoxCell> listView = new ListView<HBoxCell>();

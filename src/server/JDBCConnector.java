@@ -12,6 +12,8 @@ import java.util.ArrayList;
 public class JDBCConnector implements IJDBCConnector{
     private Connection connection;
 
+    private ArrayList<User> allUsers = new ArrayList<>();
+
     @Override
     public void connect(String host, int portNo, String userName, String password) throws ConnectionFailedException{
         // Establishing a PostgreSQL database connection
@@ -41,8 +43,18 @@ public class JDBCConnector implements IJDBCConnector{
         }
     }
 
+    private int isOnServer(String username){
+        for(int i = 0; i < allUsers.size(); i++){
+            if(allUsers.get(i).getUsername().equals(username)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
     @Override
     public void insertNewUser(User user){
+        allUsers.add(user);
         String SQL = "INSERT INTO sep5.User VALUES "
                 + "('" + user.getUsername() + "', '" + user.getType() +"');";
         try {
@@ -93,7 +105,6 @@ public class JDBCConnector implements IJDBCConnector{
         String SQL = "INSERT INTO sep5.jobad VALUES "
                 + "(DEFAULT, '" + jobAd.getJobTitle() + "', '" + jobAd.getCompany().getUsername() +"', '"
                 + jobAd.getJobDescription()+"', " + jobAd.getRequirementsForDB() +");";
-        System.out.println(SQL);
         try {
             Statement statement = connection.createStatement();
             statement.executeQuery(SQL);
@@ -150,6 +161,10 @@ public class JDBCConnector implements IJDBCConnector{
 
     @Override
     public void updateUser(User user) {
+        int localIndex = isOnServer(user.getUsername());
+        if(localIndex>=0){
+            allUsers.get(localIndex).updateUser(user);
+        }
         if(user.getType() == 'A'){
             updateApplicant(user);
         }else{
@@ -203,89 +218,109 @@ public class JDBCConnector implements IJDBCConnector{
 
     @Override
     public User getUser(String username) throws UserNotFoundException{
-        User user;
-        if(getUserType(username) =='A'){
-            user = getApplicantProfile(username);
+        int localIndex = isOnServer(username);
+        if(localIndex >= 0){
+            return allUsers.get(localIndex);
         }else{
-            user = getCompanyProfile(username);
+            User user;
+            if(getUserType(username) =='A'){
+                user = getApplicantProfile(username);
+            }else{
+                user = getCompanyProfile(username);
+            }
+            allUsers.add(user);
+            return  user;
         }
-        return  user;
 
     }
     private char getUserType(String username) throws UserNotFoundException{
-        String SQL = "SELECT type FROM sep5.User WHERE username = '"+username+"';";
-        ResultSet rs;
-        char userType = 0;
-        try {
-            Statement statement = connection.createStatement();
-            rs = statement.executeQuery(SQL);
+        int localIndex = isOnServer(username);
+        if(localIndex >= 0){
+            return allUsers.get(localIndex).getType();
+        }else {
+            String SQL = "SELECT type FROM sep5.User WHERE username = '" + username + "';";
+            ResultSet rs;
+            char userType = 0;
+            try {
+                Statement statement = connection.createStatement();
+                rs = statement.executeQuery(SQL);
 
-            rs.next();
-            userType =  rs.getString(1).charAt(0);
+                rs.next();
+                userType = rs.getString(1).charAt(0);
 
-        } catch (SQLException ex) {
-            LogBook.getInstance().quickDBLog("getUserType::"+ex.getMessage());
+            } catch (SQLException ex) {
+                LogBook.getInstance().quickDBLog("getUserType::" + ex.getMessage());
+            }
+            if (userType == 0) {
+                throw new UserNotFoundException();
+            }
+            return userType;
         }
-        if(userType == 0){
-            throw new UserNotFoundException();
-        }
-        return userType;
     }
 
     //Get a CompanyProfile from the DB
     private Company getCompanyProfile(String username){
-        String SQL = "SELECT* FROM sep5.Company WHERE username = '" + username + "';";
-        ResultSet rs;
-        Company company = new Company(username);
-        try {
-            Statement statement = connection.createStatement();
-            rs = statement.executeQuery(SQL);
+        int localIndex = isOnServer(username);
+        if(localIndex >= 0){
+            return (Company)allUsers.get(localIndex);
+        }else {
+            String SQL = "SELECT* FROM sep5.Company WHERE username = '" + username + "';";
+            ResultSet rs;
+            Company company = new Company(username);
+            try {
+                Statement statement = connection.createStatement();
+                rs = statement.executeQuery(SQL);
 
-            rs.next();
-            company.setFullName(rs.getString("companyname"));
-            company.setDetails(rs.getString("description"));
+                rs.next();
+                company.setFullName(rs.getString("companyname"));
+                company.setDetails(rs.getString("description"));
 
-            Array conversations = rs.getArray(3);
-            if(conversations != null){
-                Integer[] int_conversations = (Integer[])conversations.getArray();
-                company.setConvs(getConversationsList(int_conversations));
+                Array conversations = rs.getArray(3);
+                if (conversations != null) {
+                    Integer[] int_conversations = (Integer[]) conversations.getArray();
+                    company.setConvs(getConversationsList(int_conversations));
+                }
+
+            } catch (SQLException ex) {
+                LogBook.getInstance().quickDBLog("getCompanyProfile::" + ex.getMessage());
             }
-
-        } catch (SQLException ex) {
-            LogBook.getInstance().quickDBLog("getCompanyProfile::"+ex.getMessage());
+            return company;
         }
-        return company;
     }
 
     // Get an ApplicantProfile from the DB
     private Applicant getApplicantProfile(String username){
-        String SQL = "SELECT* FROM sep5.applicant WHERE username = '" + username + "';";
-        System.out.println(SQL);
-        ResultSet rs;
-        Applicant applicant = new Applicant(username);
-        try {
-            Statement statement = connection.createStatement();
-            rs = statement.executeQuery(SQL);
+        int localIndex = isOnServer(username);
+        if(localIndex >= 0){
+            return (Applicant)allUsers.get(localIndex);
+        }else {
+            String SQL = "SELECT* FROM sep5.applicant WHERE username = '" + username + "';";
+            ResultSet rs;
+            Applicant applicant = new Applicant(username);
+            try {
+                Statement statement = connection.createStatement();
+                rs = statement.executeQuery(SQL);
 
-            rs.next();
-            applicant.setFullName(rs.getString("fullname"));
-            applicant.setSubtitle(rs.getString("subtitle"));
-            applicant.setDetails(rs.getString(4));
+                rs.next();
+                applicant.setFullName(rs.getString("fullname"));
+                applicant.setSubtitle(rs.getString("subtitle"));
+                applicant.setDetails(rs.getString(4));
 
-            applicant.setQualities(getQualitiesList(rs.getArray(5)));
+                applicant.setQualities(getQualitiesList(rs.getArray(5)));
 
 
-            Array conversations = rs.getArray(6);
-            if(conversations != null){
-                Integer[] int_conversations = (Integer[])conversations.getArray();
-                applicant.setConvs(getConversationsList(int_conversations));
+                Array conversations = rs.getArray(6);
+                if (conversations != null) {
+                    Integer[] int_conversations = (Integer[]) conversations.getArray();
+                    applicant.setConvs(getConversationsList(int_conversations));
+                }
+
+
+            } catch (SQLException ex) {
+                LogBook.getInstance().quickDBLog("getApplicantProfile::" + ex.getMessage());
             }
-
-
-        } catch (SQLException ex) {
-            LogBook.getInstance().quickDBLog("getApplicantProfile::"+ex.getMessage());
+            return applicant;
         }
-        return applicant;
     }
     private ArrayList<String> getQualitiesList(Array requirements) throws SQLException {
         if(requirements == null){
