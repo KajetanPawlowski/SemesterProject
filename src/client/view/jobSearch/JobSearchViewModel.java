@@ -88,6 +88,7 @@ public class JobSearchViewModel implements ViewModel {
     public void onApplyBtn(){
         clientModel.applyForJob(jobAdd);
     }
+
     public boolean alreadyApplied(){
         if(jobAdd.alreadyApplied((Applicant) clientModel.getUser())){
             actionBtnProperty.setValue("You already applied");

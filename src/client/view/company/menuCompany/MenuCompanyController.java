@@ -21,6 +21,8 @@ public class MenuCompanyController implements FXMLController {
     Button chatBtn;
     @FXML
     Button logoutBtn;
+    @FXML
+    private Button applicantsBtn;
 
     @FXML
     void onChatBtn(ActionEvent event) {
@@ -42,6 +44,9 @@ public class MenuCompanyController implements FXMLController {
         menuVM.resetModel();
         viewHandler.openLoginView();
     }
+
+    @FXML
+    void onApplicantsBtn(ActionEvent event){viewHandler.openSelectApplicantView();}
 
     @FXML
     void onOverviewBtn(ActionEvent event) {

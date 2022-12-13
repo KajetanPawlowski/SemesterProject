@@ -98,6 +98,17 @@ public class ViewHandler {
         stage.show();
     }
 
+    public void openSelectApplicantView(){
+        BorderPane root = (BorderPane)createFromFXML(vmf.getSelectApplicantsViewModel(),"../view/company/selectApplicants/SelectApplicants.fxml");
+
+        root.setLeft(getCompanyMenuBar());
+
+        mainScene = new Scene(root,800, 600);
+        stage.setScene(mainScene);
+        stage.setTitle("Selects Applicants");
+        stage.show();
+    }
+
     public void openJobSearch(){
         BorderPane root = (BorderPane)createFromFXML(vmf.getJobSearchVM(),"../view/jobSearch/JobSearch.fxml");
 

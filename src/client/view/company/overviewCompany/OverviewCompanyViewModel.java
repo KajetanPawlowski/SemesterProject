@@ -1,5 +1,6 @@
 package client.view.company.overviewCompany;
 
+import client.core.ViewHandler;
 import client.core.ViewModel;
 import client.model.IUserModel;
 import client.view.applicant.overview.ListViewBtnCustom;
@@ -12,11 +13,13 @@ public class OverviewCompanyViewModel implements ViewModel {
     private IUserModel clientModel;
 
     private StringProperty titleLabelProperty;
+    private StringProperty companyNameProperty;
     private StringProperty companyDescriptionProperty;
     public OverviewCompanyViewModel(IUserModel model){
         clientModel = model;
         clientModel.attachObserver(this);
         titleLabelProperty = new SimpleStringProperty("Welcome " + clientModel.getUser().getUsername());
+        companyNameProperty = new SimpleStringProperty(clientModel.getUser().getFullName());
         companyDescriptionProperty = new SimpleStringProperty(clientModel.getUser().getDetails());
 
     }
@@ -25,9 +28,10 @@ public class OverviewCompanyViewModel implements ViewModel {
         return titleLabelProperty;
     }
     public StringProperty getCompanyDescriptionProperty(){return companyDescriptionProperty;}
+    public StringProperty getCompanyNameProperty(){ return  companyNameProperty;}
 
-    public Node getJobAddList(){
-        ListViewBtnCustom list = new ListViewBtnCustom();
+    public Node getJobAddList(ViewHandler vh){
+        ListViewBtnCompany list = new ListViewBtnCompany(vh);
         return list.createList(clientModel.getClientJobAds(), "Your open JobAds");
     }
 

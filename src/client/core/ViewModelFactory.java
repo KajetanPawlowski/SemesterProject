@@ -8,6 +8,7 @@ import client.view.applicant.editUserProfile.EditUserProfileViewModel;
 import client.view.company.createJobAd.CreateJobAdViewModel;
 import client.view.company.editCompanyProfile.EditCompanyProfileViewModel;
 import client.view.company.overviewCompany.OverviewCompanyViewModel;
+import client.view.company.selectApplicants.SelectApplicantsViewModel;
 import client.view.jobAd.JobAdViewModel;
 import client.view.jobSearch.JobSearchViewModel;
 import client.view.login.LoginViewModel;
@@ -54,4 +55,5 @@ public class ViewModelFactory {
     public EditCompanyProfileViewModel getEditCompanyProfileVM(){return new EditCompanyProfileViewModel(model);}
     public OverviewCompanyViewModel getOverviewCompanyVM(){ return new OverviewCompanyViewModel(model);}
     public CreateJobAdViewModel getCreateJobAdVM(){ return new CreateJobAdViewModel(model);}
+    public SelectApplicantsViewModel getSelectApplicantsViewModel(){ return new SelectApplicantsViewModel(model);}
 }

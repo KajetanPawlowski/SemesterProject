@@ -35,8 +35,9 @@ public class OverviewCompanyController implements FXMLController {
         viewHandler = vh;
         overviewVM = (OverviewCompanyViewModel) vm;
         topLabel.textProperty().bindBidirectional(overviewVM.getTitleLabelProperty());
+        companyNameLabel.textProperty().bindBidirectional(overviewVM.getCompanyNameProperty());
         companyDescriptionTextArea.textProperty().bindBidirectional(overviewVM.getCompanyDescriptionProperty());
-        listVbox.getChildren().add(overviewVM.getJobAddList());
+        listVbox.getChildren().add(overviewVM.getJobAddList(viewHandler));
     }
 
 }
