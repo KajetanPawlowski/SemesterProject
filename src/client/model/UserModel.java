@@ -104,6 +104,7 @@ public class UserModel implements IUserModel {
         }
     }
 
+
     @Override
     public void disconnectFromServer(String username) {
         try {
