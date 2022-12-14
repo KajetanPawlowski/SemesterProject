@@ -93,7 +93,7 @@ public class Company implements User, Serializable {
             return "NULL";
         }else{
             for(int i = 0; i<conversations.size(); i++){
-                result +="'" + conversations.get(i).getId() + "'";
+                result += + conversations.get(i).getId();
                 if(i+1 < conversations.size()){
                     result += ", ";
                 }

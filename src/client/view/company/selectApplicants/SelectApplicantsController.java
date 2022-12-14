@@ -23,7 +23,6 @@ public class SelectApplicantsController implements FXMLController {
         applicantName.textProperty().bindBidirectional(searchApplicantsVM.applicantNameProperty());
         subtitle.textProperty().bindBidirectional(searchApplicantsVM.subtitleProperty());
         personalInformation.textProperty().bindBidirectional(searchApplicantsVM.personalInformationProperty());
-        acceptApplicantBtn.textProperty().bindBidirectional(searchApplicantsVM.actionBtnProperty());
         loadSkillsList();
     }
 
@@ -33,8 +32,6 @@ public class SelectApplicantsController implements FXMLController {
     @FXML
     private Button prevApplicantButton;
 
-    @FXML
-    private Button acceptApplicantBtn;
 
     @FXML
     private Label applicantName;
@@ -62,9 +59,14 @@ public class SelectApplicantsController implements FXMLController {
         searchApplicantsVM.onPrevApplicantBtn();
         loadSkillsList();
     }
+    @FXML
+    void onOpenChatBtn(ActionEvent event){
+        searchApplicantsVM.onOpenChatBtn();
+        viewHandler.openChatView();
+    }
+
 
     private void loadSkillsList(){
         skills.setItems(searchApplicantsVM.applicantSkillsList());
-
     }
 }

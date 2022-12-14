@@ -29,6 +29,12 @@ public class SelectApplicantsViewModel implements ViewModel {
     public SelectApplicantsViewModel(IUserModel model){
         clientModel = model;
         clientModel.attachObserver(this);
+        if(clientModel.getClientJobAds().size()>0){
+            loadJobAd(clientModel.getClientJobAds().get(0));
+        }else{
+            clientModel.resetModel();
+            System.exit(69);
+        }
 
     }
     public void loadJobAd(JobAd jobAd){
@@ -42,6 +48,9 @@ public class SelectApplicantsViewModel implements ViewModel {
        }
 
 
+    }
+    public void onOpenChatBtn(){
+        clientModel.createNewConversation(applicant, jobAd);
     }
 
 

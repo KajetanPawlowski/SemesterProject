@@ -157,8 +157,8 @@ public class ServerModel {
         }
     }
 
-    public int createNewConversation(User user1, User user2){
-        return 0;
+    public int createNewConversation(User user1, JobAd add){
+        return database.insertConversation(user1, add);
     }
 
 

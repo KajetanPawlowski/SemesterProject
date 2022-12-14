@@ -5,6 +5,7 @@ import client.core.ViewModel;
 
 import client.model.IUserModel;
 import common.transferObjects.Conversation;
+import common.transferObjects.User;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -28,7 +29,10 @@ public class ChatViewModel implements ViewModel {
         clientModel.attachObserver(this);
         messageList = FXCollections.observableArrayList();
         accountList = FXCollections.observableArrayList();
-        openConversation(clientModel.getUser().getUsername());
+        if(clientModel.getUser().getConvs().size()>0){
+            openConversation(clientModel.getUser());
+        }
+
         
     }
 
@@ -42,13 +46,12 @@ public class ChatViewModel implements ViewModel {
         return accountList;
     }
     
-    public void openConversation(String username){
+    public void openConversation(User user){
         ArrayList<Conversation> conversations = clientModel.getUser().getConvs();
         for(int i = 0; i < conversations.size(); i++){
-            if(conversations.get(i).getUsers().get(0).getUsername().equals(username)){
+            if(conversations.get(i).containsUser(user)){
                 currentConversation = conversations.get(i);
-            }else if(conversations.get(i).getUsers().get(1).getUsername().equals(username)){
-                currentConversation = conversations.get(i);
+                break;
             }
         }
     }
@@ -58,6 +61,8 @@ public class ChatViewModel implements ViewModel {
         System.out.println("ChatViewModel::sentMessage");
         currentConversation.addMsg(clientModel.getUser(), messageInputProperty.get());
         messageInputProperty.setValue("");
+        clientModel.updateUser();
+        update();
 
 
     }
@@ -65,9 +70,9 @@ public class ChatViewModel implements ViewModel {
 
     public void updateMessageList(){
         messageList.clear();
-//        for(int i = 0; i < clientModel.getMessagesArrayList().size(); i++) {
-//            messageList.add(clientModel.getMessagesArrayList().get(i));
-//        }
+        for(int i = 0; i < currentConversation.getAllMessages().size(); i++) {
+            messageList.add(currentConversation.getAllMessages().get(i));
+        }
 
     }
     public void updateAccountList(){

@@ -47,7 +47,7 @@ public class MenuCompanyController implements FXMLController {
 
     @FXML
     void onApplicantsBtn(ActionEvent event){
-        System.out.println("YOU WISH");
+        viewHandler.openSelectApplicantView();
     }
 
     @FXML

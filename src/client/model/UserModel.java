@@ -210,4 +210,14 @@ public class UserModel implements IUserModel {
         return result;
 
     }
+
+    @Override
+    public void createNewConversation(User user, JobAd ad) {
+        try {
+            int id = server.createConversation(user, ad);
+            clientUser.getConvs().add(new Conversation(id, user, ad));
+        } catch (RemoteException e) {
+            log.quickClientLog("UserModel::NewConversation::RemoteException");
+        }
+    }
 }

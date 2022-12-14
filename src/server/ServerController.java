@@ -56,10 +56,6 @@ public class ServerController implements IServerConnector {
         return serverModel.getQualities();
     }
 
-    @Override
-    public void createJobAd(JobAd nextJobAd) throws RemoteException {
-        serverModel.createJobAd(nextJobAd);
-    }
 
     @Override
     public void addNewQuality(String quality) throws RemoteException {
@@ -69,6 +65,11 @@ public class ServerController implements IServerConnector {
     @Override
     public void addNewJobAd(JobAd nextAd) throws RemoteException {
         serverModel.createJobAd(nextAd);
+    }
+
+    @Override
+    public int createConversation(User user, JobAd ad) throws RemoteException {
+        return serverModel.createNewConversation(user, ad);
     }
 
     @Override

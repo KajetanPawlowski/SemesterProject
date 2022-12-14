@@ -2,6 +2,7 @@ package common.transferObjects;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Conversation implements Serializable {
     private int id;
@@ -10,6 +11,12 @@ public class Conversation implements Serializable {
 
     private ArrayList<String> messages = new ArrayList<String>();
 
+    public Conversation(int id, User applicant, JobAd ad){
+        users.add(applicant);
+        users.add(ad.getCompany());
+        this.jobId = ad.getJobId();
+        this.id = id;
+    }
     public Conversation(int id){
         this.id = id;
     }
@@ -51,4 +58,19 @@ public class Conversation implements Serializable {
     public void setUsers(ArrayList<User> users) {
         this.users = users;
     }
+
+    public boolean containsUser(User user){
+        if(users == null) {
+            return false;
+        }
+        if(users.size()<2){
+            return false;
+        }
+        if(users.get(0).getUsername().equals(user.getUsername())){
+            return true;
+        }else{
+            return users.get(1).getUsername().equals(user.getUsername());
+        }
+    }
+
 }
