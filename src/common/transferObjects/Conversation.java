@@ -73,4 +73,21 @@ public class Conversation implements Serializable {
         }
     }
 
+    public String getMessagesForDB() {
+        String result = "ARRAY [";
+        if(messages.size() == 0){
+            return "NULL";
+        }else{
+            for(int i = 0; i<messages.size(); i++){
+                result +="'" + messages.get(i) + "'";
+                if(i+1 < messages.size()){
+                    result += ", ";
+                }
+            }
+            result += "]";
+            return result;
+        }
+
+    }
+
 }
