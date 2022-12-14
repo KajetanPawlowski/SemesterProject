@@ -37,6 +37,7 @@ public class ListViewBtnCompany {
 
             button.setText("See applicants");
             button.setOnAction(e->{
+
                 vh.openSelectApplicantView();
             });
 

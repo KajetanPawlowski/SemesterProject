@@ -1,5 +1,6 @@
 package client.model;
 
+import common.transferObjects.Applicant;
 import common.transferObjects.JobAd;
 import common.transferObjects.User;
 import common.util.Subject;
@@ -16,6 +17,7 @@ public interface IUserModel extends Subject {
     void updateJobAd(JobAd nextJobAd);
     User getUser();
     ArrayList<JobAd> getClientJobAds();
+    ArrayList<Applicant> getJobAdApplicants();
     void resetModel();
     ArrayList<String> getAllQualities();
     void addNewQuality(String quality);

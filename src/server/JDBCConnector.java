@@ -465,6 +465,29 @@ public class JDBCConnector implements IJDBCConnector{
         return result;
     }
 
+//    @Override
+//    public ArrayList<Applicant> getJobAdApplicants (JobAd jobAd){
+//        String SQL= "SELECT applicants FROM sep5.jobAd WHERE jobId = '" + jobAd.getJobId() + "';";
+//        ResultSet rs;
+//        ArrayList<Applicant> jobAdApplicants = new ArrayList<>();
+//        try{
+//            Statement statement = connection.createStatement();
+//            rs = statement.executeQuery(SQL);
+//
+//            rs.next();
+//            Array list = rs.getArray("applicants");
+//            if(list != null){
+//
+//            }
+//
+//
+//        }catch(SQLException ex){
+//            LogBook.getInstance().quickDBLog("getAllJobAds::"+ex.getMessage());
+//        }
+//
+//        return jobAdApplicants;
+//    }
+
     private void deleteUser(User user){
         String SQL ="";
         if(user.getType()== 'A'){

@@ -24,6 +24,7 @@ public interface IJDBCConnector {
     ArrayList<String> getAllQualities ();
     ArrayList<JobAd> getAllJobAds();
     ArrayList<Conversation> getConversations(ArrayList<Integer> convIds);
+    //ArrayList<Applicant> getJobAdApplicants (JobAd jobAd);
 
     void truncateAllTables();
     void truncateQualitiesTable();

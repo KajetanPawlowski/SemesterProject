@@ -1,6 +1,7 @@
 package server;
 
 import common.networking.IServerConnector;
+import common.transferObjects.Applicant;
 import common.transferObjects.JobAd;
 import common.transferObjects.User;
 import common.util.LogBook;
@@ -73,6 +74,11 @@ public class ServerController implements IServerConnector {
     @Override
     public ArrayList<JobAd> getRelevantJobAds(User user) throws RemoteException {
         return serverModel.getRelevantJobAds(user);
+    }
+
+    @Override
+    public ArrayList<Applicant> getJobAdApplicants(User user) throws RemoteException{
+        return serverModel.getJobAdApplicants(user);
     }
 
 

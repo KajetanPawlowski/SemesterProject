@@ -3,6 +3,7 @@ package client.view.company.selectApplicants;
 import client.core.FXMLController;
 import client.core.ViewHandler;
 import client.core.ViewModel;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,15 +19,18 @@ public class SelectApplicantsController implements FXMLController {
         viewHandler = vh;
         searchApplicantsVM = (SelectApplicantsViewModel)vm;
 
-        applicantName.textProperty().bindBidirectional(searchApplicantsVM.positionNameProperty());
-        subtitle.textProperty().bindBidirectional(searchApplicantsVM.companyNameProperty());
-        personalInformation.textProperty().bindBidirectional(searchApplicantsVM.jobDescriptionProperty());
+        applicantName.textProperty().bindBidirectional(searchApplicantsVM.applicantNameProperty());
+        subtitle.textProperty().bindBidirectional(searchApplicantsVM.subtitleProperty());
+        personalInformation.textProperty().bindBidirectional(searchApplicantsVM.personalInformationProperty());
         acceptApplicantBtn.textProperty().bindBidirectional(searchApplicantsVM.actionBtnProperty());
         loadSkillsList();
     }
 
     @FXML
     private Button nextApplicantBtn;
+
+    @FXML
+    private Button prevApplicantButton;
 
     @FXML
     private Button acceptApplicantBtn;
@@ -42,6 +46,18 @@ public class SelectApplicantsController implements FXMLController {
 
     @FXML
     private ListView<String> skills;
+
+    @FXML
+    void onNextApplicantBtn(ActionEvent event) {
+        searchApplicantsVM.onNextApplicantBtn();
+        loadSkillsList();
+    }
+
+    @FXML
+    void onPrevApplicantBtn(ActionEvent event) {
+        searchApplicantsVM.onPrevApplicantBtn();
+        loadSkillsList();
+    }
 
     private void loadSkillsList(){
         skills.setItems(searchApplicantsVM.applicantSkillsList());

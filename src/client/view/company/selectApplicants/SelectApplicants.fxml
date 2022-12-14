@@ -11,8 +11,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="client.view.company.selectApplicants.SelectApplicantsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.company.selectApplicants.SelectApplicantsController">
    <top>
       <Label text="Applicants" BorderPane.alignment="CENTER">
          <font>
@@ -25,7 +24,7 @@
    <center>
       <BorderPane prefHeight="445.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <left>
-            <Button fx:id="nextApplicantBtn" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" text="&lt;--" BorderPane.alignment="CENTER">
+            <Button fx:id="prevApplicantButton" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#onPrevApplicantBtn" text="&lt;--" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </BorderPane.margin></Button>
@@ -70,7 +69,7 @@
             </VBox>
          </center>
          <right>
-            <Button minHeight="50.0" minWidth="50.0" mnemonicParsing="false" text="--&gt;" BorderPane.alignment="CENTER">
+            <Button fx:id="nextApplicantBtn" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#onNextApplicantBtn" text="--&gt;" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </BorderPane.margin></Button>

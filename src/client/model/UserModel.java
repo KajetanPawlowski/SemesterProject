@@ -172,4 +172,14 @@ public class UserModel implements IUserModel {
         }
         return null;
     }
+
+    @Override
+    public ArrayList<Applicant> getJobAdApplicants(){
+        try{
+            return server.getJobAdApplicants(clientUser);
+        }catch (RemoteException ex){
+            log.quickClientLog("UserModel::JobAdApplicants::RemoteException");
+        }
+        return null;
+    }
 }

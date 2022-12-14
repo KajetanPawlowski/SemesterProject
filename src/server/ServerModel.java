@@ -92,6 +92,14 @@ public class ServerModel {
         return database.getAllJobAds();
     }
 
+    public ArrayList<Applicant> getJobAdApplicants(User user){
+        ArrayList<Applicant> jobAdApplicants = new ArrayList<>();
+        for(int i =0; i<database.getAllJobAds().size(); i++){
+            jobAdApplicants = database.getAllJobAds().get(i).getApplicants();
+        }
+        return jobAdApplicants;
+    }
+
     public void updateJobAd(JobAd jobAd){
         database.updateJobAd(jobAd);
     }
