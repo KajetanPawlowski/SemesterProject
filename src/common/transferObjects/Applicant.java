@@ -97,11 +97,13 @@ public class Applicant implements User, Serializable {
 
     @Override
     public void setConvs(ArrayList<Conversation> convs) {
+        System.out.println("Applicant setCOnv");
         conversations = convs;
     }
 
     @Override
     public ArrayList<Conversation> getConvs() {
+        System.out.println("Applicant::getCOnv::" + conversations.toString());
         return conversations;
     }
 
@@ -112,7 +114,7 @@ public class Applicant implements User, Serializable {
             return "NULL";
         }else{
             for(int i = 0; i<conversations.size(); i++){
-                result +="'" + conversations.get(i).getId() + "'";
+                result +=  conversations.get(i).getId() ;
                 if(i+1 < conversations.size()){
                     result += ", ";
                 }

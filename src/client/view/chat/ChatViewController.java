@@ -58,6 +58,7 @@ public class ChatViewController implements FXMLController{
         if(event.getTarget() instanceof Text) {
             String target = event.getTarget().toString();
             String[] newTarget = target.split("\"");
+            chatVM.openConversation(newTarget[1]);
 
             System.out.println("ChatViewController::onListMousePress::" + newTarget[1]);
             

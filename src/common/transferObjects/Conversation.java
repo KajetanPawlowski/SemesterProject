@@ -72,6 +72,23 @@ public class Conversation implements Serializable {
             return users.get(1).getUsername().equals(user.getUsername());
         }
     }
+    public boolean containsUser(String fullName){
+        if(users == null) {
+            System.out.println("1");
+            return false;
+        }
+        if(users.size()<2){
+            System.out.println("2");
+            return false;
+        }
+        if(users.get(0).getFullName().equals(fullName)){
+            System.out.println("3");
+            return true;
+        }else{
+            System.out.println("4");
+            return users.get(1).getUsername().equals(fullName);
+        }
+    }
 
     public String getMessagesForDB() {
         String result = "ARRAY [";

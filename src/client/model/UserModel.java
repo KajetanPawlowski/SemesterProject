@@ -92,7 +92,6 @@ public class UserModel implements IUserModel {
         try {
             String url = "rmi://" + ip + "/server";
             server = (IServerConnector) Naming.lookup(url);
-            System.out.println(server.toString());
             server.openConnection(username);
             clientUser = server.getUser(username);
             return true;
@@ -215,8 +214,11 @@ public class UserModel implements IUserModel {
     public void createNewConversation(User user, JobAd ad) {
         try {
             int id = server.createConversation(user, ad);
-            clientUser.getConvs().add(new Conversation(id, user, ad));
-            updateUser();
+            Conversation newConv = new Conversation(id, user, ad);
+            clientUser.getConvs().add(newConv);
+            updateUser();//update company
+            user.getConvs().add(newConv);
+            server.updateUser(user); //update applicant
         } catch (RemoteException e) {
             log.quickClientLog("UserModel::NewConversation::RemoteException");
         }

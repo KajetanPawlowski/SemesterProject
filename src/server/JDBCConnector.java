@@ -173,6 +173,7 @@ public class JDBCConnector implements IJDBCConnector{
     }
 
     private void updateApplicant(User user) {
+        System.out.println("update Applicant");
         String SQL = "UPDATE sep5.Applicant SET fullName = '" + user.getFullName() + "'," +
                 " subtitle = '" + user.getSubtitle() + "'," +
                 "personalinfromation = '" + user.getDetails() + "'," +

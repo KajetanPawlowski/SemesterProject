@@ -30,7 +30,8 @@ public class ChatViewModel implements ViewModel {
         messageList = FXCollections.observableArrayList();
         accountList = FXCollections.observableArrayList();
         if(clientModel.getUser().getConvs().size()>0){
-            openConversation(clientModel.getUser());
+            openConversation(clientModel.getAllConversationBuddies().get(0));
+            updateAccountList();
         }
 
         
@@ -50,6 +51,16 @@ public class ChatViewModel implements ViewModel {
         ArrayList<Conversation> conversations = clientModel.getUser().getConvs();
         for(int i = 0; i < conversations.size(); i++){
             if(conversations.get(i).containsUser(user)){
+                currentConversation = conversations.get(i);
+                update();
+                break;
+            }
+        }
+    }
+    public void openConversation(String fullName){
+        ArrayList<Conversation> conversations = clientModel.getUser().getConvs();
+        for(int i = 0; i < conversations.size(); i++){
+            if(conversations.get(i).containsUser(fullName)){
                 currentConversation = conversations.get(i);
                 update();
                 break;
