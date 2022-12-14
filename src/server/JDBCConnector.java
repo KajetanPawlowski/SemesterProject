@@ -225,7 +225,7 @@ public class JDBCConnector implements IJDBCConnector{
             statement.executeQuery(SQL);
 
         } catch (SQLException ex) {
-            LogBook.getInstance().quickDBLog("updateJobAd::"+ ex.getMessage());
+            LogBook.getInstance().quickDBLog("updateConversation::"+ ex.getMessage());
         }
     }
 
