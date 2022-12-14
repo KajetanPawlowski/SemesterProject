@@ -217,6 +217,19 @@ public class JDBCConnector implements IJDBCConnector{
     }
 
     @Override
+    public void updateConversation(Conversation conversation){
+        String SQL = "UPDATE sep5.conversation SET messages =" + conversation.getMessagesForDB() +
+                " WHERE conversationId = '" + conversation.getId() + "';";
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeQuery(SQL);
+
+        } catch (SQLException ex) {
+            LogBook.getInstance().quickDBLog("updateJobAd::"+ ex.getMessage());
+        }
+    }
+
+    @Override
     public User getUser(String username) throws UserNotFoundException{
             User user;
             if(getUserType(username) =='A'){
