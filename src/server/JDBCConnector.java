@@ -219,7 +219,7 @@ public class JDBCConnector implements IJDBCConnector{
     @Override
     public void updateConversation(Conversation conversation){
         String SQL = "UPDATE sep5.conversation SET messages =" + conversation.getMessagesForDB() +
-                " WHERE conversationId = '" + conversation.getId() + "';";
+                " WHERE converastionId = '" + conversation.getId() + "';";
         try {
             Statement statement = connection.createStatement();
             statement.executeQuery(SQL);
@@ -369,7 +369,7 @@ public class JDBCConnector implements IJDBCConnector{
     //get all users method
 
     private Conversation getConversation(Integer id){
-        String SQL = "SELECT* FROM sep5.conversation WHERE conversationId = '" + id + "';";
+        String SQL = "SELECT* FROM sep5.conversation WHERE converastionId = '" + id + "';";
         ResultSet rs;
         Conversation conversation = new Conversation(id);
         try {

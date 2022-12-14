@@ -2,6 +2,7 @@ package server;
 
 import common.networking.IServerConnector;
 import common.transferObjects.Applicant;
+import common.transferObjects.Conversation;
 import common.transferObjects.JobAd;
 import common.transferObjects.User;
 import common.util.LogBook;
@@ -44,6 +45,11 @@ public class ServerController implements IServerConnector {
     @Override
     public void updateJobAd(JobAd ad) throws RemoteException {
         serverModel.updateJobAd(ad);
+    }
+
+    @Override
+    public void updateConv(Conversation conv) throws RemoteException {
+        serverModel.updateConversation(conv);
     }
 
     @Override

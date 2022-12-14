@@ -216,8 +216,19 @@ public class UserModel implements IUserModel {
         try {
             int id = server.createConversation(user, ad);
             clientUser.getConvs().add(new Conversation(id, user, ad));
+            updateUser();
         } catch (RemoteException e) {
             log.quickClientLog("UserModel::NewConversation::RemoteException");
+        }
+    }
+
+    @Override
+    public void updateConv(Conversation conv) {
+        try {
+            server.updateConv(conv);
+            notifyObservers();
+        } catch (RemoteException e) {
+            log.quickClientLog("UserModel::updateConv::RemoteException");
         }
     }
 }

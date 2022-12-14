@@ -2,10 +2,13 @@ package client.core;
 
 
 import client.model.UserModel;
+import client.view.chat.ChatViewModel;
 import client.view.company.createJobAd.CreateJobAdViewModel;
 import client.view.company.selectApplicants.SelectApplicantsViewModel;
 import client.view.jobSearch.JobSearchViewModel;
+import common.transferObjects.Conversation;
 import common.transferObjects.JobAd;
+import common.transferObjects.User;
 import common.util.LogBook;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -149,6 +152,18 @@ public class ViewHandler {
     }
     public void openChatView(){
         BorderPane root = (BorderPane)createFromFXML(vmf.getChatVM(),"../view/chat/ChatView.fxml");
+
+        root.setLeft(getMenuBar());
+
+        mainScene = new Scene(root,800, 600);
+        stage.setScene(mainScene);
+        stage.setTitle("Chat");
+        stage.show();
+    }
+    public void openChatView(User user){
+        ChatViewModel vm = vmf.getChatVM();
+        vm.openConversation(user);
+        BorderPane root = (BorderPane)createFromFXML(vm,"../view/chat/ChatView.fxml");
 
         root.setLeft(getMenuBar());
 

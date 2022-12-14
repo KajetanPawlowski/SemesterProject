@@ -51,6 +51,7 @@ public class ChatViewModel implements ViewModel {
         for(int i = 0; i < conversations.size(); i++){
             if(conversations.get(i).containsUser(user)){
                 currentConversation = conversations.get(i);
+                update();
                 break;
             }
         }
@@ -61,9 +62,8 @@ public class ChatViewModel implements ViewModel {
         System.out.println("ChatViewModel::sentMessage");
         currentConversation.addMsg(clientModel.getUser(), messageInputProperty.get());
         messageInputProperty.setValue("");
-        clientModel.updateUser();
+        clientModel.updateConv(currentConversation);
         update();
-
 
     }
     

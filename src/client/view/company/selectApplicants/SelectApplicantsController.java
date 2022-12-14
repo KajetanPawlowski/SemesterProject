@@ -61,7 +61,7 @@ public class SelectApplicantsController implements FXMLController {
     }
     @FXML
     void onOpenChatBtn(ActionEvent event){
-        searchApplicantsVM.onOpenChatBtn();
+        searchApplicantsVM.onOpenChatBtn(viewHandler);
         viewHandler.openChatView();
     }
 

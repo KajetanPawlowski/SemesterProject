@@ -1,10 +1,7 @@
 package server;
 
 import client.model.UserNotFoundException;
-import common.transferObjects.Applicant;
-import common.transferObjects.Company;
-import common.transferObjects.JobAd;
-import common.transferObjects.User;
+import common.transferObjects.*;
 import common.util.LogBook;
 import common.util.UserAlreadyConnectedException;
 
@@ -160,6 +157,10 @@ public class ServerModel {
     public int createNewConversation(User user1, JobAd add){
         return database.insertConversation(user1, add);
     }
+    public void updateConversation(Conversation nextConv){
+        database.updateConversation(nextConv);
+    }
+
 
 
 

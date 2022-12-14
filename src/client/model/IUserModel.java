@@ -26,6 +26,7 @@ public interface IUserModel extends Subject {
     void applyForJob(JobAd jobAd);
     ArrayList<String> getAllConversationBuddies();
     void createNewConversation(User user, JobAd ad);
+    void updateConv(Conversation conv);
 
 
 

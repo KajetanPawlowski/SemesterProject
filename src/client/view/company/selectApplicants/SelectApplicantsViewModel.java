@@ -1,5 +1,6 @@
 package client.view.company.selectApplicants;
 
+import client.core.ViewHandler;
 import client.core.ViewModel;
 import client.model.IUserModel;
 import common.transferObjects.Applicant;
@@ -49,7 +50,13 @@ public class SelectApplicantsViewModel implements ViewModel {
 
 
     }
-    public void onOpenChatBtn(){
+    public void onOpenChatBtn(ViewHandler vh){
+        for(int i = 0; i<clientModel.getUser().getConvs().size(); i++){
+            if(clientModel.getUser().getConvs().get(i).containsUser(applicant)){
+                vh.openChatView(applicant);
+                return;
+            }
+        }
         clientModel.createNewConversation(applicant, jobAd);
     }
 
