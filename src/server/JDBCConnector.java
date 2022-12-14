@@ -218,19 +218,13 @@ public class JDBCConnector implements IJDBCConnector{
 
     @Override
     public User getUser(String username) throws UserNotFoundException{
-        int localIndex = isOnServer(username);
-        if(localIndex >= 0){
-            return allUsers.get(localIndex);
-        }else{
             User user;
             if(getUserType(username) =='A'){
                 user = getApplicantProfile(username);
             }else{
                 user = getCompanyProfile(username);
             }
-            allUsers.add(user);
             return  user;
-        }
 
     }
     private char getUserType(String username) throws UserNotFoundException{
@@ -284,6 +278,7 @@ public class JDBCConnector implements IJDBCConnector{
             } catch (SQLException ex) {
                 LogBook.getInstance().quickDBLog("getCompanyProfile::" + ex.getMessage());
             }
+            allUsers.add(company);
             return company;
         }
     }
@@ -319,6 +314,7 @@ public class JDBCConnector implements IJDBCConnector{
             } catch (SQLException ex) {
                 LogBook.getInstance().quickDBLog("getApplicantProfile::" + ex.getMessage());
             }
+            allUsers.add(applicant);
             return applicant;
         }
     }
