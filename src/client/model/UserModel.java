@@ -90,8 +90,11 @@ public class UserModel implements IUserModel {
     @Override
     public boolean connectToServer(String username, String ip) throws UserNotFoundException, UserAlreadyConnectedException {
         try {
-            String url = "rmi://" + ip + "/server";
+
+            String url = "rmi://" + ip + "/sep5server";
+            System.out.println(url);
             server = (IServerConnector) Naming.lookup(url);
+            System.out.println(server.toString());
             server.openConnection(username);
             clientUser = server.getUser(username);
             return true;
@@ -163,12 +166,13 @@ public class UserModel implements IUserModel {
 
     @Override
     public ArrayList<JobAd> getClientJobAds() {
-        try{
-            return server.getRelevantJobAds(clientUser);
-        }catch (RemoteException ex){
-            log.quickClientLog("UserModel::getClientJobAds::RemoteException");
-        }
-        return null;
+        return new ArrayList<JobAd>();
+//        try{
+//            return server.getRelevantJobAds(clientUser);
+//        }catch (RemoteException ex){
+//            log.quickClientLog("UserModel::getClientJobAds::RemoteException");
+//        }
+//        return null;
     }
 
     @Override
@@ -183,54 +187,54 @@ public class UserModel implements IUserModel {
 
     @Override
     public ArrayList<Applicant> getJobAdApplicants(JobAd jobad){
-        try{
-            ArrayList<JobAd> allJobs = server.getRelevantJobAds(clientUser);
-            for(int i = 0; i < allJobs.size(); i++){
-                if(allJobs.get(i).equals(jobad)){
-                    return allJobs.get(i).getApplicants();
-                }
-            }
-        }catch (RemoteException ex){
-            log.quickClientLog("UserModel::JobAdApplicants::RemoteException");
-        }
+//        try{
+//            ArrayList<JobAd> allJobs = server.getRelevantJobAds(clientUser);
+//            for(int i = 0; i < allJobs.size(); i++){
+//                if(allJobs.get(i).equals(jobad)){
+//                    return allJobs.get(i).getApplicants();
+//                }
+//            }
+//        }catch (RemoteException ex){
+//            log.quickClientLog("UserModel::JobAdApplicants::RemoteException");
+//        }
         return null;
     }
 
     public ArrayList<String> getAllConversationBuddies(){
         ArrayList<String> result = new ArrayList<>();
-        ArrayList<Conversation> conversations = clientUser.getConvs();
-        for(int i = 0; i < conversations.size(); i++){
-            if(conversations.get(i).getUsers().get(0).equals(clientUser)){
-                result.add(conversations.get(i).getUsers().get(1).getFullName());
-            }else{
-                result.add(conversations.get(i).getUsers().get(0).getFullName());
-            }
-        }
+//        ArrayList<Conversation> conversations = clientUser.getConvs();
+//        for(int i = 0; i < conversations.size(); i++){
+//            if(conversations.get(i).getUsers().get(0).equals(clientUser)){
+//                result.add(conversations.get(i).getUsers().get(1).getFullName());
+//            }else{
+//                result.add(conversations.get(i).getUsers().get(0).getFullName());
+//            }
+//        }
         return result;
 
     }
 
     @Override
     public void createNewConversation(User user, JobAd ad) {
-        try {
-            int id = server.createConversation(user, ad);
-            Conversation newConv = new Conversation(id, user, ad);
-            clientUser.getConvs().add(newConv);
-            updateUser();//update company
-            user.getConvs().add(newConv);
-            server.updateUser(user); //update applicant
-        } catch (RemoteException e) {
-            log.quickClientLog("UserModel::NewConversation::RemoteException");
-        }
+//        try {
+//            int id = server.createConversation(user, ad);
+//            Conversation newConv = new Conversation(id, user, ad);
+//            clientUser.getConvs().add(newConv);
+//            updateUser();//update company
+//            user.getConvs().add(newConv);
+//            server.updateUser(user); //update applicant
+//        } catch (RemoteException e) {
+//            log.quickClientLog("UserModel::NewConversation::RemoteException");
+//        }
     }
 
     @Override
     public void updateConv(Conversation conv) {
-        try {
-            server.updateConv(conv);
-            notifyObservers();
-        } catch (RemoteException e) {
-            log.quickClientLog("UserModel::updateConv::RemoteException");
-        }
+//        try {
+//            server.updateConv(conv);
+//            notifyObservers();
+//        } catch (RemoteException e) {
+//            log.quickClientLog("UserModel::updateConv::RemoteException");
+//        }
     }
 }

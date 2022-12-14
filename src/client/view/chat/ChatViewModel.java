@@ -29,10 +29,10 @@ public class ChatViewModel implements ViewModel {
         clientModel.attachObserver(this);
         messageList = FXCollections.observableArrayList();
         accountList = FXCollections.observableArrayList();
-        if(clientModel.getUser().getConvs().size()>0){
-            openConversation(clientModel.getAllConversationBuddies().get(0));
-            updateAccountList();
-        }
+//        if(clientModel.getUser().getConvs().size()>0){
+//            openConversation(clientModel.getAllConversationBuddies().get(0));
+//            updateAccountList();
+//        }
 
         
     }
@@ -48,59 +48,59 @@ public class ChatViewModel implements ViewModel {
     }
     
     public void openConversation(User user){
-        ArrayList<Conversation> conversations = clientModel.getUser().getConvs();
-        for(int i = 0; i < conversations.size(); i++){
-            if(conversations.get(i).containsUser(user)){
-                currentConversation = conversations.get(i);
-                update();
-                break;
-            }
-        }
+//        ArrayList<Conversation> conversations = clientModel.getUser().getConvs();
+//        for(int i = 0; i < conversations.size(); i++){
+//            if(conversations.get(i).containsUser(user)){
+//                currentConversation = conversations.get(i);
+//                update();
+//                break;
+//            }
+//        }
     }
     public void openConversation(String fullName){
-        ArrayList<Conversation> conversations = clientModel.getUser().getConvs();
-        for(int i = 0; i < conversations.size(); i++){
-            if(conversations.get(i).containsUser(fullName)){
-                currentConversation = conversations.get(i);
-                update();
-                break;
-            }
-        }
+//        ArrayList<Conversation> conversations = clientModel.getUser().getConvs();
+//        for(int i = 0; i < conversations.size(); i++){
+//            if(conversations.get(i).containsUser(fullName)){
+//                currentConversation = conversations.get(i);
+//                update();
+//                break;
+//            }
+//        }
     }
     
     
     public void sentMessage(){
-        System.out.println("ChatViewModel::sentMessage");
-        currentConversation.addMsg(clientModel.getUser(), messageInputProperty.get());
-        messageInputProperty.setValue("");
-        clientModel.updateConv(currentConversation);
-        update();
+//        System.out.println("ChatViewModel::sentMessage");
+//        currentConversation.addMsg(clientModel.getUser(), messageInputProperty.get());
+//        messageInputProperty.setValue("");
+//        clientModel.updateConv(currentConversation);
+//        update();
 
     }
     
 
     public void updateMessageList(){
-        messageList.clear();
-        for(int i = 0; i < currentConversation.getAllMessages().size(); i++) {
-            messageList.add(currentConversation.getAllMessages().get(i));
-        }
+//        messageList.clear();
+//        for(int i = 0; i < currentConversation.getAllMessages().size(); i++) {
+//            messageList.add(currentConversation.getAllMessages().get(i));
+//        }
 
     }
     public void updateAccountList(){
-        accountList.clear();
-        for(int i = 0; i < clientModel.getAllConversationBuddies().size();i++){
-            accountList.add(clientModel.getAllConversationBuddies().get(i));
-        }
+//        accountList.clear();
+//        for(int i = 0; i < clientModel.getAllConversationBuddies().size();i++){
+//            accountList.add(clientModel.getAllConversationBuddies().get(i));
+//        }
     }
     @Override
     public void update() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                updateMessageList();
-                updateAccountList();
-            }
-        });
+//        Platform.runLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                updateMessageList();
+//                updateAccountList();
+//            }
+//        });
     }
 
 
