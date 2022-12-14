@@ -1,6 +1,7 @@
 package client.model;
 
 import common.transferObjects.Applicant;
+import common.transferObjects.Conversation;
 import common.transferObjects.JobAd;
 import common.transferObjects.User;
 import common.util.Subject;
@@ -23,6 +24,8 @@ public interface IUserModel extends Subject {
     ArrayList<String> getAllQualities();
     void addNewQuality(String quality);
     void applyForJob(JobAd jobAd);
+    ArrayList<String> getAllConversationBuddies();
+
 
 
 

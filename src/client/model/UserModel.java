@@ -1,10 +1,7 @@
 package client.model;
 
 import common.networking.IServerConnector;
-import common.transferObjects.Applicant;
-import common.transferObjects.Company;
-import common.transferObjects.JobAd;
-import common.transferObjects.User;
+import common.transferObjects.*;
 import common.util.LogBook;
 import common.util.Observer;
 import common.util.UserAlreadyConnectedException;
@@ -198,5 +195,19 @@ public class UserModel implements IUserModel {
             log.quickClientLog("UserModel::JobAdApplicants::RemoteException");
         }
         return null;
+    }
+
+    public ArrayList<String> getAllConversationBuddies(){
+        ArrayList<String> result = new ArrayList<>();
+        ArrayList<Conversation> conversations = clientUser.getConvs();
+        for(int i = 0; i < conversations.size(); i++){
+            if(conversations.get(i).getUsers().get(0).equals(clientUser)){
+                result.add(conversations.get(i).getUsers().get(1).getFullName());
+            }else{
+                result.add(conversations.get(i).getUsers().get(0).getFullName());
+            }
+        }
+        return result;
+
     }
 }

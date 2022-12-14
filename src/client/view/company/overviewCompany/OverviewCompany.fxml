@@ -9,7 +9,6 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane fx:id="borderRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.company.overviewCompany.OverviewCompanyController">
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
@@ -35,7 +34,7 @@
                      </VBox.margin>
                   </HBox>
                   <Label text="Company Description" />
-                  <TextArea fx:id="companyDescriptionTextArea" prefHeight="200.0" prefWidth="200.0" />
+                  <TextArea fx:id="companyDescriptionTextArea" editable="false" minWidth="400.0" prefHeight="200.0" prefWidth="400.0" wrapText="true" />
                </children>
                <HBox.margin>
                   <Insets />
