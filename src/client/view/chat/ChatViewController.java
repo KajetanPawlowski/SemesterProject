@@ -2,6 +2,7 @@ package client.view.chat;
 
 import client.core.FXMLController;
 import client.core.ViewHandler;
+
 import client.core.ViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
