@@ -51,6 +51,9 @@ public class ChatViewController implements FXMLController{
     }
 
     @FXML
+    void onRefreshBtn(){chatVM.update();}
+
+    @FXML
     void onListMousePress(MouseEvent event) {
         if(event.getTarget() instanceof Text) {
             String target = event.getTarget().toString();
