@@ -77,6 +77,11 @@ public class ServerController implements IServerConnector {
     }
 
     @Override
+    public ArrayList<JobAd> getAppliedJobAds(User user) throws RemoteException {
+        return serverModel.getAppliedJobs(user);
+    }
+
+    @Override
     public ArrayList<Applicant> getJobAdApplicants(User user) throws RemoteException{
         return serverModel.getJobAdApplicants(user);
     }

@@ -11,6 +11,7 @@ public class MenuViewModel implements ViewModel {
         clientModel.attachObserver(this);
     }
     public void resetModel(){
+        System.out.println("Client Model Reset:: Logout");
         clientModel.resetModel();
     }
     @Override

@@ -2,6 +2,9 @@ package client.view.applicant.overview;
 import java.util.ArrayList;
 import java.util.List;
 
+import client.core.ViewHandler;
+import client.model.IUserModel;
+import client.model.UserModel;
 import common.transferObjects.JobAd;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +18,13 @@ import javafx.scene.layout.Priority;
 
 
 public class ListViewBtnCustom {
+    private static ViewHandler vh;
+    private static IUserModel model;
+    public ListViewBtnCustom(ViewHandler vh, IUserModel model){
+        this.vh = vh;
+        this.model = model;
+    }
+
 
     public static class HBoxCell extends HBox {
         Label label = new Label();
@@ -28,6 +38,21 @@ public class ListViewBtnCustom {
             HBox.setHgrow(label, Priority.ALWAYS);
 
             button.setText(buttonText);
+            button.setOnAction(e->{
+                ArrayList<JobAd> jobAds = model.getClientJobAds();
+                JobAd ad = null;
+                for(int i = 0; i < jobAds.size(); i++){
+                    if(jobAds.get(i).getJobTitle().equals(label.getText())){
+                        ad = jobAds.get(i);
+                    }
+                }
+                if(ad == null){
+                    button.setText("Error");
+                }else{
+                    vh.openJobSearch(ad);
+                }
+
+            });
 
             this.getChildren().addAll(label, button);
         }

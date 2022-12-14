@@ -22,7 +22,8 @@ public class DatabaseTest {
 
         //database.updateUser(database.getUser("arla"));
        // System.out.println(database.insertConversation(database.getUser("alice"), database.getAllJobAds().get(1) ));
-
+        database.truncateAllTables();
+        database.truncateQualitiesTable();
 
         database.close();
 

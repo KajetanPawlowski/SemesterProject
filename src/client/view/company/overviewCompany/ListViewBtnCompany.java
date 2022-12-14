@@ -37,8 +37,14 @@ public class ListViewBtnCompany {
 
             button.setText("See applicants");
             button.setOnAction(e->{
-
-                vh.openSelectApplicantView();
+                ArrayList<JobAd> jobAds = UserModel.getInstance().getClientJobAds();
+                JobAd ad = null;
+                for(int i = 0; i < jobAds.size(); i++){
+                    if(jobAds.get(i).getJobTitle().equals(label.getText())){
+                        ad = jobAds.get(i);
+                    }
+                }
+                vh.openSelectApplicantView(ad);
             });
 
             button2.setText("Edit");

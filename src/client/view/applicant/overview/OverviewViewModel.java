@@ -1,5 +1,6 @@
 package client.view.applicant.overview;
 
+import client.core.ViewHandler;
 import client.core.ViewModel;
 import client.model.IUserModel;
 import javafx.application.Platform;
@@ -17,14 +18,14 @@ public class OverviewViewModel implements ViewModel {
         titleLabelProperty = new SimpleStringProperty("Welcome " + clientModel.getUser().getUsername());
     }
 
-    public Node getRelevantJobs(){
-        ListViewBtnCustom customList = new ListViewBtnCustom();
+    public Node getRelevantJobs(ViewHandler vh){
+        ListViewBtnCustom customList = new ListViewBtnCustom(vh, clientModel);
         return customList.createList(clientModel.getClientJobAds(), "Jobs for you");
 
     }
-    public Node getAppliedJobs(){
-        ListViewBtnCustom customList = new ListViewBtnCustom();
-        return customList.createList(clientModel.getClientJobAds(), "Jobs you applied");
+    public Node getAppliedJobs(ViewHandler vh){
+        ListViewBtnCustom customList = new ListViewBtnCustom(vh,clientModel);
+        return customList.createList(clientModel.getAppliedJobAds(), "Jobs you applied");
     }
 
     public StringProperty getTitleLabelProperty() {

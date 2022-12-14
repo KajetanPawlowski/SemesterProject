@@ -510,11 +510,11 @@ public class JDBCConnector implements IJDBCConnector{
 
     @Override
     public void truncateAllTables() {
-        String SQL = "TRUNCATE ONLY applicant CASCADE;\n" +
-                "TRUNCATE ONLY company CASCADE;\n" +
-                "TRUNCATE ONLY \"user\" CASCADE;\n" +
-                "TRUNCATE ONLY jobAd RESTART IDENTITY CASCADE;\n" +
-                "TRUNCATE ONLY conversation RESTART IDENTITY CASCADE;";
+        String SQL = "TRUNCATE ONLY sep5.applicant CASCADE;\n" +
+                "TRUNCATE ONLY sep5.company CASCADE;\n" +
+                "TRUNCATE ONLY sep5.user CASCADE;\n" +
+                "TRUNCATE ONLY sep5.jobAd RESTART IDENTITY CASCADE;\n" +
+                "TRUNCATE ONLY sep5.conversation RESTART IDENTITY CASCADE;";
 
         try{
             Statement statement = connection.createStatement();
@@ -528,7 +528,7 @@ public class JDBCConnector implements IJDBCConnector{
 
     @Override
     public void truncateQualitiesTable(){
-        String SQL = "TRUNCATE ONLY qualities CASCADE;";
+        String SQL = "TRUNCATE ONLY sep5.qualities CASCADE;";
 
         try{
             Statement statement = connection.createStatement();

@@ -23,6 +23,7 @@ public interface IServerConnector extends Remote {
     void addNewQuality(String quality) throws RemoteException;
     void addNewJobAd(JobAd nextAd) throws RemoteException;
     ArrayList<JobAd> getRelevantJobAds(User user) throws RemoteException;
+    ArrayList<JobAd> getAppliedJobAds(User user) throws RemoteException;
     ArrayList<Applicant> getJobAdApplicants(User user) throws RemoteException;
     // ArrayList<JobAdd> getRelevantJobAds(Applicant applicant, JobAdd relevantJobAd) throws RemoteException;
 }

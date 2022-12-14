@@ -19,6 +19,7 @@ public class SelectApplicantsController implements FXMLController {
         viewHandler = vh;
         searchApplicantsVM = (SelectApplicantsViewModel)vm;
 
+        topLabel.textProperty().bindBidirectional(searchApplicantsVM.topLabelProperty());
         applicantName.textProperty().bindBidirectional(searchApplicantsVM.applicantNameProperty());
         subtitle.textProperty().bindBidirectional(searchApplicantsVM.subtitleProperty());
         personalInformation.textProperty().bindBidirectional(searchApplicantsVM.personalInformationProperty());
@@ -40,6 +41,9 @@ public class SelectApplicantsController implements FXMLController {
 
     @FXML
     private Label subtitle;
+
+    @FXML
+    private Label topLabel;
 
     @FXML
     private TextArea personalInformation;

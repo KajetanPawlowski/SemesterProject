@@ -17,7 +17,8 @@ public interface IUserModel extends Subject {
     void updateJobAd(JobAd nextJobAd);
     User getUser();
     ArrayList<JobAd> getClientJobAds();
-    ArrayList<Applicant> getJobAdApplicants();
+    ArrayList<JobAd> getAppliedJobAds();
+    ArrayList<Applicant> getJobAdApplicants(JobAd jobad);
     void resetModel();
     ArrayList<String> getAllQualities();
     void addNewQuality(String quality);

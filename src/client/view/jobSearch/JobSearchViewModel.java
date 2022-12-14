@@ -40,6 +40,7 @@ public class JobSearchViewModel implements ViewModel {
         setJobAdd(allJobAds.get(0));
     }
 
+
     public char getActionBtn(){
         return clientModel.getUser().getType();
     }
@@ -65,7 +66,7 @@ public class JobSearchViewModel implements ViewModel {
         setJobAdd(allJobAds.get(prevAdd));
         currentAdd --;
     }
-    private void setJobAdd(JobAd add){
+    public void setJobAdd(JobAd add){
         jobAdd = add;
         fillJobInfo();
     }

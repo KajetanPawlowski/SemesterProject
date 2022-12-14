@@ -95,6 +95,7 @@ public class UserModel implements IUserModel {
         try {
             String url = "rmi://" + ip + "/server";
             server = (IServerConnector) Naming.lookup(url);
+            System.out.println(server.toString());
             server.openConnection(username);
             clientUser = server.getUser(username);
             return true;
@@ -108,6 +109,7 @@ public class UserModel implements IUserModel {
     public void disconnectFromServer(String username) {
         try {
             server.closeConnection(username);
+            server = null;
         } catch( RemoteException ex ) {
             log.quickClientLog("UserModel::disconnectFormServer::RemoteException");
         }
@@ -174,9 +176,24 @@ public class UserModel implements IUserModel {
     }
 
     @Override
-    public ArrayList<Applicant> getJobAdApplicants(){
+    public ArrayList<JobAd> getAppliedJobAds() {
         try{
-            return server.getJobAdApplicants(clientUser);
+            return server.getAppliedJobAds(clientUser);
+        }catch (RemoteException ex){
+            log.quickClientLog("UserModel::getAppliedJobAds::RemoteException");
+        }
+        return null;
+    }
+
+    @Override
+    public ArrayList<Applicant> getJobAdApplicants(JobAd jobad){
+        try{
+            ArrayList<JobAd> allJobs = server.getRelevantJobAds(clientUser);
+            for(int i = 0; i < allJobs.size(); i++){
+                if(allJobs.get(i).equals(jobad)){
+                    return allJobs.get(i).getApplicants();
+                }
+            }
         }catch (RemoteException ex){
             log.quickClientLog("UserModel::JobAdApplicants::RemoteException");
         }

@@ -26,7 +26,7 @@ public class OverviewController implements FXMLController {
         this.viewHandler = viewHandler;
         overviewVM = (OverviewViewModel) vm;
         titleLabel.textProperty().bindBidirectional(overviewVM.getTitleLabelProperty());
-        listsVBox.getChildren().addAll(overviewVM.getRelevantJobs(), overviewVM.getAppliedJobs());
+        listsVBox.getChildren().addAll(overviewVM.getRelevantJobs(viewHandler), overviewVM.getAppliedJobs(viewHandler));
         centerHBox.getChildren().add(viewHandler.getUserProfile());
     }
 

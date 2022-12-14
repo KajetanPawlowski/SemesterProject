@@ -3,6 +3,8 @@ package client.core;
 
 import client.model.UserModel;
 import client.view.company.createJobAd.CreateJobAdViewModel;
+import client.view.company.selectApplicants.SelectApplicantsViewModel;
+import client.view.jobSearch.JobSearchViewModel;
 import common.transferObjects.JobAd;
 import common.util.LogBook;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +27,7 @@ public class ViewHandler {
         this.vmf = vmf;
         stage = new Stage();
         stage.setOnCloseRequest(ev -> {
+            System.out.println("Client model Reset");
             UserModel.getInstance().resetModel();
         });
     }
@@ -98,8 +101,10 @@ public class ViewHandler {
         stage.show();
     }
 
-    public void openSelectApplicantView(){
-        BorderPane root = (BorderPane)createFromFXML(vmf.getSelectApplicantsViewModel(),"../view/company/selectApplicants/SelectApplicants.fxml");
+    public void openSelectApplicantView(JobAd jobAd){
+        SelectApplicantsViewModel vm = vmf.getSelectApplicantsViewModel();
+        vm.loadJobAd(jobAd);
+        BorderPane root = (BorderPane)createFromFXML(vm,"../view/company/selectApplicants/SelectApplicants.fxml");
 
         root.setLeft(getCompanyMenuBar());
 
@@ -111,6 +116,18 @@ public class ViewHandler {
 
     public void openJobSearch(){
         BorderPane root = (BorderPane)createFromFXML(vmf.getJobSearchVM(),"../view/jobSearch/JobSearch.fxml");
+
+        root.setLeft(getMenuBar());
+
+        mainScene = new Scene(root,800, 600);
+        stage.setScene(mainScene);
+        stage.setTitle("Job Search");
+        stage.show();
+    }
+    public void openJobSearch(JobAd jobAd){
+        JobSearchViewModel vm = vmf.getJobSearchVM();
+        vm.setJobAdd(jobAd);
+        BorderPane root = (BorderPane)createFromFXML(vm,"../view/jobSearch/JobSearch.fxml");
 
         root.setLeft(getMenuBar());
 

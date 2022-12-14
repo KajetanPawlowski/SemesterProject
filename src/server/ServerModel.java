@@ -25,7 +25,6 @@ public class ServerModel {
     private ArrayList<Company> companies = new ArrayList<>();
     private ArrayList<String> qualities = new ArrayList<>();
 
-    private ArrayList<JobAd> allJobAds = new ArrayList<JobAd>();
 
 
     public void run(){
@@ -84,12 +83,42 @@ public class ServerModel {
     }
 
     public void createJobAd(JobAd nextJobAd) {
-        allJobAds.add(nextJobAd);
         database.insertNewJobAdd(nextJobAd);
     }
 
     public ArrayList<JobAd> getRelevantJobAds(User user){
-        return database.getAllJobAds();
+        ArrayList<JobAd> jobAds = database.getAllJobAds();
+        if(user.getType() == 'A'){
+            ArrayList<JobAd> applied = getAppliedJobs(user);
+            for(int i = 0; i < applied.size(); i++){
+                jobAds.remove(applied.remove(i));
+            }
+            return jobAds;
+        }else{
+            return getCreatedAds(user, jobAds);
+        }
+    }
+
+    private ArrayList<JobAd> getCreatedAds(User user, ArrayList<JobAd> allJobAds){
+        ArrayList<JobAd> result = new ArrayList<JobAd>();
+        for(int i = 0; i < allJobAds.size(); i++){
+            if(allJobAds.get(i).getCompany().getUsername().equals(user.getUsername())){
+                result.add(allJobAds.get(i));
+            }
+        }
+        return result;
+    }
+    public ArrayList<JobAd> getAppliedJobs(User user){
+        ArrayList<JobAd> allJobAds = database.getAllJobAds();
+        ArrayList<JobAd> result = new ArrayList<JobAd>();
+        for(int i = 0; i < allJobAds.size(); i++){
+            for(int j = 0; j < allJobAds.get(i).getApplicants().size(); j++){
+                if(allJobAds.get(i).getApplicants().get(j).getUsername().equals(user.getUsername())){
+                    result.add(allJobAds.get(i));
+                }
+            }
+        }
+        return result;
     }
 
     public ArrayList<Applicant> getJobAdApplicants(User user){
@@ -101,6 +130,7 @@ public class ServerModel {
     }
 
     public void updateJobAd(JobAd jobAd){
+
         database.updateJobAd(jobAd);
     }
 
