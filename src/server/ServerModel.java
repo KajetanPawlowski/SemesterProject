@@ -30,7 +30,7 @@ public class ServerModel {
 
             ServerController controller = new ServerController(this);
 
-            Naming.rebind( "server", controller );
+            Naming.rebind( "sep5server", controller );
 
             System.out.println( "Server listening on " + InetAddress.getLocalHost().getHostAddress() );
 
@@ -132,8 +132,8 @@ public class ServerModel {
     }
 
     public void openConnection(String username) throws UserAlreadyConnectedException {
-        checkIfAlreadyConnected(username);
-        connectionPool.add(database.getUser(username));
+       // checkIfAlreadyConnected(username);
+       // connectionPool.add(database.getUser(username));
     }
     public void closeConnection(String username){
         for (int i = 0; i < connectionPool.size(); i++){

@@ -268,10 +268,10 @@ public class JDBCConnector implements IJDBCConnector{
 
     //Get a CompanyProfile from the DB
     private Company getCompanyProfile(String username){
-        int localIndex = isOnServer(username);
-        if(localIndex >= 0){
-            return (Company)allUsers.get(localIndex);
-        }else {
+//        int localIndex = isOnServer(username);
+//        if(localIndex >= 0){
+//            return (Company)allUsers.get(localIndex);
+//        }else {
             String SQL = "SELECT* FROM sep5.Company WHERE username = '" + username + "';";
             ResultSet rs;
             Company company = new Company(username);
@@ -294,15 +294,15 @@ public class JDBCConnector implements IJDBCConnector{
             }
             allUsers.add(company);
             return company;
-        }
+//        }
     }
 
     // Get an ApplicantProfile from the DB
     private Applicant getApplicantProfile(String username){
-        int localIndex = isOnServer(username);
-        if(localIndex >= 0){
-            return (Applicant)allUsers.get(localIndex);
-        }else {
+//        int localIndex = isOnServer(username);
+//        if(localIndex >= 0){
+//            return (Applicant)allUsers.get(localIndex);
+//        }else {
             String SQL = "SELECT* FROM sep5.applicant WHERE username = '" + username + "';";
             ResultSet rs;
             Applicant applicant = new Applicant(username);
@@ -330,7 +330,7 @@ public class JDBCConnector implements IJDBCConnector{
             }
             allUsers.add(applicant);
             return applicant;
-        }
+//        }
     }
     private ArrayList<String> getQualitiesList(Array requirements) throws SQLException {
         if(requirements == null){
